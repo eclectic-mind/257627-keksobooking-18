@@ -1,23 +1,38 @@
-// генерируем случайную картинку
+
+// создаём блок map, убираем класс
+
+var maxMapWidth = map.offsetWidth;
+
+var map = document.querySelector('.map');
+map.classList.remove('.map--faded');
+
+// случайное число из диапазона
+
+var makeOneRandomOfRange = function (min, max) {
+	return Math.floor(Math.random() * (max - min + 1)) + min;
+	};
+
+// случайный элемент из нескольких имеющихся
+
+var makeOneRandom = function () {
+	var as = [];
+    for (var i = 0; i < arguments.length; i++) {
+  	  as[i] = arguments[i];
+    }
+	var rNum = makeOneRandomOfRange(0, as.length);
+	return as[rNum]; 
+	};
+
+// случайная картинка
 
 var getRandomImg = function (min, max) {
-	var num = Math.floor(Math.random() * (max - min + 1)) + min;
+	var rNum = makeOneRandomOfRange(min, max);
 	return 'img/avatars/user/0' + num + '.png';
 }
 
-// генерируем случайное местоположение 
+// массив со случайной сортировкой из скольки угодно имеющихся элементов
 
-var makeRandomLocX = function (min, max) {
-	return Math.floor(Math.random() * (max - min + 1)) + min;
-};
-
-var makeRandomLocY = function () {
-	return y = Math.floor(Math.random() * (630 - 130 + 1)) + 130;
-};
-
-// генерируем массив со случайной сортировкой из скольки угодно имеющихся элементов
-
-var makeRandomElements = function () {
+var makeRandomArr = function () {
 	var as = [];
     for (var i = 0; i < arguments.length; i++) {
   	  as[i] = arguments[i];
@@ -29,28 +44,29 @@ var makeRandomElements = function () {
 	return s;
 }
 
+
 // генерируем объект-объявление
 
-var makeObject = function (title, price, type, rooms, guests, checkin, checkout, features, description, photos, blockXmax, blockXmin) {
+var makeObject = function () {
 author: {
 	avatar: getRandomImg (1, 8)
 }
 offer: {
-	title: '',
-	address: makeRandomLocX(blockXmax, blockXmin) + ', ' + makeRandomLocY(),
-    price: price,
-    type: type,
-    rooms: rooms,
-    guests: guests,
-    checkin: checkin,
-    checkout: checkout,
-    features: makeRandomElements('wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'),
-    description: description,
-    photos: makeRandomElements('http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg')
+	title: makeOneRandom('Offer 1', 'Offer 2', 'Offer 3', 'Offer 4', 'Offer 5', 'Offer 6', 'Offer 7', 'Offer 8'),
+	address: makeOneRandomOfRange(0, maxMapWidth) + ', ' + makeOneRandomOfRange(130, 630),
+    price: makeOneRandom(1000, 1486, 2355, 2798, 3461, 4862, 6622, 8163),
+    type: makeOneRandom('palace', 'flat', 'house', 'bungalo'),
+    rooms: makeOneRandomOfRange(1, 6),
+    guests: makeOneRandomOfRange(1, 20),
+    checkin: makeOneRandom('12:00', '13:00', '14:00'),
+    checkout: makeOneRandom('12:00', '13:00', '14:00'),
+    features: makeRandomArr('wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'),
+    description: makeOneRandom('descrpition 1', 'descrpition 2', 'descrpition 3', 'descrpition 4', 'descrpition 5', 'descrpition 6', 'descrpition 7', 'descrpition 8'),
+    photos: makeRandomArr('http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg')
 },
 location: {
-	x: makeRandomLocX(blockXmax, blockXmin),
-	y: makeRandomLocY()
+	x: makeOneRandomOfRange(0, maxMapWidth),
+	y: makeOneRandomOfRange(130, 630)
 }
 };
 
@@ -64,8 +80,22 @@ for (var i = 0; i <= 8; i++) {
 	return arr;
 }
 
-// показываем блок map
+makeObjectsArray();
 
 // создаём dom-элементы, соответствующие меткам на карте
 
-// отрисовывыем созданные dom-элементы
+var pin = document.createElement('div');
+pin.className = 'map__pin';
+
+var pinX = location.x - 50;
+var pinY = location.y - 82;
+
+pin.style.left = pinX + 'px'
+pin.style.top = pinY + 'px'
+pin.style.src = author.avatar;
+pin.style.alt = offer.title;
+
+// отрисовываем созданные dom-элементы
+
+var fragment = document.createDocumentFragment();
+fragment.appendChild(pin);
