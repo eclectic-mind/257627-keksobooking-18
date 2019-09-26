@@ -46,7 +46,7 @@ var randomSort = function (arr) {
 var generateOffer = function (citymap) {
 author: {
 	avatar: getRandomImg(1, 8)
-  },
+  }
 offer: {
 	title: chooseRandom(TITLES),
 	address: getRandomInRange(0, citymap.offsetWidth) + ', ' + getRandomInRange(130, 630),
