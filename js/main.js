@@ -16,7 +16,7 @@ var MAX_PRICE = 8345;
 // случайное число из диапазона
 
 var getRandomInRange = function (min, max) {
-	return Math.floor(Math.random() * (max - min + 1)) + min;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
 // случайный элемент из нескольких имеющихся
@@ -28,49 +28,51 @@ var chooseRandom = function (arr) {
 // случайная картинка
 
 var getRandomImg = function (min, max) {
-	var rNum = getRandomInRange(min, max);
-	return 'img/avatars/user/0' + num + '.png';
+  var rNum = getRandomInRange(min, max);
+  return 'img/avatars/user/0' + num + '.png';
 };
 
 // случайная сортировка массива
 
 var randomSort = function (arr) {
   var sortFunc = function (a, b) {
-    return 0.5 - Math.random();
+  return 0.5 - Math.random();
   };
   return arr.sort(sortFunc);
 };
 
 // генерируем объект-объявление
 
-var generateOffer = function (citymap) {
+var generateOffer = function (citymapOffsetWidth) {
 author: {
-	avatar: getRandomImg(1, 8)
+  avatar: getRandomImg(1, 8)
   },
 offer: {
-	title: chooseRandom(TITLES),
-	address: getRandomInRange(0, citymap.offsetWidth) + ', ' + getRandomInRange(130, 630),
- 	price: getRandomInRange(MIN_PRICE, MAX_PRICE),
- 	type: chooseRandom(HOUSES),
- 	rooms: getRandomInRange(MIN_ROOMS, MAX_ROOMS),
- 	guests: getRandomInRange(MIN_GUESTS, MAX_GUESTS),
-	checkin: chooseRandom(TIMECHECKS),
-	checkout: chooseRandom(TIMECHECKS),
-	features: randomSort(FEATURES),
-	description: chooseRandom(DESCRIPTIONS),
-	photos: randomSort(PICS)
-	},
+  title: chooseRandom(TITLES),
+  address: getRandomInRange(0, citymapOffsetWidth) + ', ' + getRandomInRange(MIN_Y, MAX_Y),
+  price: getRandomInRange(MIN_PRICE, MAX_PRICE),
+  type: chooseRandom(HOUSES),
+  rooms: getRandomInRange(MIN_ROOMS, MAX_ROOMS),
+  guests: getRandomInRange(MIN_GUESTS, MAX_GUESTS),
+  checkin: chooseRandom(TIMECHECKS),
+  checkout: chooseRandom(TIMECHECKS),
+  features: randomSort(FEATURES),
+  description: chooseRandom(DESCRIPTIONS),
+  photos: randomSort(PICS)
+  },
 location: {
-	x: getRandomInRange(MIN_Y, MAX_Y)
-	}
+  x: getRandomInRange(0, citymapOffsetWidth),
+  y: getRandomInRange(MIN_Y, MAX_Y)
+  }
 };
 
 //собираем массив из 8-ми таких объектов
 
 var generateOffersArray = function (n, citymap) {
   var result = [];
+  var mapWidth = citymap.offsetWidth;
   for (var i = 0; i < n; i++) {
-    result.push(generateOffer(citymap));
+  result.push(generateOffer(mapWidth));
   }
   return result;
 };
@@ -78,38 +80,40 @@ var generateOffersArray = function (n, citymap) {
 // создаём dom-элементы меток и отрисовываем их
 
 var showLocation = function (allOffers, pinsBlock) {
-	var fragment = document.createDocumentFragment();
-	var pin = '';
-	var pinX = '';
-	var pinY = '';
-	var pinPic = '';
-	pin.className = 'map__pin';
-	pin.setAttribute('type', 'button');
-	pinPic.style.width = 40;
-	pinPic.style.height = 40;
-	pinPic.setAttribute('draggable', false);	
-	pin.appendChild(pinPic);
+  var fragment = document.createDocumentFragment();
 
-	for (var i = 0; i < allOffers.length; i++) {
 // создаём метку
-	pin = document.createElement('button');
-	pinPic = document.createElement('img');
-	
+
+  for (var i = 0; i < allOffers.length; i++) {
+  var pin = document.createElement('button');
+  pin.className = 'map__pin';
+  pin.setAttribute('type', 'button');
+
 // стили метки
-	pinX = allOffers[i].location.x - 50;
-	pinY = allOffers[i].location.y - 82;
-	pin.style.left = this.pinX + 'px'
-	pin.style.top = this.pinY + 'px'
-	pinPic.src = allOffers[i].author.avatar;
-	pinPic.alt = allOffers[i].offer.title;
+	
+  var pinX = allOffers[i].location.x - 50;
+  var pinY = allOffers[i].location.y - 82;
+  pin.style.left = pinX + 'px'
+  pin.style.top = pinY + 'px'
+
+// добавляем в метку картинку со всеми стилями
+
+  var pinPic = document.createElement('img');
+  pinPic.src = allOffers[i].author.avatar;
+  pinPic.alt = allOffers[i].offer.title;
+  pinPic.style.width = 40;
+  pinPic.style.height = 40;
+  pinPic.setAttribute('draggable', false);	
+  pin.appendChild(pinPic);
 
 //выводим метку в html
-	fragment.appendChild(pin);
-	pinsBlock.appendChild(fragment);
-	}
 
-	return pinsBlock;
+  fragment.appendChild(pin);
+  pinsBlock.appendChild(fragment);
+  }
+  return pinsBlock;
 };
+
 // создаём блок map, убираем класс, создаём контейнер для меток
 
 var map = document.querySelector('.map');
