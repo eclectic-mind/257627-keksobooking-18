@@ -77,7 +77,7 @@ var generateOffersArray = function (n, citymap) {
   var result = [];
   var mapWidth = citymap.offsetWidth;
   for (var i = 0; i < n; i++) {
-     result.push(generateOffer(mapWidth));
+    result.push(generateOffer(mapWidth));
   }
   return result;
 };
