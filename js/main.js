@@ -43,27 +43,30 @@ var randomSort = function (arr) {
 
 // генерируем объект-объявление
 
-var generateOffer = function (citymapOffsetWidth) {
-author: {
-  avatar: getRandomImg(1, 8)
-  },
-offer: {
-  title: chooseRandom(TITLES),
-  address: getRandomInRange(0, citymapOffsetWidth) + ', ' + getRandomInRange(MIN_Y, MAX_Y),
-  price: getRandomInRange(MIN_PRICE, MAX_PRICE),
-  type: chooseRandom(HOUSES),
-  rooms: getRandomInRange(MIN_ROOMS, MAX_ROOMS),
-  guests: getRandomInRange(MIN_GUESTS, MAX_GUESTS),
-  checkin: chooseRandom(TIMECHECKS),
-  checkout: chooseRandom(TIMECHECKS),
-  features: randomSort(FEATURES),
-  description: chooseRandom(DESCRIPTIONS),
-  photos: randomSort(PICS)
-  },
-location: {
-  x: getRandomInRange(0, citymapOffsetWidth),
-  y: getRandomInRange(MIN_Y, MAX_Y)
-  }
+var generateOffer = function(citymapOffsetWidth) {
+  return {
+    author: { avatar: getRandomImg(1, 8) },
+    offer: {
+      title: chooseRandom(TITLES),
+      address:
+        getRandomInRange(0, citymapOffsetWidth) +
+        ", " +
+        getRandomInRange(MIN_Y, MAX_Y),
+      price: getRandomInRange(MIN_PRICE, MAX_PRICE),
+      type: chooseRandom(HOUSES),
+      rooms: getRandomInRange(MIN_ROOMS, MAX_ROOMS),
+      guests: getRandomInRange(MIN_GUESTS, MAX_GUESTS),
+      checkin: chooseRandom(TIMECHECKS),
+      checkout: chooseRandom(TIMECHECKS),
+      features: randomSort(FEATURES),
+      description: chooseRandom(DESCRIPTIONS),
+      photos: randomSort(PICS)
+    },
+    location: {
+      x: getRandomInRange(0, citymapOffsetWidth),
+      y: getRandomInRange(MIN_Y, MAX_Y)
+    }
+  };
 };
 
 //собираем массив из 8-ми таких объектов
