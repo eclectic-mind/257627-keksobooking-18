@@ -155,8 +155,9 @@ var disableAllForms = function (citymap, form, filters, fieldsets) {
   form.setAttribute('disabled', 'disabled');
   filters.classList.add('ad-form--disabled');
   filters.setAttribute('disabled', 'disabled');
-  fieldsets.forEach(function(item) {
-  item.setAttribute('disabled', 'disabled')});
+  fieldsets.forEach(function (item) {
+    item.setAttribute('disabled', 'disabled');
+  });
 };
 
 var activateAllForms = function (citymap, form, filters, fieldsets) {
@@ -166,8 +167,9 @@ var activateAllForms = function (citymap, form, filters, fieldsets) {
   form.removeAttribute('disabled');
   filters.classList.remove('ad-form--disabled');
   filters.removeAttribute('disabled');
-  fieldsets.forEach(function(item) {
-  item.removeAttribute('disabled')});
+  fieldsets.forEach(function (item) {
+    item.removeAttribute('disabled');
+ });
 };
 
 disableAllForms(map, adForm, mapFilters, allFieldsets);
