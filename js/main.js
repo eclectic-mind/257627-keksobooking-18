@@ -15,6 +15,9 @@ var MAX_ROOMS = 6;
 var MIN_PRICE = 1000;
 var MAX_PRICE = 8345;
 
+var PIN_WIDTH = 50;
+var PIN_HEIGHT = 70;
+
 // случайное число из диапазона
 
 var getRandomInRange = function (min, max) {
@@ -31,7 +34,7 @@ var chooseRandom = function (arr) {
 
 var getRandomImg = function (min, max) {
   var num = getRandomInRange(min, max);
-  return 'img/avatars/user/0' + num + '.png';
+  return 'img/avatars/user0' + num + '.png';
 };
 
 // случайная сортировка массива
@@ -96,8 +99,8 @@ var showLocation = function (allOffers, pinsBlock) {
 
     // стили метки
 
-    var pinX = allOffers[i].location.x - 50;
-    var pinY = allOffers[i].location.y - 82;
+    var pinX = allOffers[i].location.x - (PIN_WIDTH / 2);
+    var pinY = allOffers[i].location.y - PIN_HEIGHT;
     pin.style.left = pinX + 'px';
     pin.style.top = pinY + 'px';
 
@@ -106,8 +109,8 @@ var showLocation = function (allOffers, pinsBlock) {
     var pinPic = document.createElement('img');
     pinPic.src = allOffers[i].author.avatar;
     pinPic.alt = allOffers[i].offer.title;
-    pinPic.style.width = 40;
-    pinPic.style.height = 40;
+    pinPic.style.width = PIN_WIDTH + 'px';
+    pinPic.style.height = PIN_HEIGHT + 'px';
     pinPic.setAttribute('draggable', false);
     pin.appendChild(pinPic);
 
