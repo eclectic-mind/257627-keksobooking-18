@@ -169,7 +169,7 @@ var activateAllForms = function (citymap, form, filters, fieldsets) {
   filters.removeAttribute('disabled');
   fieldsets.forEach(function (item) {
     item.removeAttribute('disabled');
- });
+  });
 };
 
 disableAllForms(map, adForm, mapFilters, allFieldsets);
