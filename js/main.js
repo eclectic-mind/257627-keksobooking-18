@@ -15,6 +15,10 @@ var MAX_ROOMS = 6;
 var MIN_PRICE = 1000;
 var MAX_PRICE = 8345;
 
+var PIN_WIDTH = 50;
+var PIN_HEIGHT = 70;
+var AVATAR_SIZE = 40;
+
 // случайное число из диапазона
 
 var getRandomInRange = function (min, max) {
@@ -31,7 +35,7 @@ var chooseRandom = function (arr) {
 
 var getRandomImg = function (min, max) {
   var num = getRandomInRange(min, max);
-  return 'img/avatars/user/0' + num + '.png';
+  return 'img/avatars/user0' + num + '.png';
 };
 
 // случайная сортировка массива
@@ -96,8 +100,8 @@ var showLocation = function (allOffers, pinsBlock) {
 
     // стили метки
 
-    var pinX = allOffers[i].location.x - 50;
-    var pinY = allOffers[i].location.y - 82;
+    var pinX = allOffers[i].location.x - (PIN_WIDTH / 2);
+    var pinY = allOffers[i].location.y - PIN_HEIGHT;
     pin.style.left = pinX + 'px';
     pin.style.top = pinY + 'px';
 
@@ -106,8 +110,8 @@ var showLocation = function (allOffers, pinsBlock) {
     var pinPic = document.createElement('img');
     pinPic.src = allOffers[i].author.avatar;
     pinPic.alt = allOffers[i].offer.title;
-    pinPic.style.width = 40;
-    pinPic.style.height = 40;
+    pinPic.style.width = AVATAR_SIZE + 'px';
+    pinPic.style.height = AVATAR_SIZE + 'px';
     pinPic.setAttribute('draggable', false);
     pin.appendChild(pinPic);
 
@@ -122,7 +126,7 @@ var showLocation = function (allOffers, pinsBlock) {
 // создаём блок map, убираем класс, создаём контейнер для меток
 
 var map = document.querySelector('.map');
-map.classList.remove('.map--faded');
+// map.classList.remove('.map--faded');
 
 var pinsContainer = document.querySelector('.map__pins');
 
@@ -130,3 +134,41 @@ var pinsContainer = document.querySelector('.map__pins');
 
 var offers = generateOffersArray(8, map);
 showLocation(offers, pinsContainer);
+
+// активный и неактивный режимы
+
+var adForm = document.querySelector('.ad-form');
+var mapFilters = document.querySelector('.map__filters');
+var allFieldsets = document.querySelectorAll('fieldset');
+var control = document.querySelector('.map__pin--main');
+
+var disableAllForms = function (citymap, form, filters, fieldsets) {
+  citymap.classList.add('map--faded');
+  citymap.setAttribute('disabled', 'disabled');
+  form.classList.add('ad-form--disabled');
+  form.setAttribute('disabled', 'disabled');
+  filters.classList.add('ad-form--disabled');
+  filters.setAttribute('disabled', 'disabled');
+  fieldsets.forEach(function(item) {
+  item.setAttribute('disabled', 'disabled')});
+};
+
+var activateAllForms = function (citymap, form, filters, fieldsets) {
+  citymap.classList.remove('map--faded');
+  citymap.removeAttribute('disabled');
+  form.classList.remove('ad-form--disabled');
+  form.removeAttribute('disabled');
+  filters.classList.remove('ad-form--disabled');
+  filters.removeAttribute('disabled');
+  fieldsets.forEach(function(item) {
+  item.removeAttribute('disabled')});
+};
+
+disableAllForms(map, adForm, mapFilters, allFieldsets);
+
+control.addEventListener('mousedown', activateAllForms(map, adForm, mapFilters, allFieldsets));
+control.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === 13) {
+    activateAllForms(map, adForm, mapFilters, allFieldsets);
+  }
+});
