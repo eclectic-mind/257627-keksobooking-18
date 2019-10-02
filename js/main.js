@@ -17,6 +17,7 @@ var MAX_PRICE = 8345;
 
 var PIN_WIDTH = 50;
 var PIN_HEIGHT = 70;
+
 var AVATAR_SIZE = 40;
 
 // случайное число из диапазона
@@ -110,8 +111,13 @@ var showLocation = function (allOffers, pinsBlock) {
     var pinPic = document.createElement('img');
     pinPic.src = allOffers[i].author.avatar;
     pinPic.alt = allOffers[i].offer.title;
+
     pinPic.style.width = AVATAR_SIZE + 'px';
     pinPic.style.height = AVATAR_SIZE + 'px';
+
+    pinPic.style.width = PIN_WIDTH + 'px';
+    pinPic.style.height = PIN_HEIGHT + 'px';
+
     pinPic.setAttribute('draggable', false);
     pin.appendChild(pinPic);
 
