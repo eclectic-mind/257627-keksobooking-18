@@ -115,9 +115,6 @@ var showLocation = function (allOffers, pinsBlock) {
     pinPic.style.width = AVATAR_SIZE + 'px';
     pinPic.style.height = AVATAR_SIZE + 'px';
 
-    pinPic.style.width = PIN_WIDTH + 'px';
-    pinPic.style.height = PIN_HEIGHT + 'px';
-
     pinPic.setAttribute('draggable', false);
     pin.appendChild(pinPic);
 
@@ -180,3 +177,48 @@ control.addEventListener('keydown', function (evt) {
     activateAllForms(map, adForm, mapFilters, allFieldsets);
   }
 });
+
+// соотношение гостей и комнат
+
+var checkMaximumGuests = function (roomsQuantity, guestsQuantity) {
+  if (roomsQuantity <= 3) {
+    if (guestsQuantity >= 1 && guestsQuantity <= roomsQuantity) return true;
+  }
+  else return false;
+};
+
+// ловим количество комнат и гостей из полей
+
+var catchSelected = function (select) {
+  return select.options[select.options.selectedIndex].value;
+};
+
+/* var catchValueOnchange = function (elem) {
+  elem.addEventListener('change', function() {
+  var elemValue = catchSelected(this);
+  console.log(elemValue);
+  return elemValue;
+  });
+};
+*/
+
+var roomsField = document.querySelector('#housing-rooms');
+var guestsField = document.querySelector('#housing-guests');
+var roomsValue = 0;
+var guestsValue = 0;
+
+roomsField.addEventListener('change', function() {
+roomsValue = catchSelected(this);
+return roomsValue;
+});
+
+guestsField.addEventListener('change', function() {
+guestsValue = catchSelected(this);
+return guestsValue;
+});
+
+console.log('комнат ' + roomsValue + ', гостей ' + guestsValue);
+
+if (!checkMaximumGuests(roomsValue, guestsValue)) {
+  setCustomValidity();
+};
