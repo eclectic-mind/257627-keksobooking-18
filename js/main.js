@@ -216,15 +216,17 @@ control.addEventListener('keydown', function (evt) {
 
 var checkMaximumGuests = function (roomsQuantity, guestsQuantity) {
   if (roomsQuantity <= 3 && guestsQuantity >= 1 && guestsQuantity <= roomsQuantity) {
-    // console.log('гостей ' + guestsQuantity + ', комнат ' + roomsQuantity + ', всё ок!');
+    console.log('гостей ' + guestsQuantity + ', комнат ' + roomsQuantity + ', всё ок!');
     return true;
   }
   if (roomsQuantity === 100 && guestsQuantity === 0) {
-    // console.log('гостей ' + guestsQuantity + ', комнат ' + roomsQuantity + ', всё ок!');
-    return true;}
+    console.log('гостей ' + guestsQuantity + ', комнат ' + roomsQuantity + ', всё ок!');
+    return true;
+  }
   else {
-    // console.log('всё плохо!');
-    return false;}
+    console.log('всё плохо!');
+    return false;
+  }
 };
 
 // ловим количество комнат и гостей из полей основной формы
@@ -239,25 +241,17 @@ var roomsValue = 0;
 var guestsValue = 0;
 
 roomsField.addEventListener('change', function () {
-  roomsValue = catchSelected(this);
+  roomsValue = catchSelected(roomsField);
   if (!checkMaximumGuests(roomsValue, guestsValue)) {
-    // console.log('комнат: ' + roomsValue + ', гостей: ' + guestsValue);
+    console.log('комнат: ' + roomsValue + ', гостей: ' + guestsValue);
     roomsField.setCustomValidity('Количество комнат не соответствует количеству гостей!');
   }
-  return roomsValue;
 });
 
 guestsField.addEventListener('change', function () {
-  guestsValue = catchSelected(this);
+  guestsValue = catchSelected(guestsField);
   if (!checkMaximumGuests(roomsValue, guestsValue)) {
-    // console.log('комнат: ' + roomsValue + ', гостей: ' + guestsValue);
+    console.log('комнат: ' + roomsValue + ', гостей: ' + guestsValue);
     guestsField.setCustomValidity('Количество комнат не соответствует количеству гостей!');
   }
-  return guestsValue;
 });
-
-/* if (!checkMaximumGuests(roomsValue, guestsValue)) {
-  console.log('комнат: ' + roomsValue + ', гостей: ' + guestsValue);
-  roomsField.setCustomValidity('Количество комнат не соответствует количеству гостей!');
-};
-*/
