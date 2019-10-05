@@ -17,8 +17,17 @@ var MAX_PRICE = 8345;
 
 var PIN_WIDTH = 50;
 var PIN_HEIGHT = 70;
-
+var CONTROL_SIZE = 65;
+var CONTROL_SPIKE_HEIGHT = 22;
 var AVATAR_SIZE = 40;
+var MAP_HEIGHT = 750;
+
+var adForm = document.querySelector('.ad-form');
+var mapFilters = document.querySelector('.map__filters');
+var filtersSelect = document.querySelectorAll('.map__filter');
+var allFieldsets = document.querySelectorAll('fieldset');
+var control = document.querySelector('.map__pin--main');
+var addrField = document.querySelector('#address');
 
 // случайное число из диапазона
 
@@ -138,87 +147,119 @@ var pinsContainer = document.querySelector('.map__pins');
 var offers = generateOffersArray(8, map);
 showLocation(offers, pinsContainer);
 
+// вывод адреса по умолчанию
+
+var defaultX = map.offsetWidth / 2;
+var defaultY = MAP_HEIGHT / 2;
+var defaultAddress = defaultX + ', ' + defaultY;
+
+// вывод актуального адреса главной метки
+
+var currentX = defaultX;
+var currentY = defaultY + CONTROL_SPIKE_HEIGHT;
+var currentAddress = currentX + ', ' + currentY;
+
 // активный и неактивный режимы
 
-var adForm = document.querySelector('.ad-form');
-var mapFilters = document.querySelector('.map__filters');
-var allFieldsets = document.querySelectorAll('fieldset');
-var control = document.querySelector('.map__pin--main');
 
-var disableAllForms = function (citymap, form, filters, fieldsets) {
-  citymap.classList.add('map--faded');
-  citymap.setAttribute('disabled', 'disabled');
-  form.classList.add('ad-form--disabled');
-  form.setAttribute('disabled', 'disabled');
-  filters.classList.add('ad-form--disabled');
-  filters.setAttribute('disabled', 'disabled');
-  fieldsets.forEach(function (item) {
-    item.setAttribute('disabled', 'disabled');
-  });
-};
+map.setAttribute('disabled', 'disabled');
+mapFilters.classList.add('ad-form--disabled');
+mapFilters.setAttribute('disabled', 'disabled');
+filtersSelect.forEach(function (item) {
+  item.setAttribute('disabled', 'disabled');
+})
+allFieldsets.forEach(function (item) {
+  item.setAttribute('disabled', 'disabled');
+});
+addrField.value = defaultAddress;
 
-var activateAllForms = function (citymap, form, filters, fieldsets) {
+var activateAllForms = function (citymap, form, filters, filtSelects, fieldsets) {
+  addrField.value = currentAddress;
   citymap.classList.remove('map--faded');
   citymap.removeAttribute('disabled');
   form.classList.remove('ad-form--disabled');
   form.removeAttribute('disabled');
   filters.classList.remove('ad-form--disabled');
   filters.removeAttribute('disabled');
+  filtSelects.forEach(function (item) {
+    item.removeAttribute('disabled');
+  });
   fieldsets.forEach(function (item) {
     item.removeAttribute('disabled');
   });
 };
 
-disableAllForms(map, adForm, mapFilters, allFieldsets);
+var disactivateAllForms = function (citymap, form, filters, filtSelects, fieldsets) {
+  addrField.value = defaultAddress;
+  citymap.classList.add('map--faded');
+  citymap.setAttribute('disabled');
+  form.classList.add('ad-form--disabled');
+  form.setAttribute('disabled');
+  filters.classList.add('ad-form--disabled');
+  filters.setAttribute('disabled');
+  filtSelects.forEach(function (item) {
+    item.setAttribute('disabled');
+  });
+  fieldsets.forEach(function (item) {
+    item.settAttribute('disabled');
+  });
+};
 
-control.addEventListener('mousedown', activateAllForms(map, adForm, mapFilters, allFieldsets));
+control.addEventListener('mousedown', activateAllForms(map, adForm, mapFilters, filtersSelect, allFieldsets));
 control.addEventListener('keydown', function (evt) {
   if (evt.keyCode === 13) {
-    activateAllForms(map, adForm, mapFilters, allFieldsets);
+    activateAllForms(map, adForm, mapFilters, filtersSelect, allFieldsets);
   }
 });
 
 // соотношение гостей и комнат
 
 var checkMaximumGuests = function (roomsQuantity, guestsQuantity) {
-  if (roomsQuantity <= 3) {
-    if (guestsQuantity >= 1 && guestsQuantity <= roomsQuantity) return true;
+  if (roomsQuantity <= 3 && guestsQuantity >= 1 && guestsQuantity <= roomsQuantity) {
+    console.log('гостей ' + guestsQuantity + ', комнат ' + roomsQuantity + ', всё ок!');
+    return true;
   }
-  else return false;
+  if (roomsQuantity == 100 && guestsQuantity == 0) {
+        console.log('гостей ' + guestsQuantity + ', комнат ' + roomsQuantity + ', всё ок!');
+    return true;
+  }
+  else {
+    console.log('всё плохо!');
+    return false;
+  }
 };
 
-// ловим количество комнат и гостей из полей
+// ловим количество комнат и гостей из полей основной формы
 
 var catchSelected = function (select) {
   return select.options[select.options.selectedIndex].value;
 };
 
-/* var catchValueOnchange = function (elem) {
-  elem.addEventListener('change', function() {
-  var elemValue = catchSelected(this);
-  console.log(elemValue);
-  return elemValue;
-  });
-};
-*/
-
-var roomsField = document.querySelector('#housing-rooms');
-var guestsField = document.querySelector('#housing-guests');
+var roomsField = document.querySelector('#room_number');
+var guestsField = document.querySelector('#capacity');
 var roomsValue = 0;
 var guestsValue = 0;
 
 roomsField.addEventListener('change', function() {
-roomsValue = catchSelected(this);
-return roomsValue;
+  roomsValue = catchSelected(this);
+  if (!checkMaximumGuests(roomsValue, guestsValue)) {
+  console.log('комнат: ' + roomsValue + ', гостей: ' + guestsValue);
+  roomsField.setCustomValidity('Количество комнат не соответствует количеству гостей!');
+};
+  return roomsValue;
 });
 
 guestsField.addEventListener('change', function() {
-guestsValue = catchSelected(this);
-return guestsValue;
+  guestsValue = catchSelected(this);
+  if (!checkMaximumGuests(roomsValue, guestsValue)) {
+  console.log('комнат: ' + roomsValue + ', гостей: ' + guestsValue);
+  guestsField.setCustomValidity('Количество комнат не соответствует количеству гостей!');
+};
+  return guestsValue;
 });
 
-console.log('комнат ' + roomsValue + ', гостей ' + guestsValue);
-
-if (!checkMaximumGuests(roomsValue, guestsValue)) {
-  setCustomValidity();
+/* if (!checkMaximumGuests(roomsValue, guestsValue)) {
+  console.log('комнат: ' + roomsValue + ', гостей: ' + guestsValue);
+  roomsField.setCustomValidity('Количество комнат не соответствует количеству гостей!');
 };
+*/
