@@ -17,7 +17,7 @@ var MAX_PRICE = 8345;
 
 var PIN_WIDTH = 50;
 var PIN_HEIGHT = 70;
-var CONTROL_SIZE = 65;
+// var CONTROL_SIZE = 65;
 var CONTROL_SPIKE_HEIGHT = 22;
 var AVATAR_SIZE = 40;
 var MAP_HEIGHT = 750;
@@ -167,7 +167,7 @@ mapFilters.classList.add('ad-form--disabled');
 mapFilters.setAttribute('disabled', 'disabled');
 filtersSelect.forEach(function (item) {
   item.setAttribute('disabled', 'disabled');
-})
+});
 allFieldsets.forEach(function (item) {
   item.setAttribute('disabled', 'disabled');
 });
@@ -188,7 +188,7 @@ var activateAllForms = function (citymap, form, filters, filtSelects, fieldsets)
     item.removeAttribute('disabled');
   });
 };
-
+/*
 var disactivateAllForms = function (citymap, form, filters, filtSelects, fieldsets) {
   addrField.value = defaultAddress;
   citymap.classList.add('map--faded');
@@ -204,7 +204,7 @@ var disactivateAllForms = function (citymap, form, filters, filtSelects, fieldse
     item.settAttribute('disabled');
   });
 };
-
+*/
 control.addEventListener('mousedown', activateAllForms(map, adForm, mapFilters, filtersSelect, allFieldsets));
 control.addEventListener('keydown', function (evt) {
   if (evt.keyCode === 13) {
@@ -216,15 +216,15 @@ control.addEventListener('keydown', function (evt) {
 
 var checkMaximumGuests = function (roomsQuantity, guestsQuantity) {
   if (roomsQuantity <= 3 && guestsQuantity >= 1 && guestsQuantity <= roomsQuantity) {
-    console.log('гостей ' + guestsQuantity + ', комнат ' + roomsQuantity + ', всё ок!');
+    // console.log('гостей ' + guestsQuantity + ', комнат ' + roomsQuantity + ', всё ок!');
     return true;
   }
-  if (roomsQuantity == 100 && guestsQuantity == 0) {
-        console.log('гостей ' + guestsQuantity + ', комнат ' + roomsQuantity + ', всё ок!');
+  if (roomsQuantity === 100 && guestsQuantity === 0) {
+    // console.log('гостей ' + guestsQuantity + ', комнат ' + roomsQuantity + ', всё ок!');
     return true;
   }
   else {
-    console.log('всё плохо!');
+    // console.log('всё плохо!');
     return false;
   }
 };
@@ -240,21 +240,21 @@ var guestsField = document.querySelector('#capacity');
 var roomsValue = 0;
 var guestsValue = 0;
 
-roomsField.addEventListener('change', function() {
+roomsField.addEventListener('change', function () {
   roomsValue = catchSelected(this);
   if (!checkMaximumGuests(roomsValue, guestsValue)) {
-  console.log('комнат: ' + roomsValue + ', гостей: ' + guestsValue);
-  roomsField.setCustomValidity('Количество комнат не соответствует количеству гостей!');
-};
+    // console.log('комнат: ' + roomsValue + ', гостей: ' + guestsValue);
+    roomsField.setCustomValidity('Количество комнат не соответствует количеству гостей!');
+  }
   return roomsValue;
 });
 
-guestsField.addEventListener('change', function() {
+guestsField.addEventListener('change', function () {
   guestsValue = catchSelected(this);
   if (!checkMaximumGuests(roomsValue, guestsValue)) {
-  console.log('комнат: ' + roomsValue + ', гостей: ' + guestsValue);
-  guestsField.setCustomValidity('Количество комнат не соответствует количеству гостей!');
-};
+    // console.log('комнат: ' + roomsValue + ', гостей: ' + guestsValue);
+    guestsField.setCustomValidity('Количество комнат не соответствует количеству гостей!');
+  }
   return guestsValue;
 });
 
