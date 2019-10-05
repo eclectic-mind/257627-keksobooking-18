@@ -216,14 +216,14 @@ control.addEventListener('keydown', function (evt) {
 
 var checkMaximumGuests = function (roomsQuantity, guestsQuantity) {
   if (roomsQuantity <= 3 && guestsQuantity >= 1 && guestsQuantity <= roomsQuantity) {
-    //console.log('гостей ' + guestsQuantity + ', комнат ' + roomsQuantity + ', всё ок!');
+    // console.log('гостей ' + guestsQuantity + ', комнат ' + roomsQuantity + ', всё ок!');
     return true;
   }
   if (roomsQuantity === 100 && guestsQuantity === 0) {
-    //console.log('гостей ' + guestsQuantity + ', комнат ' + roomsQuantity + ', всё ок!');
+    // console.log('гостей ' + guestsQuantity + ', комнат ' + roomsQuantity + ', всё ок!');
     return true;
   } else {
-    //console.log('всё плохо!');
+    // console.log('всё плохо!');
     return false;
   }
 };
@@ -242,7 +242,7 @@ var guestsValue = 0;
 roomsField.addEventListener('change', function () {
   roomsValue = catchSelected(roomsField);
   if (!checkMaximumGuests(roomsValue, guestsValue)) {
-    //console.log('комнат: ' + roomsValue + ', гостей: ' + guestsValue);
+    // console.log('комнат: ' + roomsValue + ', гостей: ' + guestsValue);
     roomsField.setCustomValidity('Количество комнат не соответствует количеству гостей!');
   }
 });
@@ -250,7 +250,7 @@ roomsField.addEventListener('change', function () {
 guestsField.addEventListener('change', function () {
   guestsValue = catchSelected(guestsField);
   if (!checkMaximumGuests(roomsValue, guestsValue)) {
-    //console.log('комнат: ' + roomsValue + ', гостей: ' + guestsValue);
+    // console.log('комнат: ' + roomsValue + ', гостей: ' + guestsValue);
     guestsField.setCustomValidity('Количество комнат не соответствует количеству гостей!');
   }
 });
