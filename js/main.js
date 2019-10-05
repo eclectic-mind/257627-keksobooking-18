@@ -222,11 +222,11 @@ var checkMaximumGuests = function (roomsQuantity, guestsQuantity) {
   if (roomsQuantity === 100 && guestsQuantity === 0) {
     // console.log('гостей ' + guestsQuantity + ', комнат ' + roomsQuantity + ', всё ок!');
     return true;
-  }
+    }
   else {
     // console.log('всё плохо!');
     return false;
-  }
+    }
 };
 
 // ловим количество комнат и гостей из полей основной формы
