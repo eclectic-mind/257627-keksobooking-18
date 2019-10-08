@@ -248,10 +248,10 @@ var checkMaximumGuests = function (roomsQuantity, guestsQuantity) {
 var validate = function (fieldOneValue, fieldTwoValue, field, message) {
   if (!checkMaximumGuests(fieldOneValue, fieldTwoValue)) {
     field.setCustomValidity(message);
-    console.log('ошибка');
+    // console.log('ошибка');
   } else {
     field.setCustomValidity('');
-    console.log('всё ок');
+    // console.log('всё ок');
   }
 };
 
