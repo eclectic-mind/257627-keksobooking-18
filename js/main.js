@@ -173,21 +173,22 @@ allFieldsets.forEach(function (item) {
 });
 addrField.value = defaultAddress;
 
-var activateAllForms = function (citymap, form, filters, filtSelects, fieldsets) {
+var activateAllForms = function () {
   addrField.value = currentAddress;
-  citymap.classList.remove('map--faded');
-  citymap.removeAttribute('disabled');
-  form.classList.remove('ad-form--disabled');
-  form.removeAttribute('disabled');
-  filters.classList.remove('ad-form--disabled');
-  filters.removeAttribute('disabled');
-  filtSelects.forEach(function (item) {
+  map.classList.remove('map--faded');
+  map.removeAttribute('disabled');
+  adForm.classList.remove('ad-form--disabled');
+  adForm.removeAttribute('disabled');
+  mapFilters.classList.remove('ad-form--disabled');
+  mapFilters.removeAttribute('disabled');
+  filtersSelect.forEach(function (item) {
     item.removeAttribute('disabled');
   });
-  fieldsets.forEach(function (item) {
+  allFieldsets.forEach(function (item) {
     item.removeAttribute('disabled');
   });
 };
+
 /*
 var disactivateAllForms = function (citymap, form, filters, filtSelects, fieldsets) {
   addrField.value = defaultAddress;
@@ -205,21 +206,56 @@ var disactivateAllForms = function (citymap, form, filters, filtSelects, fieldse
   });
 };
 */
-control.addEventListener('mousedown', activateAllForms(map, adForm, mapFilters, filtersSelect, allFieldsets));
+control.addEventListener('mousedown', function (evt) {activateAllForms()}, false);
 control.addEventListener('keydown', function (evt) {
   if (evt.keyCode === 13) {
-    activateAllForms(map, adForm, mapFilters, filtersSelect, allFieldsets);
+    activateAllForms();
   }
 });
 
 // соотношение гостей и комнат
 
+var checkMaximumGuests = function (rvalue, gvalue) {
+  if (rvalue === 100 && gvalue != 0) {
+    return guestsField.setCustomValidity('Количество комнат не соответствует количеству гостей!');
+  }
+    if (rvalue === 1 && gvalue != 1) {
+    return guestsField.setCustomValidity('Количество комнат не соответствует количеству гостей!');
+  }
+    if (rvalue === 2 && gvalue < 1) {
+    return guestsField.setCustomValidity('Количество комнат не соответствует количеству гостей!');
+  }
+    if (rvalue === 2 && gvalue > 2) {
+    return guestsField.setCustomValidity('Количество комнат не соответствует количеству гостей!');
+  }
+    if (rvalue === 3 && gvalue < 1) {
+    return guestsField.setCustomValidity('Количество комнат не соответствует количеству гостей!');
+  }
+    if (rvalue === 3 && gvalue > 3) {
+    return guestsField.setCustomValidity('Количество комнат не соответствует количеству гостей!');
+  }
+};
+
+/*
+var checkMaximumGuests = function (roomsQuantity, guestsQuantity) {
+  if (roomsQuantity === 100 && guestsQuantity === 0) return true;
+  if (roomsQuantity === 1 && guestsQuantity === 1) return true;
+  if (roomsQuantity === 2 && guestsQuantity === 2) return true;
+  if (roomsQuantity === 2 && guestsQuantity === 1) return true;
+  if (roomsQuantity === 3 && guestsQuantity === 3) return true;
+  if (roomsQuantity === 3 && guestsQuantity === 2) return true;
+  if (roomsQuantity === 3 && guestsQuantity === 1) return true;
+  else return false;
+};
+*/
+
+/*
 var checkMaximumGuests = function (roomsQuantity, guestsQuantity) {
   if (roomsQuantity <= 3 && guestsQuantity >= 1 && guestsQuantity <= roomsQuantity) {
     // console.log('гостей ' + guestsQuantity + ', комнат ' + roomsQuantity + ', всё ок!');
     return true;
   }
-  if (roomsQuantity === 100 && guestsQuantity === 0) {
+  else if (roomsQuantity === 100 && guestsQuantity === 0) {
     // console.log('гостей ' + guestsQuantity + ', комнат ' + roomsQuantity + ', всё ок!');
     return true;
   } else {
@@ -227,30 +263,36 @@ var checkMaximumGuests = function (roomsQuantity, guestsQuantity) {
     return false;
   }
 };
+*/
 
 // ловим количество комнат и гостей из полей основной формы
 
-var catchSelected = function (select) {
+/* var catchSelected = function (select) {
   return select.options[select.options.selectedIndex].value;
 };
+*/
 
 var roomsField = document.querySelector('#room_number');
 var guestsField = document.querySelector('#capacity');
-var roomsValue = 0;
-var guestsValue = 0;
+var roomsValue = roomsField.value;
+console.log(roomsValue);
+
+// как вариант -
+// var roomsValue = catchSelected(roomsField);
+
+var guestsValue = guestsField.value;
+console.log(guestsValue);
 
 roomsField.addEventListener('change', function () {
-  roomsValue = catchSelected(roomsField);
-  if (!checkMaximumGuests(roomsValue, guestsValue)) {
-    // console.log('комнат: ' + roomsValue + ', гостей: ' + guestsValue);
-    roomsField.setCustomValidity('Количество комнат не соответствует количеству гостей!');
-  }
+  roomsValue = roomsField.value;
+  console.log('комнат ' + roomsValue);
+  return roomsValue;
 });
 
 guestsField.addEventListener('change', function () {
-  guestsValue = catchSelected(guestsField);
-  if (!checkMaximumGuests(roomsValue, guestsValue)) {
-    // console.log('комнат: ' + roomsValue + ', гостей: ' + guestsValue);
-    guestsField.setCustomValidity('Количество комнат не соответствует количеству гостей!');
-  }
+  guestsValue = guestsField.value;
+    console.log('гостей ' + guestsValue);
+  return guestsValue;
 });
+
+checkMaximumGuests(roomsValue, guestsValue);
