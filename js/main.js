@@ -239,11 +239,9 @@ var checkMaximumGuests = function (roomsQuantity, guestsQuantity) {
     if (guestsQuantity === 0) {
       return true;
     }
-  }
-  else if (guestsQuantity <= roomsQuantity) {
+  } else if (guestsQuantity <= roomsQuantity) {
     return true;
-  }
-  else {
+  } else {
     return false;
   }
 };
