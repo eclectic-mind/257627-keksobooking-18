@@ -206,7 +206,9 @@ var disactivateAllForms = function (citymap, form, filters, filtSelects, fieldse
   });
 };
 */
-control.addEventListener('mousedown', function (evt) {activateAllForms()}, false);
+control.addEventListener('mousedown', function () {
+  activateAllForms();
+  }, false);
 control.addEventListener('keydown', function (evt) {
   if (evt.keyCode === 13) {
     activateAllForms();
@@ -216,22 +218,22 @@ control.addEventListener('keydown', function (evt) {
 // соотношение гостей и комнат
 
 var checkMaximumGuests = function (rvalue, gvalue) {
-  if (rvalue === 100 && gvalue != 0) {
+  if (rvalue === 100 && gvalue !== 0) {
     return guestsField.setCustomValidity('Количество комнат не соответствует количеству гостей!');
   }
-    if (rvalue === 1 && gvalue != 1) {
+  if (rvalue === 1 && gvalue !== 1) {
     return guestsField.setCustomValidity('Количество комнат не соответствует количеству гостей!');
   }
-    if (rvalue === 2 && gvalue < 1) {
+  if (rvalue === 2 && gvalue < 1) {
     return guestsField.setCustomValidity('Количество комнат не соответствует количеству гостей!');
   }
-    if (rvalue === 2 && gvalue > 2) {
+  if (rvalue === 2 && gvalue > 2) {
     return guestsField.setCustomValidity('Количество комнат не соответствует количеству гостей!');
   }
-    if (rvalue === 3 && gvalue < 1) {
+  if (rvalue === 3 && gvalue < 1) {
     return guestsField.setCustomValidity('Количество комнат не соответствует количеству гостей!');
   }
-    if (rvalue === 3 && gvalue > 3) {
+  if (rvalue === 3 && gvalue > 3) {
     return guestsField.setCustomValidity('Количество комнат не соответствует количеству гостей!');
   }
 };
@@ -275,23 +277,23 @@ var checkMaximumGuests = function (roomsQuantity, guestsQuantity) {
 var roomsField = document.querySelector('#room_number');
 var guestsField = document.querySelector('#capacity');
 var roomsValue = roomsField.value;
-console.log(roomsValue);
+// console.log(roomsValue);
 
 // как вариант -
 // var roomsValue = catchSelected(roomsField);
 
 var guestsValue = guestsField.value;
-console.log(guestsValue);
+// console.log(guestsValue);
 
 roomsField.addEventListener('change', function () {
   roomsValue = roomsField.value;
-  console.log('комнат ' + roomsValue);
+  // console.log('комнат ' + roomsValue);
   return roomsValue;
 });
 
 guestsField.addEventListener('change', function () {
   guestsValue = guestsField.value;
-    console.log('гостей ' + guestsValue);
+  // console.log('гостей ' + guestsValue);
   return guestsValue;
 });
 
