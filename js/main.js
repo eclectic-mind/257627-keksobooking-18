@@ -238,10 +238,8 @@ var checkMaximumGuests = function (roomsQuantity, guestsQuantity) {
   if (roomsQuantity === 100) {
     if (guestsQuantity === 0) return true;
   }
-  else {
-    if (guestsQuantity <= roomsQuantity) return true;
-    else return false;
-  }
+  else if (guestsQuantity <= roomsQuantity) return true;
+  else return false;
 };
 
 
