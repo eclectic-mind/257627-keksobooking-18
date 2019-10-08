@@ -208,7 +208,7 @@ var disactivateAllForms = function (citymap, form, filters, filtSelects, fieldse
 */
 control.addEventListener('mousedown', function () {
   activateAllForms();
-  }, false);
+}, false);
 control.addEventListener('keydown', function (evt) {
   if (evt.keyCode === 13) {
     activateAllForms();
@@ -217,39 +217,43 @@ control.addEventListener('keydown', function (evt) {
 
 // соотношение гостей и комнат
 
+/*
 var checkMaximumGuests = function (rvalue, gvalue) {
-  if (rvalue === 100 && gvalue !== 0) {
-    return guestsField.setCustomValidity('Количество комнат не соответствует количеству гостей!');
+  if ((rvalue === 100 && gvalue !== 0) || (rvalue === 1 && gvalue !== 1) || (rvalue === 2 && gvalue < 1) || (rvalue === 2 && gvalue > 2) || (rvalue === 3 && gvalue < 1) || (rvalue === 3 && gvalue > 3)) {
+    return false;
   }
-  if (rvalue === 1 && gvalue !== 1) {
-    return guestsField.setCustomValidity('Количество комнат не соответствует количеству гостей!');
-  }
-  if (rvalue === 2 && gvalue < 1) {
-    return guestsField.setCustomValidity('Количество комнат не соответствует количеству гостей!');
-  }
-  if (rvalue === 2 && gvalue > 2) {
-    return guestsField.setCustomValidity('Количество комнат не соответствует количеству гостей!');
-  }
-  if (rvalue === 3 && gvalue < 1) {
-    return guestsField.setCustomValidity('Количество комнат не соответствует количеству гостей!');
-  }
-  if (rvalue === 3 && gvalue > 3) {
-    return guestsField.setCustomValidity('Количество комнат не соответствует количеству гостей!');
-  }
+  else return true;
 };
+*/
 
 /*
 var checkMaximumGuests = function (roomsQuantity, guestsQuantity) {
   if (roomsQuantity === 100 && guestsQuantity === 0) return true;
-  if (roomsQuantity === 1 && guestsQuantity === 1) return true;
-  if (roomsQuantity === 2 && guestsQuantity === 2) return true;
-  if (roomsQuantity === 2 && guestsQuantity === 1) return true;
-  if (roomsQuantity === 3 && guestsQuantity === 3) return true;
-  if (roomsQuantity === 3 && guestsQuantity === 2) return true;
-  if (roomsQuantity === 3 && guestsQuantity === 1) return true;
+  else if (roomsQuantity >= guestsQuantity) return true;
   else return false;
 };
 */
+
+var checkMaximumGuests = function (roomsQuantity, guestsQuantity) {
+  if (roomsQuantity === 100) {
+    if (guestsQuantity === 0) return true;
+  }
+  else {
+    if (guestsQuantity <= roomsQuantity) return true;
+    else return false;
+  }
+};
+
+
+var validate = function (fieldOneValue, fieldTwoValue, field, message) {
+  if (!checkMaximumGuests(fieldOneValue, fieldTwoValue)) {
+    field.setCustomValidity(message);
+    console.log('ошибка');
+  } else {
+    field.setCustomValidity('');
+    console.log('всё ок');
+  }
+};
 
 /*
 var checkMaximumGuests = function (roomsQuantity, guestsQuantity) {
@@ -297,4 +301,4 @@ guestsField.addEventListener('change', function () {
   return guestsValue;
 });
 
-checkMaximumGuests(roomsValue, guestsValue);
+validate(roomsValue, guestsValue, guestsField, 'Количество комнат не соответствует количеству гостей!');
