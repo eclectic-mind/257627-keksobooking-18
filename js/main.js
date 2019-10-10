@@ -17,10 +17,12 @@ var MAX_PRICE = 8345;
 
 var PIN_WIDTH = 50;
 var PIN_HEIGHT = 70;
-// var CONTROL_SIZE = 65;
+var CONTROL_SIZE = 65;
 var CONTROL_SPIKE_HEIGHT = 22;
 var AVATAR_SIZE = 40;
 var MAP_HEIGHT = 750;
+
+var ENTER_KEYCODE = 13;
 
 var adForm = document.querySelector('.ad-form');
 var mapFilters = document.querySelector('.map__filters');
@@ -28,6 +30,27 @@ var filtersSelect = document.querySelectorAll('.map__filter');
 var allFieldsets = document.querySelectorAll('fieldset');
 var control = document.querySelector('.map__pin--main');
 var addrField = document.querySelector('#address');
+var roomsField = document.querySelector('#room_number');
+var guestsField = document.querySelector('#capacity');
+
+
+// создаём блок map, убираем класс, создаём контейнер для меток
+
+var map = document.querySelector('.map');
+var pinsContainer = document.querySelector('.map__pins');
+
+// изначально неактивный режим
+
+map.setAttribute('disabled', 'disabled');
+mapFilters.classList.add('ad-form--disabled');
+mapFilters.setAttribute('disabled', 'disabled');
+filtersSelect.forEach(function (item) {
+  item.setAttribute('disabled', 'disabled');
+});
+allFieldsets.forEach(function (item) {
+  item.setAttribute('disabled', 'disabled');
+});
+addrField.value = defaultAddress;
 
 // случайное число из диапазона
 
@@ -135,43 +158,31 @@ var showLocation = function (allOffers, pinsBlock) {
   return pinsBlock;
 };
 
-// создаём блок map, убираем класс, создаём контейнер для меток
-
-var map = document.querySelector('.map');
-// map.classList.remove('.map--faded');
-
-var pinsContainer = document.querySelector('.map__pins');
-
 // выводим метки
 
 var offers = generateOffersArray(8, map);
 showLocation(offers, pinsContainer);
 
-// вывод адреса по умолчанию
+// генерируем строку адреса
 
-var defaultX = map.offsetWidth / 2;
-var defaultY = MAP_HEIGHT / 2;
-var defaultAddress = defaultX + ', ' + defaultY;
+var writeAddress = function (x, y) {
+  return x.toString() + ', ' + y.toString();
+};
 
-// вывод актуального адреса главной метки
+// выводим адрес по умолчанию
+
+var defaultX = CONTROL_SIZE / 2;
+var defaultY = CONTROL_SIZE / 2;
+var defaultAddress = writeAddress(defaultX, defaultY);
+
+// вывод актуального адреса контролького пина - будет дописано позже в соответствии с ТЗ,
+// когда мы начнём двигать этот пин и пересчитывать его координаты, а пока так
 
 var currentX = defaultX;
 var currentY = defaultY + CONTROL_SPIKE_HEIGHT;
-var currentAddress = currentX + ', ' + currentY;
+var currentAddress = writeAddress(currentX, currentY);
 
-// активный и неактивный режимы
-
-
-map.setAttribute('disabled', 'disabled');
-mapFilters.classList.add('ad-form--disabled');
-mapFilters.setAttribute('disabled', 'disabled');
-filtersSelect.forEach(function (item) {
-  item.setAttribute('disabled', 'disabled');
-});
-allFieldsets.forEach(function (item) {
-  item.setAttribute('disabled', 'disabled');
-});
-addrField.value = defaultAddress;
+// активируем страницу
 
 var activateAllForms = function () {
   addrField.value = currentAddress;
@@ -189,7 +200,8 @@ var activateAllForms = function () {
   });
 };
 
-/*
+/* дезактивация страницы - пригодится позже
+
 var disactivateAllForms = function (citymap, form, filters, filtSelects, fieldsets) {
   addrField.value = defaultAddress;
   citymap.classList.add('map--faded');
@@ -206,101 +218,31 @@ var disactivateAllForms = function (citymap, form, filters, filtSelects, fieldse
   });
 };
 */
-control.addEventListener('mousedown', function () {
-  activateAllForms();
-}, false);
+
+// валидация гостей/комнат
+
+var checkGuests = function () {
+  var selectedRooms = parseInt(roomsField.value);
+  var selectedGuests = parseInt(guestsField.value);
+  var errMsg = '';
+  if (selectedGuests > selectedRooms || (selectedRooms === 100 && selectedGuests !== 0)) {
+    errMsg = 'Количество гостей не соответствует выбранному количеству комнат';
+  };
+  guestsField.setCustomValidity(errMsg);
+};
+
+// добавляем обработчик на контрольный пин для активации страницы
+
+control.addEventListener('mousedown', activateAllForms);
 control.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === 13) {
+  if (evt.keyCode === ENTER_KEYCODE) {
     activateAllForms();
   }
 });
 
-// соотношение гостей и комнат
+// проверяем, не слишком ли много гостей
 
-/*
-var checkMaximumGuests = function (rvalue, gvalue) {
-  if ((rvalue === 100 && gvalue !== 0) || (rvalue === 1 && gvalue !== 1) || (rvalue === 2 && gvalue < 1) || (rvalue === 2 && gvalue > 2) || (rvalue === 3 && gvalue < 1) || (rvalue === 3 && gvalue > 3)) {
-    return false;
-  }
-  else return true;
-};
-*/
+roomsField.addEventListener('change', checkGuests);
+guestsField.addEventListener('change', checkGuests);
 
-/*
-var checkMaximumGuests = function (roomsQuantity, guestsQuantity) {
-  if (roomsQuantity === 100 && guestsQuantity === 0) return true;
-  else if (roomsQuantity >= guestsQuantity) return true;
-  else return false;
-};
-*/
-
-var checkMaximumGuests = function (roomsQuantity, guestsQuantity) {
-  if (roomsQuantity === 100) {
-    if (guestsQuantity === 0) {
-      return true;
-    }
-  } else if (guestsQuantity <= roomsQuantity) {
-    return true;
-  } else {
-    return false;
-  }
-};
-
-
-var validate = function (fieldOneValue, fieldTwoValue, field, message) {
-  if (!checkMaximumGuests(fieldOneValue, fieldTwoValue)) {
-    field.setCustomValidity(message);
-    // console.log('ошибка');
-  } else {
-    field.setCustomValidity('');
-    // console.log('всё ок');
-  }
-};
-
-/*
-var checkMaximumGuests = function (roomsQuantity, guestsQuantity) {
-  if (roomsQuantity <= 3 && guestsQuantity >= 1 && guestsQuantity <= roomsQuantity) {
-    // console.log('гостей ' + guestsQuantity + ', комнат ' + roomsQuantity + ', всё ок!');
-    return true;
-  }
-  else if (roomsQuantity === 100 && guestsQuantity === 0) {
-    // console.log('гостей ' + guestsQuantity + ', комнат ' + roomsQuantity + ', всё ок!');
-    return true;
-  } else {
-    // console.log('всё плохо!');
-    return false;
-  }
-};
-*/
-
-// ловим количество комнат и гостей из полей основной формы
-
-/* var catchSelected = function (select) {
-  return select.options[select.options.selectedIndex].value;
-};
-*/
-
-var roomsField = document.querySelector('#room_number');
-var guestsField = document.querySelector('#capacity');
-var roomsValue = roomsField.value;
-// console.log(roomsValue);
-
-// как вариант -
-// var roomsValue = catchSelected(roomsField);
-
-var guestsValue = guestsField.value;
-// console.log(guestsValue);
-
-roomsField.addEventListener('change', function () {
-  roomsValue = roomsField.value;
-  // console.log('комнат ' + roomsValue);
-  return roomsValue;
-});
-
-guestsField.addEventListener('change', function () {
-  guestsValue = guestsField.value;
-  // console.log('гостей ' + guestsValue);
-  return guestsValue;
-});
-
-validate(roomsValue, guestsValue, guestsField, 'Количество комнат не соответствует количеству гостей!');
+checkGuests();
