@@ -20,7 +20,7 @@ var PIN_HEIGHT = 70;
 var CONTROL_SIZE = 65;
 var CONTROL_SPIKE_HEIGHT = 22;
 var AVATAR_SIZE = 40;
-var MAP_HEIGHT = 750;
+// var MAP_HEIGHT = 750;
 
 var ENTER_KEYCODE = 13;
 
@@ -222,12 +222,12 @@ var disactivateAllForms = function (citymap, form, filters, filtSelects, fieldse
 // валидация гостей/комнат
 
 var checkGuests = function () {
-  var selectedRooms = parseInt(roomsField.value);
-  var selectedGuests = parseInt(guestsField.value);
+  var selectedRooms = parseInt(roomsField.value, 10);
+  var selectedGuests = parseInt(guestsField.value, 10);
   var errMsg = '';
   if (selectedGuests > selectedRooms || (selectedRooms === 100 && selectedGuests !== 0)) {
     errMsg = 'Количество гостей не соответствует выбранному количеству комнат';
-  };
+  }
   guestsField.setCustomValidity(errMsg);
 };
 
