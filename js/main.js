@@ -17,6 +17,40 @@ var MAX_PRICE = 8345;
 
 var PIN_WIDTH = 50;
 var PIN_HEIGHT = 70;
+var CONTROL_SIZE = 65;
+var CONTROL_SPIKE_HEIGHT = 22;
+var AVATAR_SIZE = 40;
+// var MAP_HEIGHT = 750;
+
+var ENTER_KEYCODE = 13;
+
+var adForm = document.querySelector('.ad-form');
+var mapFilters = document.querySelector('.map__filters');
+var filtersSelect = document.querySelectorAll('.map__filter');
+var allFieldsets = document.querySelectorAll('fieldset');
+var control = document.querySelector('.map__pin--main');
+var addrField = document.querySelector('#address');
+var roomsField = document.querySelector('#room_number');
+var guestsField = document.querySelector('#capacity');
+
+
+// создаём блок map, убираем класс, создаём контейнер для меток
+
+var map = document.querySelector('.map');
+var pinsContainer = document.querySelector('.map__pins');
+
+// изначально неактивный режим
+
+map.setAttribute('disabled', 'disabled');
+mapFilters.classList.add('ad-form--disabled');
+mapFilters.setAttribute('disabled', 'disabled');
+filtersSelect.forEach(function (item) {
+  item.setAttribute('disabled', 'disabled');
+});
+allFieldsets.forEach(function (item) {
+  item.setAttribute('disabled', 'disabled');
+});
+addrField.value = defaultAddress;
 
 // случайное число из диапазона
 
@@ -109,8 +143,10 @@ var showLocation = function (allOffers, pinsBlock) {
     var pinPic = document.createElement('img');
     pinPic.src = allOffers[i].author.avatar;
     pinPic.alt = allOffers[i].offer.title;
-    pinPic.style.width = PIN_WIDTH + 'px';
-    pinPic.style.height = PIN_HEIGHT + 'px';
+
+    pinPic.style.width = AVATAR_SIZE + 'px';
+    pinPic.style.height = AVATAR_SIZE + 'px';
+
     pinPic.setAttribute('draggable', false);
     pin.appendChild(pinPic);
 
@@ -122,14 +158,91 @@ var showLocation = function (allOffers, pinsBlock) {
   return pinsBlock;
 };
 
-// создаём блок map, убираем класс, создаём контейнер для меток
-
-var map = document.querySelector('.map');
-map.classList.remove('.map--faded');
-
-var pinsContainer = document.querySelector('.map__pins');
-
 // выводим метки
 
 var offers = generateOffersArray(8, map);
 showLocation(offers, pinsContainer);
+
+// генерируем строку адреса
+
+var writeAddress = function (x, y) {
+  return x.toString() + ', ' + y.toString();
+};
+
+// выводим адрес по умолчанию
+
+var defaultX = CONTROL_SIZE / 2;
+var defaultY = CONTROL_SIZE / 2;
+var defaultAddress = writeAddress(defaultX, defaultY);
+
+// вывод актуального адреса контролького пина - будет дописано позже в соответствии с ТЗ,
+// когда мы начнём двигать этот пин и пересчитывать его координаты, а пока так
+
+var currentX = defaultX;
+var currentY = defaultY + CONTROL_SPIKE_HEIGHT;
+var currentAddress = writeAddress(currentX, currentY);
+
+// активируем страницу
+
+var activateAllForms = function () {
+  addrField.value = currentAddress;
+  map.classList.remove('map--faded');
+  map.removeAttribute('disabled');
+  adForm.classList.remove('ad-form--disabled');
+  adForm.removeAttribute('disabled');
+  mapFilters.classList.remove('ad-form--disabled');
+  mapFilters.removeAttribute('disabled');
+  filtersSelect.forEach(function (item) {
+    item.removeAttribute('disabled');
+  });
+  allFieldsets.forEach(function (item) {
+    item.removeAttribute('disabled');
+  });
+};
+
+/* дезактивация страницы - пригодится позже
+
+var disactivateAllForms = function (citymap, form, filters, filtSelects, fieldsets) {
+  addrField.value = defaultAddress;
+  citymap.classList.add('map--faded');
+  citymap.setAttribute('disabled');
+  form.classList.add('ad-form--disabled');
+  form.setAttribute('disabled');
+  filters.classList.add('ad-form--disabled');
+  filters.setAttribute('disabled');
+  filtSelects.forEach(function (item) {
+    item.setAttribute('disabled');
+  });
+  fieldsets.forEach(function (item) {
+    item.settAttribute('disabled');
+  });
+};
+*/
+
+// валидация гостей/комнат
+
+var checkGuests = function () {
+  var selectedRooms = parseInt(roomsField.value, 10);
+  var selectedGuests = parseInt(guestsField.value, 10);
+  var errMsg = '';
+  if (selectedGuests > selectedRooms || (selectedRooms === 100 && selectedGuests !== 0)) {
+    errMsg = 'Количество гостей не соответствует выбранному количеству комнат';
+  }
+  guestsField.setCustomValidity(errMsg);
+};
+
+// добавляем обработчик на контрольный пин для активации страницы
+
+control.addEventListener('mousedown', activateAllForms);
+control.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    activateAllForms();
+  }
+});
+
+// проверяем, не слишком ли много гостей
+
+roomsField.addEventListener('change', checkGuests);
+guestsField.addEventListener('change', checkGuests);
+
+checkGuests();
