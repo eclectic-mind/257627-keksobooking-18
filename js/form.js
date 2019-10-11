@@ -2,7 +2,7 @@
 
 (function () {
 
-// валидация гостей/комнат
+  // валидация гостей/комнат
 
   window.checkGuests = function () {
     var selectedRooms = parseInt(window.globals.roomsField.value, 10);
@@ -16,8 +16,8 @@
 
   // проверяем, не слишком ли много гостей
 
-  window.globals.roomsField.addEventListener('change', checkGuests);
-  window.globals.guestsField.addEventListener('change', checkGuests);
+  window.globals.roomsField.addEventListener('change', window.checkGuests);
+  window.globals.guestsField.addEventListener('change', window.checkGuests);
 
   window.checkGuests();
 

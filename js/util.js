@@ -66,7 +66,7 @@
     return x.toString() + ', ' + y.toString();
   };
 
-// выводим адрес по умолчанию
+  // выводим адрес по умолчанию
 
   var defaultX = window.util.CONTROL_SIZE / 2;
   var defaultY = window.util.CONTROL_SIZE / 2;
