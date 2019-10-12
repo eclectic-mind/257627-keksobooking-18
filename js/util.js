@@ -23,13 +23,13 @@
   // случайный элемент из нескольких имеющихся
 
   window.chooseRandom = function (arr) {
-    return arr[getRandomInRange(0, arr.length)];
+    return arr[window.getRandomInRange(0, arr.length)];
   };
 
   // случайная картинка
 
   window.getRandomImg = function (min, max) {
-    var num = getRandomInRange(min, max);
+    var num = window.getRandomInRange(min, max);
     return 'img/avatars/user0' + num + '.png';
   };
 
