@@ -107,7 +107,7 @@
   var offers = generateOffersArray(8, map);
   showLocation(offers, pinsContainer);
 
-    // изначально неактивный режим
+  // изначально неактивный режим
 
   map.setAttribute('disabled', 'disabled');
   mapFilters.classList.add('ad-form--disabled');
