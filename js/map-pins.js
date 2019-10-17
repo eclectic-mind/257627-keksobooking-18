@@ -5,11 +5,21 @@
   var AVATAR_SIZE = 40;
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 70;
-  var DATA_SRC = 'https://js.dump.academy/keksobooking/data';
+  var DATA_SRC = '__https://js.dump.academy/keksobooking/data';
 
   var map = document.querySelector('.map');
   var pinsContainer = document.querySelector('.map__pins');
   var mapFilters = document.querySelector('.map__filters');
+  var mainBlock = document.querySelector('main');
+
+  // активируем карту
+
+  var activateMap = function () {
+    map.classList.remove('map--faded');
+    map.removeAttribute('disabled');
+    mapFilters.classList.remove('ad-form--disabled');
+    mapFilters.removeAttribute('disabled');
+  };
 
   // создаём dom-элементы меток и отрисовываем их
 
@@ -50,16 +60,34 @@
     return pinsContainer;
   };
 
-  // выводим метки
+  // обработчики ошибки и успешной загрузки объектов
 
   var successHandler = function (allOffers) {
     showLocation(allOffers);
-    console.log(allOffers);
-      console.log('объявление номер восемь ' + allOffers[8].offer.address);
   };
+
   var errorHandler = function (errorMessage) {
-    console.log('ошибка при загрузке: ' + errorMessage);
+
+    // закрытие окна ошибки
+
+    var closeErrorWindow = function (evt) {
+    evt.preventDefault();
+    errorTpl.remove();
+    console.log('окно должно было удалиться');
+    };
+
+    var errorTpl = document.querySelector('#error').content.querySelector('div');
+    var fragment = document.createDocumentFragment();
+    errorTpl.querySelector('p').textContent = errorMessage;
+    errorTpl.cloneNode(true);
+    fragment.appendChild(errorTpl);
+    mainBlock.prepend(fragment);
+    errorTpl.querySelector('button').addEventListener('click', closeErrorWindow);
   };
+
+
+
+  // выводим метки
 
   var offers = window.load(successHandler, errorHandler, DATA_SRC);
 
@@ -68,15 +96,6 @@
   map.setAttribute('disabled', 'disabled');
   mapFilters.classList.add('ad-form--disabled');
   mapFilters.setAttribute('disabled', 'disabled');
-
-  // активируем карту
-
-  var activateMap = function () {
-    map.classList.remove('map--faded');
-    map.removeAttribute('disabled');
-    mapFilters.classList.remove('ad-form--disabled');
-    mapFilters.removeAttribute('disabled');
-  };
 
   // добавляем обработчик на контрольный пин для активации страницы
 

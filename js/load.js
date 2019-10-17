@@ -2,9 +2,6 @@
 
 (function () {
 
-  window.mainBlock = document.querySelector('.main');
-  window.errorTpl = document.querySelector('#error');
-
   // подгрузка данных с сервера
 
 window.load = function (onSuccess, onError, url) {
@@ -26,7 +23,6 @@ window.load = function (onSuccess, onError, url) {
     });
 
     xhr.timeout = 10000; // 10s
-
     xhr.open('GET', url);
     xhr.send();
   };
