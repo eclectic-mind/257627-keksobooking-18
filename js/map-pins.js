@@ -45,10 +45,8 @@
       var pinPic = document.createElement('img');
       pinPic.src = allOffers[i].author.avatar;
       pinPic.alt = allOffers[i].offer.title;
-
       pinPic.style.width = AVATAR_SIZE + 'px';
       pinPic.style.height = AVATAR_SIZE + 'px';
-
       pinPic.setAttribute('draggable', false);
       pin.appendChild(pinPic);
 
@@ -73,7 +71,6 @@
     var closeErrorWindow = function (evt) {
       evt.preventDefault();
       errorTpl.remove();
-      console.log('окно должно было удалиться');
     };
 
     var errorTpl = document.querySelector('#error').content.querySelector('div');
