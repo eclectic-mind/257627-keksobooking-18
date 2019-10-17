@@ -5,7 +5,7 @@
   var AVATAR_SIZE = 40;
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 70;
-  var DATA_SRC = '__https://js.dump.academy/keksobooking/data';
+  var DATA_SRC = 'https://js.dump.academy/keksobooking/data';
 
   var map = document.querySelector('.map');
   var pinsContainer = document.querySelector('.map__pins');
