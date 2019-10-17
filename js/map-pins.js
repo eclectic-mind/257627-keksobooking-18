@@ -71,9 +71,9 @@
     // закрытие окна ошибки
 
     var closeErrorWindow = function (evt) {
-    evt.preventDefault();
-    errorTpl.remove();
-    console.log('окно должно было удалиться');
+      evt.preventDefault();
+      errorTpl.remove();
+      console.log('окно должно было удалиться');
     };
 
     var errorTpl = document.querySelector('#error').content.querySelector('div');
@@ -85,11 +85,9 @@
     errorTpl.querySelector('button').addEventListener('click', closeErrorWindow);
   };
 
-
-
   // выводим метки
 
-  var offers = window.load(successHandler, errorHandler, DATA_SRC);
+  window.load(successHandler, errorHandler, DATA_SRC);
 
   // изначально неактивный режим
 

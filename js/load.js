@@ -4,7 +4,7 @@
 
   // подгрузка данных с сервера
 
-window.load = function (onSuccess, onError, url) {
+  window.load = function (onSuccess, onError, url) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
