@@ -94,7 +94,7 @@
   var pins = window.load(showLocation, errorHandler, DATA_SRC);
   console.log(pins);
   var offers = window.load(jsonToArray, errorHandler, DATA_SRC);
-  //console.log(offers);
+  console.log(offers);
   //var pins = showLocation(offers);
 
   // изначально неактивный режим
