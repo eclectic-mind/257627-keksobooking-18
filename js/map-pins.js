@@ -29,6 +29,8 @@
     // создаём метку
 
     for (var i = 0; i < allOffers.length; i++) {
+      if (i >= 5) break;
+
       var pin = document.createElement('button');
       pin.className = 'map__pin';
       pin.setAttribute('type', 'button');
@@ -60,8 +62,13 @@
 
   // обработчики ошибки и успешной загрузки объектов
 
-  var successHandler = function (allOffers) {
-    showLocation(allOffers);
+  var jsonToArray = function (data) {
+    var objects = [];
+    for (var i = 0; i < data.length; i++) {
+      objects.push(data[i]);
+    }
+    console.log(objects);
+    return objects;
   };
 
   var errorHandler = function (errorMessage) {
@@ -84,7 +91,11 @@
 
   // выводим метки
 
-  window.load(successHandler, errorHandler, DATA_SRC);
+  var pins = window.load(showLocation, errorHandler, DATA_SRC);
+  console.log(pins);
+  var offers = window.load(jsonToArray, errorHandler, DATA_SRC);
+  //console.log(offers);
+  //var pins = showLocation(offers);
 
   // изначально неактивный режим
 
