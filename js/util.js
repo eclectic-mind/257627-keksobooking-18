@@ -13,6 +13,8 @@
   };
 
   window.control = document.querySelector('.map__pin--main');
+  window.map = document.querySelector('.map');
+  window.filtersContainer = document.querySelector('.map__filters-container');
 
   // случайное число из диапазона
 

@@ -7,18 +7,14 @@
   var PIN_HEIGHT = 70;
   var DATA_SRC = 'https://js.dump.academy/keksobooking/data';
 
-  var map = document.querySelector('.map');
   var pinsContainer = document.querySelector('.map__pins');
-  var mapFilters = document.querySelector('.map__filters');
   var mainBlock = document.querySelector('main');
 
   // активируем карту
 
   var activateMap = function () {
-    map.classList.remove('map--faded');
-    map.removeAttribute('disabled');
-    mapFilters.classList.remove('ad-form--disabled');
-    mapFilters.removeAttribute('disabled');
+    window.map.classList.remove('map--faded');
+    window.map.removeAttribute('disabled');
   };
 
   // создаём dom-элементы меток и отрисовываем их
@@ -99,9 +95,7 @@
 
   // изначально неактивный режим
 
-  map.setAttribute('disabled', 'disabled');
-  mapFilters.classList.add('ad-form--disabled');
-  mapFilters.setAttribute('disabled', 'disabled');
+  window.map.setAttribute('disabled', 'disabled');
 
   // добавляем обработчик на контрольный пин для активации страницы
 
