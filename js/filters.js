@@ -27,7 +27,7 @@ if ((priceName === 'middle') && (value >= 10000 && value < 50000)) {
 };
 
   var filterByParam = function (allOffers, param, val) {
-    console.log('название цены____: ' + val);
+    // console.log('название цены____: ' + val);
     var filtered = [];
 
     if (param === 'rooms' || param === 'guests') {
@@ -38,8 +38,8 @@ if ((priceName === 'middle') && (value >= 10000 && value < 50000)) {
       var condition = allOffers[i].offer[param];
 
       if (param === 'price') {
-          console.log('название цены: ' + val);
-          console.log('фактическое значение: ' + condition);
+          // console.log('название цены: ' + val);
+          // console.log('фактическое значение: ' + condition);
           var result = fitPriceScale(val, condition);
           console.log('сравнили ' + result);
           if (result === true) {
@@ -67,7 +67,7 @@ if ((priceName === 'middle') && (value >= 10000 && value < 50000)) {
   mapFilters.classList.add('ad-form--disabled');
   mapFilters.setAttribute('disabled', 'disabled');
 
-  // добавляем обработчик на контрольный пин для активации страницы
+  // добавляем обработчик на контрольный пин для активации фильтров
 
   window.control.addEventListener('mousedown', activateFilters);
   window.control.addEventListener('keydown', function (evt) {
@@ -75,6 +75,5 @@ if ((priceName === 'middle') && (value >= 10000 && value < 50000)) {
       activateFilters();
     }
   });
-
 
 })();

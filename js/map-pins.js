@@ -5,10 +5,8 @@
   var AVATAR_SIZE = 40;
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 70;
-  var DATA_SRC = 'https://js.dump.academy/keksobooking/data';
 
   var pinsContainer = document.querySelector('.map__pins');
-  var mainBlock = document.querySelector('main');
 
   // активируем карту
 
@@ -56,48 +54,16 @@
     return pinsContainer;
   };
 
-  // обработчики ошибки и успешной загрузки объектов
-
-  var jsonToArray = function (data) {
-    var objects = [];
-    for (var i = 0; i < data.length; i++) {
-      objects.push(data[i]);
-    }
-    console.log(objects);
-    return objects;
-  };
-
-  var errorHandler = function (errorMessage) {
-
-    // закрытие окна ошибки
-
-    var closeErrorWindow = function (evt) {
-      evt.preventDefault();
-      errorTpl.remove();
-    };
-
-    var errorTpl = document.querySelector('#error').content.querySelector('div');
-    var fragment = document.createDocumentFragment();
-    errorTpl.querySelector('p').textContent = errorMessage;
-    errorTpl.cloneNode(true);
-    fragment.appendChild(errorTpl);
-    mainBlock.prepend(fragment);
-    errorTpl.querySelector('button').addEventListener('click', closeErrorWindow);
-  };
-
   // выводим метки
 
-  var pins = window.load(showLocation, errorHandler, DATA_SRC);
+  var pins = window.load(showLocation, window.DATA_SRC);
   console.log(pins);
-  var offers = window.load(jsonToArray, errorHandler, DATA_SRC);
-  console.log(offers);
-  //var pins = showLocation(offers);
 
   // изначально неактивный режим
 
   window.map.setAttribute('disabled', 'disabled');
 
-  // добавляем обработчик на контрольный пин для активации страницы
+  // добавляем обработчик на контрольный пин для активации карты
 
   window.control.addEventListener('mousedown', activateMap);
   window.control.addEventListener('keydown', function (evt) {

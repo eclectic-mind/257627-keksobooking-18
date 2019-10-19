@@ -2,9 +2,13 @@
 
 (function () {
 
+  window.DATA_SRC = 'https://js.dump.academy/keksobooking/data';
+  var mainBlock = document.querySelector('main');
+  var errorTpl = document.querySelector('#error').content.querySelector('div');
+
   // подгрузка данных с сервера
 
-  window.load = function (onSuccess, onError, url) {
+  window.load = function (onSuccess, url) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
@@ -25,6 +29,23 @@
     xhr.timeout = 10000; // 10s
     xhr.open('GET', url);
     xhr.send();
+  };
+
+  // обработчик ошибки
+
+  var onError = function (errorMessage) {
+    // закрытие окна ошибки
+    var closeErrorWindow = function (evt) {
+      evt.preventDefault();
+      errorTpl.remove();
+    };
+    // console.log(errorTpl);
+    var fragment = document.createDocumentFragment();
+    errorTpl.querySelector('p').textContent = errorMessage;
+    errorTpl.cloneNode(true);
+    fragment.appendChild(errorTpl);
+    mainBlock.prepend(fragment);
+    errorTpl.querySelector('button').addEventListener('click', closeErrorWindow);
   };
 
 })();
