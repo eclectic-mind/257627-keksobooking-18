@@ -6,16 +6,6 @@
   var CONTROL_SPIKE_HEIGHT = 22;
   var ENTER_KEYCODE = 13;
 
-  window.util = {
-    CONTROL_SIZE: CONTROL_SIZE,
-    CONTROL_SPIKE_HEIGHT: CONTROL_SPIKE_HEIGHT,
-    ENTER_KEYCODE: ENTER_KEYCODE
-  };
-
-  window.control = document.querySelector('.map__pin--main');
-  window.map = document.querySelector('.map');
-  window.filtersContainer = document.querySelector('.map__filters-container');
-
   // случайное число из диапазона
 
   window.getRandomInRange = function (min, max) {
@@ -42,6 +32,17 @@
       return 0.5 - Math.random();
     };
     return arr.sort(sortFunc);
+  };
+
+  window.util = {
+    CONTROL_SIZE: CONTROL_SIZE,
+    CONTROL_SPIKE_HEIGHT: CONTROL_SPIKE_HEIGHT,
+    ENTER_KEYCODE: ENTER_KEYCODE,
+
+    getRandomInRange: getRandomInRange,
+    chooseRandom: chooseRandom,
+    getRandomImg: getRandomImg,
+    randomSort: randomSort
   };
 
 })();
