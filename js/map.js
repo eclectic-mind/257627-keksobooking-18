@@ -8,7 +8,6 @@
 
   var map = document.querySelector('.map');
   var pinsContainer = document.querySelector('.map__pins');
-  var mapFilters = document.querySelector('.map__filters');
   var control = document.querySelector('.map__pin--main');
 
   // активируем-дезактивируем карту
@@ -17,13 +16,9 @@
     if (active) {
       map.classList.remove('map--faded');
       map.removeAttribute('disabled');
-      mapFilters.classList.remove('ad-form--disabled');
-      mapFilters.removeAttribute('disabled');
     } else {
       map.classList.add('map--faded');
       map.setAttribute('disabled', 'disabled');
-      mapFilters.classList.add('ad-form--disabled');
-      mapFilters.setAttribute('disabled', 'disabled');
     }
   }
 
@@ -61,15 +56,15 @@
 
   // создаём dom-элементы меток и отрисовываем их
 
-  var showLocation = function (offers) {
+  var showLocation = function (allOffers) {
     var fragment = document.createDocumentFragment();
 
     // создаём метки
 
-    for (var i = 0; i < offers.length; i++) {
-      if (i >= 5) break;
+    for (var i = 0; i < allOffers.length; i++) {
+      // if (i >= 5) break;
 
-      var pin = drawPin(offers[i]);
+      var pin = drawPin(allOffers[i]);
       fragment.appendChild(pin);
       pinsContainer.appendChild(fragment);
     }

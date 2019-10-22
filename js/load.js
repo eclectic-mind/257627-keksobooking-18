@@ -9,14 +9,15 @@
 
   // подгрузка данных с сервера
 
-  var loadData = function (onSuccess, onError, url) {
+  var loadData = function (onSuccess, onError, url, holder) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
     xhr.timeout = 10000;
 
     xhr.addEventListener('load', function () {
       if (xhr.status === 200) {
-        onSuccess(xhr.response);
+        jsonToArray(xhr.response, holder);
+        window.map.showLocation(xhr.response);
       } else {
         onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
       }
@@ -34,9 +35,17 @@
     xhr.send();
   };
 
+  var jsonToArray = function (data, holder) {
+    for (var i = 0; i < data.length; i++) {
+      holder.push(data[i]);
+    }
+    return holder;
+  };
+
   window.load = {
     DATA_SRC: DATA_SRC,
-    loadData: loadData
+    loadData: loadData,
+    jsonToArray: jsonToArray
   }
 
 })();
