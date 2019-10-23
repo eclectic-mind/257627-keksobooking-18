@@ -62,12 +62,13 @@
     // создаём метки
 
     for (var i = 0; i < allOffers.length; i++) {
-      // if (i >= 5) break;
+      if (i > 4) break;
 
       var pin = drawPin(allOffers[i]);
-      if (i > 4) {
+      /* if (i > 4) {
         pin.classList.add('visually-hidden');
       };
+      */
       fragment.appendChild(pin);
       pinsContainer.appendChild(fragment);
       }
@@ -78,10 +79,34 @@
     console.log('кликнули на метку!');
   };
 
+  var deletePins = function () {
+    var pins = pinsContainer.getElementsByClassName('map__pin');
+    console.log(pins);
+    var empty = [];
+    empty.push(control);
+    pins = empty;
+    console.log(pins);
+  };
+
+  var rewritePins = function (allOffers) {
+    deletePins();
+
+    var filter = window.filters.housingType;
+    var val = window.filters.getFilteredVal(filter);
+    console.log(val);
+
+    var filteredData = window.filters.filterByType(val);
+    console.log(filteredData);
+
+    showLocation(filteredData);
+  };
+
   window.map = {
     control: control,
     toggleMapActivate: toggleMapActivate,
     showLocation: showLocation,
+    deletePins: deletePins,
+    rewritePins: rewritePins,
     showDetails: showDetails
   };
 

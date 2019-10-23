@@ -147,11 +147,39 @@
        }
      }
     }
-    window.map.showLocation(filtered);
+    //window.map.showLocation(filtered);
     return filtered;
   };
 
-  var crossFilter = function (allValues, offers) {
+  var filterByType = function (val) {
+    var filtered = [];
+    for (var i = 0; i < window.offers.length; i++) {
+      var realValue = window.offers[i].offer.type;
+        if ((realValue === val) || (val === 'any')) {
+          filtered.push(window.offers[i]);
+       }
+     }
+    return filtered;
+  };
+
+  var getFilteredVal = function (filter) {
+    return filter.value;
+  };
+
+ /* var filterListener = function (filter) {
+    filter.addEventListener('change', getFilteredData);
+  }
+*/
+
+  /* var getFilteredData = function (data ) {
+    var result = [];
+
+    result = filterByParam(data, param, val);
+    return result;
+  };
+  */
+
+  /* var crossFilter = function (allValues, offers) {
       var filtered = [];
       filtered = filterByParam(window.offers, 'type', allValues[0]);
       filtered = filterByParam(filtered, 'price', allValues[1]);
@@ -161,16 +189,7 @@
       offers = filtered;
     return offers;
   }
-
-  // подключаем обработчики фильтров
-
-  // housingType.addEventListener('change', crossFilter(chosenValues, window.offers));
-  housingType.addEventListener('change', function() {
-    console.log(housingType.value);
-  });
-
-
-
+*/
   window.filters = {
     mapFilters: mapFilters,
     filterSelects: filterSelects,
@@ -190,7 +209,11 @@
     toggleFiltersActivate: toggleFiltersActivate,
     fitPriceScale: fitPriceScale,
     filterByParam: filterByParam,
-    crossFilter: crossFilter
+    getFilteredVal: getFilteredVal,
+    filterByType: filterByType
+    //filterListener: filterListener
+
+    //crossFilter: crossFilter
   };
 
 })();

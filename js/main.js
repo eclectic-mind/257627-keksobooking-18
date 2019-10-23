@@ -37,8 +37,10 @@
 
   // когда всё готово, выводим метки
 
-  // window.load.jsonToArray(window.load.loadData, window.offers);
-
   window.load.loadData(onLoad, window.error.showError);
+
+  // подключаем обработчики фильтров
+
+  window.filters.housingType.addEventListener('change', window.map.rewritePins);
 
 })();
