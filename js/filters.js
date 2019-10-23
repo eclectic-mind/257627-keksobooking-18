@@ -3,7 +3,10 @@
 (function () {
 
   var mapFilters = document.querySelector('.map__filters');
-  var filterSelect = mapFilters.querySelectorAll('select');
+  var filterSelects = mapFilters.querySelectorAll('select');
+  var checkboxes = document.querySelectorAll('.map__feature');
+  // console.log(checkboxes);
+
   var housingType = document.querySelector('#housing-type');
   var chosenType = housingType.value;
   var housingPrice = document.querySelector('#housing-price');
@@ -12,45 +15,80 @@
   var chosenRooms = housingRooms.value;
   var housingGuests = document.querySelector('#housing-guests');
   var chosenGuests = housingGuests.value;
-  var housingFeatures = document.querySelector('#housing-features');
-  // var filterWifi = housingFeatures.querySelector('#filter-wifi');
-  // var filterDishwasher = housingFeatures.querySelector('#filter-dishwasher');
-  // var filterParking = housingFeatures.querySelector('#filter-parking');
-  // var filterWasher = housingFeatures.querySelector('#filter-washer');
-  // var filterElevator = housingFeatures.querySelector('#filter-elevator');
-  // var filterConditioner = housingFeatures.querySelector('#conditioner');
-  // var chosenFeatures = [filterWifi, filterDishwasher, filterParking, filterWasher, filterElevator, filterConditioner];
 
-  var chosenOptions = [chosenType, chosenPrice, chosenRooms, chosenGuests];
+  var housingFeaturesBlock = document.querySelector('#housing-features');
 
-  console.log(chosenOptions);
+  var filterWifi = document.querySelector('#filter-wifi');
+  var filterDishwasher = document.querySelector('#filter-dishwasher');
+  var filterParking = document.querySelector('#filter-parking');
+  var filterWasher = document.querySelector('#filter-washer');
+  var filterElevator = document.querySelector('#filter-elevator');
+  var filterConditioner = document.querySelector('#filter-conditioner');
 
-    // активируем фильтры
+  // активируем фильтры
 
- // var activateFilters = function () {
-  //  mapFilters.classList.remove('ad-form--disabled');
-   // mapFilters.removeAttribute('disabled');
- // };
-
-   var toggleFiltersActivate = function (active) {
+  var toggleFiltersActivate = function (active) {
     if (active) {
       mapFilters.removeAttribute('disabled');
-      filterSelect.forEach(function (item) {
+      filterSelects.forEach(function (item) {
         item.removeAttribute('disabled');
         // item.addEventListener('change', rewritePins(window.offers));
       });
     } else {
       mapFilters.setAttribute('disabled', 'disabled');
-      filterSelect.forEach(function (item) {
+      filterSelects.forEach(function (item) {
         item.setAttribute('disabled', 'disabled');
       });
       };
   }
 
-  // фильтрация объектов
+  // собираем features
+
+  var getFeatures = function (filterWifi, filterDishwasher, filterParking, filterWasher, filterElevator, filterConditioner) {
+    var result = [];
+    if (filterWifi.checked) {
+      result.push(filterWifi.value);
+    };
+    if (filterDishwasher.checked) {
+      result.push(filterDishwasher.value);
+    };
+    if (filterParking.checked) {
+      result.push(filterParking.value);
+    };
+    if (filterWasher.checked) {
+      result.push(filterWasher.value);
+    };
+    if (filterElevator.checked) {
+      result.push(filterElevator.value);
+    };
+    if (filterConditioner.checked) {
+      result.push(filterConditioner.value);
+    };
+    // console.log(result);
+    return result;
+  };
+
+ var allFeatures = getFeatures(filterWifi, filterDishwasher, filterParking, filterWasher, filterElevator, filterConditioner);
+ console.log(allFeatures);
+
+ // собираем все свойства
+
+  /* var chosenOptions = {
+    'type': chosenType,
+    'price': chosenPrice,
+    'rooms': chosenRooms,
+    'guests': chosenGuests,
+    'features': allFeatures
+  }; */
+
+  var chosenValues = [chosenType, chosenPrice, chosenRooms, chosenGuests, allFeatures];
+
+  console.log(chosenValues);
+
+  // сопоставляем название цены и числовой диапазон
 
   var fitPriceScale = function (priceName, value) {
-    if ((priceName === 'middle') && (value >= 10000 && value < 50000)) {
+    if ((priceName === 'middle') && (value >= 10000 && value <= 50000)) {
       return true;
     }
     else if ((priceName === 'low') && (value < 10000)) {
@@ -62,77 +100,92 @@
     else return false;
   };
 
-  var filterByParam = function (allOffers, param, val) {
-    // console.log('название цены____: ' + val);
-    var filtered = [];
+  // фильтрация объектов
 
+  var filterByParam = function (allOffers, param, val) {
+
+    // allOffers - исходный нефильтрованный массив квартир, param - параметр, по к-рому фильтруем, val - значение параметра, к-рое пришло из фильтра
+    // filtered - итоговый отфильтрованный массив, realValue - фактическое значение параметра у каждой квартиры
+
+    var filtered = [];
+    if (val === 'any') {
+      filtered = allOffers;
+    };
+
+  // числовые параметры приводим к числовым значениям
     if (param === 'rooms' || param === 'guests') {
       val = parseInt(val, 10);
     };
 
-    for (var i = 0; i < allOffers.length; i++) {
-      var condition = allOffers[i].offer[param];
+  // сравниваем заданное значение с фактическим у каждой квартиры
 
+    for (var i = 0; i < allOffers.length; i++) {
+      var realValue = allOffers[i].offer[param];
+
+  // сравниваем цену
       if (param === 'price') {
           // console.log('название цены: ' + val);
-          // console.log('фактическое значение: ' + condition);
-          var result = fitPriceScale(val, condition);
-          console.log('сравнили ' + result);
+          // console.log('фактическое значение: ' + realValue);
+          var result = fitPriceScale(val, realValue);
+          // console.log('сравнили ' + result);
           if (result === true) {
             filtered.push(allOffers[i]);
           }
       }
-
-      else if (param === 'features') {
-        if (condition.includes(val)) {
-          filtered.push(allOffers[i]);
+  // c features - отдельная история
+      if (param === 'features') {
+        for (var i = 0; i < param.length; i++) {
+          if (realValue.includes(param[i])) {
+            filtered.push(allOffers[i]);
+             }
+            }
         }
-      }
-
+  // если сравнение прошло, добавляем элемент в итоговый массив
       else {
-        if (condition === val) {
+        if (realValue === val) {
           filtered.push(allOffers[i]);
        }
      }
     }
+    window.map.showLocation(filtered);
     return filtered;
   };
 
-  // переписываем рендеринг объектов
+  var crossFilter = function (allValues, offers) {
+      var filtered = [];
+      filtered = filterByParam(window.offers, 'type', allValues[0]);
+      filtered = filterByParam(filtered, 'price', allValues[1]);
+      filtered = filterByParam(filtered, 'rooms', allValues[2]);
+      filtered = filterByParam(filtered, 'guests', allValues[3]);
+      // filtered = filterByParam(filtered, 'features', allValues[4]);
+      offers = filtered;
+    return offers;
+  }
 
-  var getFilteredOffers = function (allOffers) {
-    var result = [];
-    for (var i = 0; i < chosenOptions.length; i++) {
-      if (chosenOptions[i].value !== 'any') {
-        result = filterByParam(allOffers);
-      }
-    }
-    return result;
-  };
+  // подключаем обработчики фильтров
 
-  var rewritePins = function (allOffers) {
-    var res = getFilteredOffers(allOffers);
-    window.map.showLocation(res);
-  };
+  // housingType.addEventListener('change', crossFilter(chosenValues, window.offers));
 
   window.filters = {
     mapFilters: mapFilters,
-    filterSelect: filterSelect,
-    chosenOptions: chosenOptions,
+    filterSelects: filterSelects,
+    checkboxes: checkboxes,
+
     housingType: housingType,
     housingPrice: housingPrice,
     housingRooms: housingRooms,
     housingGuests: housingGuests,
-    housingFeatures: housingFeatures,
+
     chosenType: chosenType,
     chosenPrice: chosenPrice,
     chosenRooms: chosenRooms,
     chosenGuests: chosenGuests,
-    // chosenFeatures: chosenFeatures,
+    chosenValues: chosenValues,
+
     toggleFiltersActivate: toggleFiltersActivate,
     fitPriceScale: fitPriceScale,
     filterByParam: filterByParam,
-    rewritePins: rewritePins
+    crossFilter: crossFilter
   };
 
 })();

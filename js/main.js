@@ -28,7 +28,6 @@
   toggleUiActivate(false);
 
   // сразу валидируем поля
-
   window.form.checkGuests();
 
   // когда всё готово, выводим метки
@@ -39,7 +38,7 @@
   console.log(window.offers);
 
   // window.pins = window.map.showLocation(offers);
-  //window.load.loadData(window.map.showLocation, window.error.showError, window.load.DATA_SRC, window.pins);
-  //console.log(window.pins);
+  window.load.loadData(window.map.showLocation, window.error.showError, window.load.DATA_SRC, window.pins);
+  // console.log(window.pins);
 
 })();

@@ -50,13 +50,13 @@
 
     // добавляем в метку картинку со всеми стилями
     pin.appendChild(drawPinImage(offer));
-
+    pin.addEventListener('click', showDetails);
     return pin;
   }
 
   // создаём dom-элементы меток и отрисовываем их
 
-  var showLocation = function (allOffers) {
+  var showLocation = function (allOffers, holder) {
     var fragment = document.createDocumentFragment();
 
     // создаём метки
@@ -65,15 +65,26 @@
       // if (i >= 5) break;
 
       var pin = drawPin(allOffers[i]);
+      if (i > 4) {
+        pin.classList.add('visually-hidden');
+      };
       fragment.appendChild(pin);
       pinsContainer.appendChild(fragment);
-    }
+      holder.push(allOffers[i]);
+      }
+      return holder;
+  };
+
+  var showDetails = function () {
+    pin.classList.add('map__pin--active');
+    console.log('кликнули на метку!');
   };
 
   window.map = {
     control: control,
     toggleMapActivate: toggleMapActivate,
-    showLocation: showLocation
-  }
+    showLocation: showLocation,
+    showDetails: showDetails
+  };
 
 })();

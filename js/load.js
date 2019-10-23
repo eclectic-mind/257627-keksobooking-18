@@ -16,8 +16,9 @@
 
     xhr.addEventListener('load', function () {
       if (xhr.status === 200) {
-        jsonToArray(xhr.response, holder);
-        window.map.showLocation(xhr.response);
+        //jsonToArray(xhr.response, holder);
+        // window.map.showLocation(xhr.response);
+        onSuccess(xhr.response, holder);
       } else {
         onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
       }
