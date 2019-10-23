@@ -3,7 +3,7 @@
 (function() {
 
   window.offers = [];
-  window.pins = [];
+  // window.pins = [];
 
   var toggleUiActivate = function (active) {
     window.map.toggleMapActivate(active);
@@ -23,6 +23,11 @@
     }
   });
 
+  var onLoad = function (data) {
+    window.offers = data;
+    window.map.showLocation(data);
+  };
+
   // изначально неактивный режим
 
   toggleUiActivate(false);
@@ -34,11 +39,6 @@
 
   // window.load.jsonToArray(window.load.loadData, window.offers);
 
-  window.load.loadData(window.load.jsonToArray, window.error.showError, window.load.DATA_SRC, window.offers);
-  console.log(window.offers);
-
-  // window.pins = window.map.showLocation(offers);
-  window.load.loadData(window.map.showLocation, window.error.showError, window.load.DATA_SRC, window.pins);
-  // console.log(window.pins);
+  window.load.loadData(onLoad, window.error.showError);
 
 })();

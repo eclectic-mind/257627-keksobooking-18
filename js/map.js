@@ -56,7 +56,7 @@
 
   // создаём dom-элементы меток и отрисовываем их
 
-  var showLocation = function (allOffers, holder) {
+  var showLocation = function (allOffers) {
     var fragment = document.createDocumentFragment();
 
     // создаём метки
@@ -70,9 +70,7 @@
       };
       fragment.appendChild(pin);
       pinsContainer.appendChild(fragment);
-      holder.push(allOffers[i]);
       }
-      return holder;
   };
 
   var showDetails = function () {

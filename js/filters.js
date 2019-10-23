@@ -165,6 +165,11 @@
   // подключаем обработчики фильтров
 
   // housingType.addEventListener('change', crossFilter(chosenValues, window.offers));
+  housingType.addEventListener('change', function() {
+    console.log(housingType.value);
+  });
+
+
 
   window.filters = {
     mapFilters: mapFilters,

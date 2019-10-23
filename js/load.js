@@ -9,7 +9,7 @@
 
   // подгрузка данных с сервера
 
-  var loadData = function (onSuccess, onError, url, holder) {
+  var loadData = function (onSuccess, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
     xhr.timeout = 10000;
@@ -18,7 +18,7 @@
       if (xhr.status === 200) {
         //jsonToArray(xhr.response, holder);
         // window.map.showLocation(xhr.response);
-        onSuccess(xhr.response, holder);
+        onSuccess(xhr.response);
       } else {
         onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
       }
@@ -32,7 +32,7 @@
       onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
     });
 
-    xhr.open('GET', url);
+    xhr.open('GET', DATA_SRC);
     xhr.send();
   };
 
