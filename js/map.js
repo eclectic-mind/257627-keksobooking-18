@@ -81,8 +81,9 @@
     // создаём метки
 
     for (var i = 0; i < allOffers.length; i++) {
-      if (i > 4) break;
-
+      if (i > 4) {
+        break;
+      }
       var pin = drawPin(allOffers[i]);
       /* if (i > 4) {
         pin.classList.add('visually-hidden');

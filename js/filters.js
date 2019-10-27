@@ -68,10 +68,10 @@
     return result;
   };
 
- var allFeatures = getFeatures(filterWifi, filterDishwasher, filterParking, filterWasher, filterElevator, filterConditioner);
- // console.log(allFeatures);
+  var allFeatures = getFeatures(filterWifi, filterDishwasher, filterParking, filterWasher, filterElevator, filterConditioner);
+  // console.log(allFeatures);
 
- // собираем все свойства
+  // собираем все свойства
 
   /* var chosenOptions = {
     'type': chosenType,
@@ -90,14 +90,13 @@
   var fitPriceScale = function (priceName, value) {
     if ((priceName === 'middle') && (value >= 10000 && value <= 50000)) {
       return true;
-    }
-    else if ((priceName === 'low') && (value < 10000)) {
+    } else if ((priceName === 'low') && (value < 10000)) {
       return true;
-    }
-    else if ((priceName === 'high') && (value > 50000)) {
+    } else if ((priceName === 'high') && (value > 50000)) {
       return true;
+    } else {
+      return false;
     }
-    else return false;
   };
 
   // фильтрация объектов
@@ -122,32 +121,30 @@
     for (var i = 0; i < allOffers.length; i++) {
       var realValue = allOffers[i].offer[param];
 
-  // сравниваем цену
+      // сравниваем цену
       if (param === 'price') {
-          // console.log('название цены: ' + val);
-          // console.log('фактическое значение: ' + realValue);
-          var result = fitPriceScale(val, realValue);
-          // console.log('сравнили ' + result);
-          if (result === true) {
-            filtered.push(allOffers[i]);
-          }
+        // console.log('название цены: ' + val);
+        // console.log('фактическое значение: ' + realValue);
+        var result = fitPriceScale(val, realValue);
+        // console.log('сравнили ' + result);
+        if (result === true) {
+          filtered.push(allOffers[i]);
+        }
       }
-  // c features - отдельная история
+      // c features - отдельная история
       if (param === 'features') {
         for (var j = 0; j < param.length; j++) {
           if (realValue.includes(param[j])) {
             filtered.push(allOffers[j]);
-             }
-            }
+          }
         }
-  // если сравнение прошло, добавляем элемент в итоговый массив
-      else {
+      } else {
         if (realValue === val) {
           filtered.push(allOffers[i]);
-       }
-     }
+        }
+      }
     }
-  // window.map.showLocation(filtered);
+    // window.map.showLocation(filtered);
     return filtered;
   };
 
@@ -155,10 +152,10 @@
     var filtered = [];
     for (var i = 0; i < window.offers.length; i++) {
       var realValue = window.offers[i].offer.type;
-        if ((realValue === val) || (val === 'any')) {
-          filtered.push(window.offers[i]);
-        }
+      if ((realValue === val) || (val === 'any')) {
+        filtered.push(window.offers[i]);
       }
+    }
     return filtered;
   };
 
