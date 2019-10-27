@@ -44,7 +44,7 @@
 
   // собираем features
 
-  var getFeatures = function (filterWifi, filterDishwasher, filterParking, filterWasher, filterElevator, filterConditioner) {
+  var getFeatures = function () {
     var result = [];
     if (filterWifi.checked) {
       result.push(filterWifi.value);
@@ -111,13 +111,12 @@
       filtered = allOffers;
     }
 
-  // числовые параметры приводим к числовым значениям
+    // числовые параметры приводим к числовым значениям
     if (param === 'rooms' || param === 'guests') {
       val = parseInt(val, 10);
     }
 
-  // сравниваем заданное значение с фактическим у каждой квартиры
-
+    // сравниваем заданное значение с фактическим у каждой квартиры
     for (var i = 0; i < allOffers.length; i++) {
       var realValue = allOffers[i].offer[param];
 
