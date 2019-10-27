@@ -48,7 +48,7 @@
         item.setAttribute('disabled', 'disabled');
       });
     }
-  }
+  };
 
   // валидация гостей/комнат
 
@@ -71,7 +71,7 @@
     if (title.length < 30 || title.length > 100) {
       // console.log(title.length);
       errMessage = 'Недопустимая длина заголовка';
-      }
+    }
     titleField.setCustomValidity(errMessage);
   };
 
@@ -84,16 +84,13 @@
     // pr.placeholder = pr;
     if (pr < 0) {
       errMessage = 'Цена не может быть меньше нуля';
-    }
-    else if (pr < 10000 && tp === 'palace') {
+    } else if (pr < 10000 && tp === 'palace') {
       errMessage = 'Минимальная цена на дворец составляет 10000';
-    }
-    else if (pr < 5000 && tp === 'house') {
+    } else if (pr < 5000 && tp === 'house') {
       errMessage = 'Минимальная цена на дом составляет 5000';
-    }
-    else if (pr < 1000 && tp === 'flat') {
+    } else if (pr < 1000 && tp === 'flat') {
       errMessage = 'Минимальная цена на квартиру составляет 1000';
-    };
+    }
     priceField.setCustomValidity(errMessage);
   };
 

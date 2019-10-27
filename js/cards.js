@@ -65,9 +65,9 @@
     var offerType = card.querySelector('.popup__type');
     offerType.textContent = fitType(object.offer.type);
     var offerCapacity = card.querySelector('.popup__text--capacity');
-    offerCapacity.textContent = object.offer.rooms + ' комнаты для ' + object.offer.guests +' гостей';
+    offerCapacity.textContent = object.offer.rooms + ' комнаты для ' + object.offer.guests + ' гостей';
     var offerTimeChecks = card.querySelector('.popup__text--time');
-    offerTimeChecks.textContent = 'Заезд после ' + object.offer.checkin +', выезд до ' + object.offer.checkout;
+    offerTimeChecks.textContent = 'Заезд после ' + object.offer.checkin + ', выезд до ' + object.offer.checkout;
     var offerFeatures = card.querySelector('.popup__features');
 
     offerFeatures.innerHTML = getFeatures(object);
@@ -88,7 +88,7 @@
 
   // закрытие карточки
 
-  var closeCard = function (evt) {
+  var closeCard = function () {
     document.querySelector('.popup').remove();
   };
 

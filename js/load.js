@@ -16,7 +16,7 @@
 
     xhr.addEventListener('load', function () {
       if (xhr.status === 200) {
-        //jsonToArray(xhr.response, holder);
+        // jsonToArray(xhr.response, holder);
         // window.map.showLocation(xhr.response);
         onSuccess(xhr.response);
       } else {
@@ -47,6 +47,6 @@
     DATA_SRC: DATA_SRC,
     loadData: loadData,
     jsonToArray: jsonToArray
-  }
+  };
 
 })();

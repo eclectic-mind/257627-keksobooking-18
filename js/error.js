@@ -1,4 +1,4 @@
- 'use strict';
+'use strict';
 
 (function () {
 
@@ -7,7 +7,7 @@
 
   // закрытие окна ошибки
 
-  var closeErrorWindow = function (evt) {
+  var closeErrorWindow = function () {
     // evt.preventDefault();
     // errorTpl.remove();
     document.querySelector('.error').remove();
@@ -26,6 +26,6 @@
 
   window.error = {
     showError: showError
-  }
+  };
 
-  })();
+})();

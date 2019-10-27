@@ -1,6 +1,6 @@
 'use strict';
 
-(function() {
+(function () {
 
   window.offers = [];
   // window.pins = [];
@@ -9,7 +9,7 @@
     window.map.toggleMapActivate(active);
     window.form.toggleFormActivate(active);
     window.filters.toggleFiltersActivate(active);
-  }
+  };
 
   // добавляем обработчик на контрольный пин для активации страницы
 

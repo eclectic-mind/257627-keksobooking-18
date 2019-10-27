@@ -20,7 +20,7 @@
       map.classList.add('map--faded');
       map.setAttribute('disabled', 'disabled');
     }
-  }
+  };
 
   /* var findOfferClicked = function () {
     var selected = document.querySelector('.map__pin--active');
@@ -44,7 +44,7 @@
     pinPic.setAttribute('draggable', false);
 
     return pinPic;
-  }
+  };
 
   // отрисовываем метку
 
@@ -61,17 +61,17 @@
 
     // обрабатываем клик - выводим карточку
 
-    pin.addEventListener('click', function() {
+    pin.addEventListener('click', function () {
       // console.log('кликнули на метку!');
       pin.classList.add('map__pin--active');
       window.cards.showCard(offer);
-      });
+    });
 
     // добавляем в метку картинку со всеми стилями
     pin.appendChild(drawPinImage(offer));
 
     return pin;
-  }
+  };
 
   // создаём dom-элементы меток и отрисовываем их
 
@@ -91,7 +91,7 @@
       fragment.appendChild(pin);
       pinsContainer.appendChild(fragment);
 
-      }
+    }
   };
 
   var deletePins = function () {
@@ -102,13 +102,13 @@
     pins = empty;*/
     for (var i = 0; i < pins.length; i++) {
       pins[i].parentNode.removeChild(pins[i]);
-    };
+    }
     pinsContainer.appendChild(control);
     // console.log(pins);
     return pinsContainer;
   };
 
-  var rewritePins = function (allOffers) {
+  var rewritePins = function () {
     deletePins();
     var filter = window.filters.housingType;
     var val = window.filters.getFilteredVal(filter);

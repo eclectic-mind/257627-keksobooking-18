@@ -8,26 +8,26 @@
 
   // случайное число из диапазона
 
-  window.getRandomInRange = function (min, max) {
+  var getRandomInRange = function (min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   };
 
   // случайный элемент из нескольких имеющихся
 
-  window.chooseRandom = function (arr) {
+  var chooseRandom = function (arr) {
     return arr[window.getRandomInRange(0, arr.length)];
   };
 
   // случайная картинка
 
-  window.getRandomImg = function (min, max) {
+  var getRandomImg = function (min, max) {
     var num = window.getRandomInRange(min, max);
     return 'img/avatars/user0' + num + '.png';
   };
 
   // случайная сортировка массива
 
-  window.randomSort = function (arr) {
+  var randomSort = function (arr) {
     var sortFunc = function () {
       return 0.5 - Math.random();
     };

@@ -16,7 +16,7 @@
   var housingGuests = document.querySelector('#housing-guests');
   var chosenGuests = housingGuests.value;
 
-  var housingFeaturesBlock = document.querySelector('#housing-features');
+  // var housingFeaturesBlock = document.querySelector('#housing-features');
 
   var filterWifi = document.querySelector('#filter-wifi');
   var filterDishwasher = document.querySelector('#filter-dishwasher');
@@ -39,8 +39,8 @@
       filterSelects.forEach(function (item) {
         item.setAttribute('disabled', 'disabled');
       });
-      };
-  }
+    }
+  };
 
   // собираем features
 
@@ -48,22 +48,22 @@
     var result = [];
     if (filterWifi.checked) {
       result.push(filterWifi.value);
-    };
+    }
     if (filterDishwasher.checked) {
       result.push(filterDishwasher.value);
-    };
+    }
     if (filterParking.checked) {
       result.push(filterParking.value);
-    };
+    }
     if (filterWasher.checked) {
       result.push(filterWasher.value);
-    };
+    }
     if (filterElevator.checked) {
       result.push(filterElevator.value);
-    };
+    }
     if (filterConditioner.checked) {
       result.push(filterConditioner.value);
-    };
+    }
     // console.log(result);
     return result;
   };
@@ -110,12 +110,12 @@
     var filtered = [];
     if (val === 'any') {
       filtered = allOffers;
-    };
+    }
 
   // числовые параметры приводим к числовым значениям
     if (param === 'rooms' || param === 'guests') {
       val = parseInt(val, 10);
-    };
+    }
 
   // сравниваем заданное значение с фактическим у каждой квартиры
 
@@ -134,9 +134,9 @@
       }
   // c features - отдельная история
       if (param === 'features') {
-        for (var i = 0; i < param.length; i++) {
-          if (realValue.includes(param[i])) {
-            filtered.push(allOffers[i]);
+        for (var j = 0; j < param.length; j++) {
+          if (realValue.includes(param[j])) {
+            filtered.push(allOffers[j]);
              }
             }
         }
@@ -147,7 +147,7 @@
        }
      }
     }
-    //window.map.showLocation(filtered);
+  // window.map.showLocation(filtered);
     return filtered;
   };
 
@@ -157,8 +157,8 @@
       var realValue = window.offers[i].offer.type;
         if ((realValue === val) || (val === 'any')) {
           filtered.push(window.offers[i]);
-       }
-     }
+        }
+      }
     return filtered;
   };
 
@@ -166,10 +166,10 @@
     return filter.value;
   };
 
- /* var filterListener = function (filter) {
+  /* var filterListener = function (filter) {
     filter.addEventListener('change', getFilteredData);
   }
-*/
+  */
 
   /* var getFilteredData = function (data ) {
     var result = [];
@@ -211,9 +211,8 @@
     filterByParam: filterByParam,
     getFilteredVal: getFilteredVal,
     filterByType: filterByType
-    //filterListener: filterListener
-
-    //crossFilter: crossFilter
+    // filterListener: filterListener
+    // crossFilter: crossFilter
   };
 
 })();
