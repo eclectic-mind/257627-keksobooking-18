@@ -22,6 +22,17 @@
     }
   }
 
+  /* var findOfferClicked = function () {
+    var selected = document.querySelector('.map__pin--active');
+    var objName = selected.img.alt;
+    var data = window.offers;
+
+    for (var i = 0; i < data.length; i++) {
+      if (data[i].offer.title === objName) return data[i];
+    }
+  }
+  */
+
   // отрисовываем картинку в метку
 
   var drawPinImage = function (offer) {
@@ -48,9 +59,17 @@
     pin.style.left = pinX + 'px';
     pin.style.top = pinY + 'px';
 
+    // обрабатываем клик - выводим карточку
+
+    pin.addEventListener('click', function() {
+      console.log('кликнули на метку!');
+      pin.classList.add('map__pin--active');
+      window.cards.showCard(offer);
+      });
+
     // добавляем в метку картинку со всеми стилями
     pin.appendChild(drawPinImage(offer));
-    pin.addEventListener('click', showDetails);
+
     return pin;
   }
 
@@ -71,21 +90,22 @@
       */
       fragment.appendChild(pin);
       pinsContainer.appendChild(fragment);
+
       }
   };
 
-  var showDetails = function () {
-    pin.classList.add('map__pin--active');
-    console.log('кликнули на метку!');
-  };
-
   var deletePins = function () {
-    var pins = pinsContainer.getElementsByClassName('map__pin');
+    var pins = pinsContainer.querySelectorAll('.map__pin');
     console.log(pins);
-    var empty = [];
+    /* var empty = [];
     empty.push(control);
-    pins = empty;
+    pins = empty;*/
+    for (var i = 0; i < pins.length; i++) {
+      pins[i].parentNode.removeChild(pins[i]);
+    };
+    pinsContainer.appendChild(control);
     console.log(pins);
+    return pinsContainer;
   };
 
   var rewritePins = function (allOffers) {
@@ -102,12 +122,12 @@
   };
 
   window.map = {
+    map: map,
     control: control,
     toggleMapActivate: toggleMapActivate,
     showLocation: showLocation,
     deletePins: deletePins,
-    rewritePins: rewritePins,
-    showDetails: showDetails
+    rewritePins: rewritePins
   };
 
 })();
