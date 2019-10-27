@@ -18,18 +18,18 @@
 
   var getPics = function (object) {
     var data = object.offer.photos;
-    console.log(data);
+    // console.log(data);
     var container = card.querySelector('.popup__photos');
     var title = object.offer.title;
     var list = [];
     for (var i = 0; i < data.length; i++) {
       var elem = card.getElementsByClassName('popup__photo');
-      console.log(elem);
+      // console.log(elem);
       elem.src = data[i];
       elem.alt = title;
       list.push(elem);
     }
-    console.log(list);
+    // console.log(list);
     container.innerHTML = list;
     return container;
   };
@@ -62,8 +62,8 @@
     offerAddress.textContent = object.offer.address;
     var offerPrice = card.querySelector('.popup__text--price');
     offerPrice.textContent = object.offer.price.toString() + ' ₽/ночь';
-    var offerType = card.querySelector('.offer.type');
-    //offerType.textContent = fitType(object.offer.type);
+    var offerType = card.querySelector('.popup__type');
+    offerType.textContent = fitType(object.offer.type);
     var offerCapacity = card.querySelector('.popup__text--capacity');
     offerCapacity.textContent = object.offer.rooms + ' комнаты для ' + object.offer.guests +' гостей';
     var offerTimeChecks = card.querySelector('.popup__text--time');

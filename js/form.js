@@ -58,7 +58,7 @@
     var errMessage = '';
     if (selectedGuests > selectedRooms || (selectedRooms === 100 && selectedGuests !== 0)) {
       errMessage = 'Количество гостей не соответствует выбранному количеству комнат';
-      console.log('комнат ' + selectedRooms + ', гостей ' + selectedGuests);
+      // console.log('комнат ' + selectedRooms + ', гостей ' + selectedGuests);
     }
     guestsField.setCustomValidity(errMessage);
   };
@@ -69,7 +69,7 @@
     var title = titleField.value;
     var errMessage = '';
     if (title.length < 30 || title.length > 100) {
-      //console.log(title.length);
+      // console.log(title.length);
       errMessage = 'Недопустимая длина заголовка';
       }
     titleField.setCustomValidity(errMessage);
@@ -103,7 +103,7 @@
     var errMessage = '';
     var tIn = parseInt(checkinField.value, 10);
     var tOut = parseInt(checkoutField.value, 10);
-    console.log(tIn, tOut);
+    // console.log(tIn, tOut);
     if (tIn !== tOut) {
       errMessage = 'Время заезда не соответствует времени выезда';
     }

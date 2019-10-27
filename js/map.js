@@ -62,7 +62,7 @@
     // обрабатываем клик - выводим карточку
 
     pin.addEventListener('click', function() {
-      console.log('кликнули на метку!');
+      // console.log('кликнули на метку!');
       pin.classList.add('map__pin--active');
       window.cards.showCard(offer);
       });
@@ -96,7 +96,7 @@
 
   var deletePins = function () {
     var pins = pinsContainer.querySelectorAll('.map__pin');
-    console.log(pins);
+    // console.log(pins);
     /* var empty = [];
     empty.push(control);
     pins = empty;*/
@@ -104,20 +104,17 @@
       pins[i].parentNode.removeChild(pins[i]);
     };
     pinsContainer.appendChild(control);
-    console.log(pins);
+    // console.log(pins);
     return pinsContainer;
   };
 
   var rewritePins = function (allOffers) {
     deletePins();
-
     var filter = window.filters.housingType;
     var val = window.filters.getFilteredVal(filter);
-    console.log(val);
-
+    // console.log(val);
     var filteredData = window.filters.filterByType(val);
-    console.log(filteredData);
-
+    // console.log(filteredData);
     showLocation(filteredData);
   };
 

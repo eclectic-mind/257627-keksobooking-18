@@ -69,7 +69,7 @@
   };
 
  var allFeatures = getFeatures(filterWifi, filterDishwasher, filterParking, filterWasher, filterElevator, filterConditioner);
- console.log(allFeatures);
+ // console.log(allFeatures);
 
  // собираем все свойства
 
@@ -83,7 +83,7 @@
 
   var chosenValues = [chosenType, chosenPrice, chosenRooms, chosenGuests, allFeatures];
 
-  console.log(chosenValues);
+  // console.log(chosenValues);
 
   // сопоставляем название цены и числовой диапазон
 
