@@ -68,7 +68,7 @@
     return result;
   };
 
-  var allFeatures = getFeatures(filterWifi, filterDishwasher, filterParking, filterWasher, filterElevator, filterConditioner);
+  var allFeatures = getFeatures();
   // console.log(allFeatures);
 
   // собираем все свойства
