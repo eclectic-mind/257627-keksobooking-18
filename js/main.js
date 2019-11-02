@@ -63,7 +63,7 @@
 
   window.map.control.addEventListener('mousedown', window.map.dragControl);
 
-  window.reset.resetButton.addEventListener('click', function (evt) {
+  window.reset.resetButton.addEventListener('click', function () {
     toggleUiActivate(false);
     window.reset.resetAll();
   });

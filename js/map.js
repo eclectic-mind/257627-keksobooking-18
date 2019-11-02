@@ -13,10 +13,8 @@
   var pinsContainer = document.querySelector('.map__pins');
   var control = document.querySelector('.map__pin--main');
 
-  var min_x = (innerWidth - map.offsetWidth) / 2;
-  var max_x = (map.offsetWidth + min_x) - (PIN_WIDTH / 2);
-  // console.log(min_x, max_x);
-  // console.log(MIN_Y, MAX_Y, min_x, max_x);
+  var minX = (innerWidth - map.offsetWidth) / 2;
+  var maxX = (map.offsetWidth + minX) - (PIN_WIDTH / 2);
 
   // активируем-дезактивируем карту
 
@@ -112,7 +110,7 @@
     var pinClass = 'map__pin--active';
     // console.log(pinClass);
     var pin = document.getElementsByClassName(pinClass)[0];
-    //console.log(pin);
+    // console.log(pin);
     pin.classList.remove(pinClass);
     // console.log(pin);
   };
@@ -127,12 +125,12 @@
     var rs = window.filters.getFilteredVal(window.filters.housingRooms);
     var gs = window.filters.getFilteredVal(window.filters.housingGuests);
 
-    var wf = window.filters.getFeature(window.filters.filterWifi);
+    /* var wf = window.filters.getFeature(window.filters.filterWifi);
     var dw = window.filters.getFeature(window.filters.filterDishwasher);
     var pk = window.filters.getFeature(window.filters.filterParking);
     var ws = window.filters.getFeature(window.filters.filterWasher);
     var et = window.filters.getFeature(window.filters.filterElevator);
-    var cd = window.filters.getFeature(window.filters.filterConditioner);
+    var cd = window.filters.getFeature(window.filters.filterConditioner); */
 
     var filteredData = window.offers;
     filteredData = window.filters.filterByParam('type', tp, filteredData);
@@ -175,7 +173,7 @@
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
       var finishCoords = {
-        x: checkLimits(moveEvt.clientX, min_x, max_x),
+        x: checkLimits(moveEvt.clientX, minX, maxX),
         y: checkLimits(moveEvt.clientY, MIN_Y, MAX_Y)
       };
       var shift = {

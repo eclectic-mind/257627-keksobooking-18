@@ -69,7 +69,7 @@
     offerCapacity.textContent = object.offer.rooms + ' комнаты для ' + object.offer.guests + ' гостей';
     var offerTimeChecks = card.querySelector('.popup__text--time');
     offerTimeChecks.textContent = 'Заезд после ' + object.offer.checkin + ', выезд до ' + object.offer.checkout;
-    var offerFeatures = card.querySelector('.popup__features');
+    // var offerFeatures = card.querySelector('.popup__features');
 
     // offerFeatures.innerHTML = getFeatures(object);
     var offerDescr = card.querySelector('.popup__description');

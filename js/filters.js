@@ -142,8 +142,11 @@
         if (result === true) {
           filtered.push(data[i]);
         }
+      } else {
+        if (realValue === val) {
+          filtered.push(data[i]);
+        }
       }
-
       // сравниваем удобства
       /* if (val === 'wifi' || val === 'dishwasher' || val === 'parking' || val === 'washer' || val === 'elevator' || val === 'conditioner') {
         realValue = data[i].offer.features;
@@ -154,11 +157,6 @@
         }
       }
       */
-      else {
-        if (realValue === val) {
-          filtered.push(data[i]);
-        }
-      }
     }
     return filtered;
   };
