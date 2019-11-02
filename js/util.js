@@ -5,6 +5,7 @@
   var CONTROL_SIZE = 65;
   var CONTROL_SPIKE_HEIGHT = 22;
   var ENTER_KEYCODE = 13;
+  var ESC_KEYCODE = 27;
 
   // случайное число из диапазона
 
@@ -38,6 +39,7 @@
     CONTROL_SIZE: CONTROL_SIZE,
     CONTROL_SPIKE_HEIGHT: CONTROL_SPIKE_HEIGHT,
     ENTER_KEYCODE: ENTER_KEYCODE,
+    ESC_KEYCODE: ESC_KEYCODE,
 
     getRandomInRange: getRandomInRange,
     chooseRandom: chooseRandom,

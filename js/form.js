@@ -32,6 +32,14 @@
     return x.toString() + ', ' + y.toString();
   };
 
+  var getCurrentAddress = function () {
+    var c = window.map.control;
+    var currX = c.offsetLeft;
+    var currY = c.offsetTop;
+    var addr = writeAddress(currX, currY);
+    return addr;
+  };
+
   var toggleFormActivate = function (active) {
     if (active) {
       addrField.value = currentAddress;
@@ -108,17 +116,22 @@
   };
 
   defaultAddress = writeAddress(defaultX, defaultY);
-  currentAddress = writeAddress(currentX, currentY);
+  // currentAddress = writeAddress(currentX, currentY);
+  currentAddress = getCurrentAddress();
   addrField.value = defaultAddress;
 
   titleField.addEventListener('change', validateTitle);
   priceField.addEventListener('change', checkPrice);
-  // roomsField.addEventListener('change', checkGuests);
-  // guestsField.addEventListener('change', checkGuests);
+  roomsField.addEventListener('change', checkGuests);
+  guestsField.addEventListener('change', checkGuests);
   checkinField.addEventListener('change', checkTime);
   checkoutField.addEventListener('change', checkTime);
 
   window.form = {
+    adForm: adForm,
+    currentAddress: currentAddress,
+    currentX: currentX,
+    currentY: currentY,
     roomsField: roomsField,
     guestsField: guestsField,
     titleField: titleField,
@@ -126,7 +139,7 @@
     typeField: typeField,
     checkinField: checkinField,
     checkoutField: checkoutField,
-
+    getCurrentAddress: getCurrentAddress,
     toggleFormActivate: toggleFormActivate,
     checkGuests: checkGuests,
     validateTitle: validateTitle,

@@ -23,6 +23,12 @@
     }
   });
 
+  document.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === window.util.ESC_KEYCODE) {
+      window.cards.closeCard();
+    }
+  });
+
   var onLoad = function (data) {
     window.offers = data;
     window.map.showLocation(data);
@@ -33,7 +39,7 @@
   toggleUiActivate(false);
 
   // сразу валидируем поля
-  window.form.checkGuests();
+  // window.form.checkGuests();
 
   // когда всё готово, выводим метки
 
@@ -42,5 +48,24 @@
   // подключаем обработчики фильтров
 
   window.filters.housingType.addEventListener('change', window.map.rewritePins);
+  window.filters.housingPrice.addEventListener('change', window.map.rewritePins);
+  window.filters.housingRooms.addEventListener('change', window.map.rewritePins);
+  window.filters.housingGuests.addEventListener('change', window.map.rewritePins);
+
+  /*
+  window.filters.filterWifi.addEventListener('change', window.map.rewritePins);
+  window.filters.filterDishwasher.addEventListener('change', window.map.rewritePins);
+  window.filters.filterParking.addEventListener('change', window.map.rewritePins);
+  window.filters.filterWasher.addEventListener('change', window.map.rewritePins);
+  window.filters.filterElevator.addEventListener('change', window.map.rewritePins);
+  window.filters.filterConditioner.addEventListener('change', window.map.rewritePins);
+  */
+
+  window.map.control.addEventListener('mousedown', window.map.dragControl);
+
+  window.reset.resetButton.addEventListener('click', function () {
+    toggleUiActivate(false);
+    window.reset.resetAll();
+  });
 
 })();

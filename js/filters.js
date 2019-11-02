@@ -4,8 +4,6 @@
 
   var mapFilters = document.querySelector('.map__filters');
   var filterSelects = mapFilters.querySelectorAll('select');
-  var checkboxes = document.querySelectorAll('.map__feature');
-  // console.log(checkboxes);
 
   var housingType = document.querySelector('#housing-type');
   var chosenType = housingType.value;
@@ -16,14 +14,14 @@
   var housingGuests = document.querySelector('#housing-guests');
   var chosenGuests = housingGuests.value;
 
-  // var housingFeaturesBlock = document.querySelector('#housing-features');
-
   var filterWifi = document.querySelector('#filter-wifi');
   var filterDishwasher = document.querySelector('#filter-dishwasher');
   var filterParking = document.querySelector('#filter-parking');
   var filterWasher = document.querySelector('#filter-washer');
   var filterElevator = document.querySelector('#filter-elevator');
   var filterConditioner = document.querySelector('#filter-conditioner');
+
+  var checkboxes = document.querySelectorAll('.map__checkbox');
 
   // активируем фильтры
 
@@ -32,7 +30,6 @@
       mapFilters.removeAttribute('disabled');
       filterSelects.forEach(function (item) {
         item.removeAttribute('disabled');
-        // item.addEventListener('change', rewritePins(window.offers));
       });
     } else {
       mapFilters.setAttribute('disabled', 'disabled');
@@ -42,9 +39,18 @@
     }
   };
 
+  var getFeature = function (checkbox) {
+    if (checkbox.checked) {
+      // console.log('фича выбрана! Это ' + checkbox.value);
+      return checkbox.value;
+    } else {
+      return null;
+    }
+  };
+
   // собираем features
 
-  var getFeatures = function () {
+  /* var getFeatures = function () {
     var result = [];
     if (filterWifi.checked) {
       result.push(filterWifi.value);
@@ -64,12 +70,12 @@
     if (filterConditioner.checked) {
       result.push(filterConditioner.value);
     }
-    // console.log(result);
     return result;
   };
 
   var allFeatures = getFeatures();
-  // console.log(allFeatures);
+  console.log(allFeatures);
+  */
 
   // собираем все свойства
 
@@ -81,9 +87,7 @@
     'features': allFeatures
   }; */
 
-  var chosenValues = [chosenType, chosenPrice, chosenRooms, chosenGuests, allFeatures];
-
-  // console.log(chosenValues);
+  // var chosenValues = [chosenType, chosenPrice, chosenRooms, chosenGuests, allFeatures];
 
   // сопоставляем название цены и числовой диапазон
 
@@ -99,16 +103,28 @@
     }
   };
 
+  /* var compareArrays = function (data, val) {
+    for (var i = 0; i < data.length; i++) {
+      var realValue = data[i].offer.features;
+      for (var j = 0; j < data.length; j++) {
+      if (realValue[j].includes(val) {
+          return true;
+        }
+      }
+    }
+  };
+  */
+
   // фильтрация объектов
 
-  var filterByParam = function (allOffers, param, val) {
+  var filterByParam = function (param, val, data) {
 
-    // allOffers - исходный нефильтрованный массив квартир, param - параметр, по к-рому фильтруем, val - значение параметра, к-рое пришло из фильтра
+    // data - фильтруемый массив квартир, param - параметр, по к-рому фильтруем, val - значение параметра, к-рое пришло из фильтра
     // filtered - итоговый отфильтрованный массив, realValue - фактическое значение параметра у каждой квартиры
 
     var filtered = [];
     if (val === 'any') {
-      filtered = allOffers;
+      filtered = data;
     }
 
     // числовые параметры приводим к числовым значениям
@@ -117,37 +133,49 @@
     }
 
     // сравниваем заданное значение с фактическим у каждой квартиры
-    for (var i = 0; i < allOffers.length; i++) {
-      var realValue = allOffers[i].offer[param];
+    for (var i = 0; i < data.length; i++) {
+      var realValue = data[i].offer[param];
 
       // сравниваем цену
       if (param === 'price') {
-        // console.log('название цены: ' + val);
-        // console.log('фактическое значение: ' + realValue);
         var result = fitPriceScale(val, realValue);
-        // console.log('сравнили ' + result);
         if (result === true) {
-          filtered.push(allOffers[i]);
-        }
-      }
-      // c features - отдельная история
-      if (param === 'features') {
-        for (var j = 0; j < param.length; j++) {
-          if (realValue.includes(param[j])) {
-            filtered.push(allOffers[j]);
-          }
+          filtered.push(data[i]);
         }
       } else {
         if (realValue === val) {
-          filtered.push(allOffers[i]);
+          filtered.push(data[i]);
         }
       }
+      // сравниваем удобства
+      /* if (val === 'wifi' || val === 'dishwasher' || val === 'parking' || val === 'washer' || val === 'elevator' || val === 'conditioner') {
+        realValue = data[i].offer.features;
+        console.log(realValue);
+        if (realValue.includes(val)) {
+          filtered.push(data[i]);
+          console.log('фича есть!');
+        }
+      }
+      */
     }
-    // window.map.showLocation(filtered);
     return filtered;
   };
 
-  var filterByType = function (val) {
+  var filterByFeat = function (param, val, data) {
+    var filtered = [];
+    if (val === null) {
+      filtered = data;
+    }
+    for (var i = 0; i < data.length; i++) {
+      var realValue = data[i].offer[param];
+      if (realValue === val) {
+        filtered.push(data[i]);
+      }
+    }
+    return filtered;
+  };
+
+  /* var filterByType = function (val) {
     var filtered = [];
     for (var i = 0; i < window.offers.length; i++) {
       var realValue = window.offers[i].offer.type;
@@ -156,36 +184,12 @@
       }
     }
     return filtered;
-  };
+  }; */
 
   var getFilteredVal = function (filter) {
     return filter.value;
   };
 
-  /* var filterListener = function (filter) {
-    filter.addEventListener('change', getFilteredData);
-  }
-  */
-
-  /* var getFilteredData = function (data ) {
-    var result = [];
-
-    result = filterByParam(data, param, val);
-    return result;
-  };
-  */
-
-  /* var crossFilter = function (allValues, offers) {
-      var filtered = [];
-      filtered = filterByParam(window.offers, 'type', allValues[0]);
-      filtered = filterByParam(filtered, 'price', allValues[1]);
-      filtered = filterByParam(filtered, 'rooms', allValues[2]);
-      filtered = filterByParam(filtered, 'guests', allValues[3]);
-      // filtered = filterByParam(filtered, 'features', allValues[4]);
-      offers = filtered;
-    return offers;
-  }
-*/
   window.filters = {
     mapFilters: mapFilters,
     filterSelects: filterSelects,
@@ -200,15 +204,23 @@
     chosenPrice: chosenPrice,
     chosenRooms: chosenRooms,
     chosenGuests: chosenGuests,
-    chosenValues: chosenValues,
+    // chosenValues: chosenValues,
+    // allFeatures: allFeatures,
+
+    filterWifi: filterWifi,
+    filterDishwasher: filterDishwasher,
+    filterParking: filterParking,
+    filterWasher: filterWasher,
+    filterElevator: filterElevator,
+    filterConditioner: filterConditioner,
 
     toggleFiltersActivate: toggleFiltersActivate,
     fitPriceScale: fitPriceScale,
     filterByParam: filterByParam,
     getFilteredVal: getFilteredVal,
-    filterByType: filterByType
-    // filterListener: filterListener
-    // crossFilter: crossFilter
+
+    filterByFeat: filterByFeat,
+    getFeature: getFeature
   };
 
 })();
