@@ -4,7 +4,7 @@
 
   var card = document.querySelector('#card').content.querySelector('article');
 
-  var getFeatures = function (object) {
+  /* var getFeatures = function (object) {
     var data = object.offer.features;
     var list = [];
     for (var i = 0; i < data.length; i++) {
@@ -15,6 +15,7 @@
     }
     return list;
   };
+  */
 
   var getPics = function (object) {
     var data = object.offer.photos;
@@ -70,7 +71,7 @@
     offerTimeChecks.textContent = 'Заезд после ' + object.offer.checkin + ', выезд до ' + object.offer.checkout;
     var offerFeatures = card.querySelector('.popup__features');
 
-    offerFeatures.innerHTML = getFeatures(object);
+    // offerFeatures.innerHTML = getFeatures(object);
     var offerDescr = card.querySelector('.popup__description');
     offerDescr.textContent = object.offer.description;
     var offerPics = card.querySelector('.popup__photos');
@@ -90,11 +91,12 @@
 
   var closeCard = function () {
     document.querySelector('.popup').remove();
+    window.map.desactivatePin();
   };
 
   window.cards = {
     card: card,
-    getFeatures: getFeatures,
+    // getFeatures: getFeatures,
     getPics: getPics,
     fitType: fitType,
     showCard: showCard,
