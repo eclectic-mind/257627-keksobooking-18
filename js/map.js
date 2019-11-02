@@ -56,13 +56,13 @@
 
     // обрабатываем клик - выводим карточку
     pin.addEventListener('click', function () {
-       var selected = document.querySelectorAll('.map__pin--active');
-       // console.log(selected);
-       if (selected.length > 0) {
+      var selected = document.querySelectorAll('.map__pin--active');
+      // console.log(selected);
+      if (selected.length > 0) {
         desactivatePin();
       }
-        pin.classList.add('map__pin--active');
-        window.cards.showCard(offer);
+      pin.classList.add('map__pin--active');
+      window.cards.showCard(offer);
     });
 
     // добавляем в метку картинку со всеми стилями
