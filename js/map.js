@@ -16,6 +16,11 @@
   var minX = (innerWidth - map.offsetWidth) / 2;
   var maxX = (map.offsetWidth + minX) - (PIN_WIDTH / 2);
 
+  var controlStartCoords = control.getBoundingClientRect();
+  var startX = controlStartCoords.left;
+  var startY = controlStartCoords.top + window.scrollY;
+  // console.log(controlStartCoords, startX, startY);
+
   // активируем-дезактивируем карту
 
   var toggleMapActivate = function (active) {
@@ -91,6 +96,7 @@
   // удаляем все метки
 
   var deletePins = function () {
+    // var pins = pinsContainer.getElementsByClassName('map__pin');
     var pins = pinsContainer.querySelectorAll('.map__pin');
     // console.log(pins);
     /* var empty = [];
@@ -111,8 +117,10 @@
     // console.log(pinClass);
     var pin = document.getElementsByClassName(pinClass)[0];
     // console.log(pin);
-    pin.classList.remove(pinClass);
-    // console.log(pin);
+    if (pin) {
+      pin.classList.remove(pinClass);
+      // console.log(pin);
+    }
   };
 
   // перерисовываем метки при фильтрации
@@ -186,6 +194,8 @@
       };
       control.style.top = (control.offsetTop - shift.y) + 'px';
       control.style.left = (control.offsetLeft - shift.x) + 'px';
+      // console.log(finishCoords);
+      // window.form.getCurrentAddress();
     };
 
     var onMouseUp = function (upEvt) {
@@ -197,14 +207,24 @@
     document.addEventListener('mouseup', onMouseUp);
   };
 
+  var resetControl = function () {
+    control.left = startX;
+    control.top = startY;
+    console.log(control.left, control.top);
+  };
+
   window.map = {
     map: map,
     control: control,
+    controlStartCoords: controlStartCoords,
+    startX: startX,
+    startY: startY,
     toggleMapActivate: toggleMapActivate,
     showLocation: showLocation,
     deletePins: deletePins,
     rewritePins: rewritePins,
     dragControl: dragControl,
+    resetControl: resetControl,
     desactivatePin: desactivatePin
   };
 

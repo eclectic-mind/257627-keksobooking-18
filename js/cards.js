@@ -19,20 +19,28 @@
 
   var getPics = function (object) {
     var data = object.offer.photos;
-    // console.log(data);
     var container = card.querySelector('.popup__photos');
     var title = object.offer.title;
-    var list = [];
     for (var i = 0; i < data.length; i++) {
-      var elem = card.getElementsByClassName('popup__photo');
-      // console.log(elem);
+      // var elem = document.createElement('img');
+      var elem = new Image(45, 40);
       elem.src = data[i];
       elem.alt = title;
-      list.push(elem);
+      // elem.width = 45;
+      // elem.height = 40;
+      elem.classList.add('popup__photo');
+      container.appendChild(elem);
     }
-    // console.log(list);
-    container.innerHTML = list;
     return container;
+  };
+
+  var deleteEmpty = function (pics) {
+    var elems = pics.querySelectorAll('.popup__photo');
+    for (var i = 0; i < elems.length; i++) {
+      if (elems[i].alt === 'Фотография жилья') {
+        elems[i].remove();
+      }
+    }
   };
 
   var fitType = function (objType) {
@@ -74,10 +82,10 @@
     // offerFeatures.innerHTML = getFeatures(object);
     var offerDescr = card.querySelector('.popup__description');
     offerDescr.textContent = object.offer.description;
-    var offerPics = card.querySelector('.popup__photos');
 
-    var pics = getPics(object);
-    offerPics.innerHTML = pics;
+    var offerPics = getPics(object);
+    deleteEmpty(offerPics);
+
     var offerAvatar = card.querySelector('.popup__avatar');
     offerAvatar.src = object.author.avatar;
 

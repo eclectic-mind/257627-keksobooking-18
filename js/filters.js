@@ -72,7 +72,6 @@
     }
     return result;
   };
-
   var allFeatures = getFeatures();
   console.log(allFeatures);
   */

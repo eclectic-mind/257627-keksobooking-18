@@ -61,9 +61,22 @@
   window.filters.filterConditioner.addEventListener('change', window.map.rewritePins);
   */
 
+// ресет
+
   window.map.control.addEventListener('mousedown', window.map.dragControl);
+  window.map.control.addEventListener('mouseup', window.form.rewriteAddress);
 
   window.reset.resetButton.addEventListener('click', function () {
+    toggleUiActivate(false);
+    window.reset.resetAll();
+  });
+
+  // отправка заполненной формы на сервер
+
+  window.form.adForm.addEventListener('submit', function (evt) {
+    // console.log('нажат сабмит!');
+    window.load.sendData(window.error.showSuccess, window.error.showError);
+    evt.preventDefault();
     toggleUiActivate(false);
     window.reset.resetAll();
   });
