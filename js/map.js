@@ -211,6 +211,7 @@
     control.left = startX;
     control.top = startY;
     console.log(control.left, control.top);
+    return control;
   };
 
   window.map = {

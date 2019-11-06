@@ -10,11 +10,11 @@
     if (openedCards) {
       window.cards.closeCard();
       window.map.desactivatePin();
-      window.map.resetControl();
     }
-
+    window.map.resetControl();
     window.form.adForm.reset();
     window.filters.mapFilters.reset();
+    window.map.rewritePins();
     // console.log('ресет!');
   };
 
