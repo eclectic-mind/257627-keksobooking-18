@@ -48,47 +48,6 @@
     }
   };
 
-  // собираем features
-
-  /* var getFeatures = function () {
-    var result = [];
-    if (filterWifi.checked) {
-      result.push(filterWifi.value);
-    }
-    if (filterDishwasher.checked) {
-      result.push(filterDishwasher.value);
-    }
-    if (filterParking.checked) {
-      result.push(filterParking.value);
-    }
-    if (filterWasher.checked) {
-      result.push(filterWasher.value);
-    }
-    if (filterElevator.checked) {
-      result.push(filterElevator.value);
-    }
-    if (filterConditioner.checked) {
-      result.push(filterConditioner.value);
-    }
-    return result;
-  };
-
-  var allFeatures = getFeatures();
-  console.log(allFeatures);
-  */
-
-  // собираем все свойства
-
-  /* var chosenOptions = {
-    'type': chosenType,
-    'price': chosenPrice,
-    'rooms': chosenRooms,
-    'guests': chosenGuests,
-    'features': allFeatures
-  }; */
-
-  // var chosenValues = [chosenType, chosenPrice, chosenRooms, chosenGuests, allFeatures];
-
   // сопоставляем название цены и числовой диапазон
 
   var fitPriceScale = function (priceName, value) {
@@ -102,18 +61,6 @@
       return false;
     }
   };
-
-  /* var compareArrays = function (data, val) {
-    for (var i = 0; i < data.length; i++) {
-      var realValue = data[i].offer.features;
-      for (var j = 0; j < data.length; j++) {
-      if (realValue[j].includes(val) {
-          return true;
-        }
-      }
-    }
-  };
-  */
 
   // фильтрация объектов
 
@@ -147,16 +94,6 @@
           filtered.push(data[i]);
         }
       }
-      // сравниваем удобства
-      /* if (val === 'wifi' || val === 'dishwasher' || val === 'parking' || val === 'washer' || val === 'elevator' || val === 'conditioner') {
-        realValue = data[i].offer.features;
-        console.log(realValue);
-        if (realValue.includes(val)) {
-          filtered.push(data[i]);
-          console.log('фича есть!');
-        }
-      }
-      */
     }
     return filtered;
   };
@@ -167,24 +104,14 @@
       filtered = data;
     }
     for (var i = 0; i < data.length; i++) {
-      var realValue = data[i].offer[param];
-      if (realValue === val) {
+      var realValue = data[i].offer.features;
+      var hasFeature = realValue.includes(val);
+      if (hasFeature === true) {
         filtered.push(data[i]);
       }
     }
     return filtered;
   };
-
-  /* var filterByType = function (val) {
-    var filtered = [];
-    for (var i = 0; i < window.offers.length; i++) {
-      var realValue = window.offers[i].offer.type;
-      if ((realValue === val) || (val === 'any')) {
-        filtered.push(window.offers[i]);
-      }
-    }
-    return filtered;
-  }; */
 
   var getFilteredVal = function (filter) {
     return filter.value;
@@ -204,8 +131,6 @@
     chosenPrice: chosenPrice,
     chosenRooms: chosenRooms,
     chosenGuests: chosenGuests,
-    // chosenValues: chosenValues,
-    // allFeatures: allFeatures,
 
     filterWifi: filterWifi,
     filterDishwasher: filterDishwasher,
@@ -213,12 +138,10 @@
     filterWasher: filterWasher,
     filterElevator: filterElevator,
     filterConditioner: filterConditioner,
-
     toggleFiltersActivate: toggleFiltersActivate,
     fitPriceScale: fitPriceScale,
     filterByParam: filterByParam,
     getFilteredVal: getFilteredVal,
-
     filterByFeat: filterByFeat,
     getFeature: getFeature
   };

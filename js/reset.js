@@ -6,14 +6,15 @@
 
   var resetAll = function () {
 
-    var openedCards = document.querySelectorAll('.popup');
+    var openedCards = document.getElementsByClassName('popup');
     if (openedCards) {
       window.cards.closeCard();
       window.map.desactivatePin();
     }
-
+    window.map.resetControl();
     window.form.adForm.reset();
     window.filters.mapFilters.reset();
+    window.map.rewritePins();
     // console.log('ресет!');
   };
 

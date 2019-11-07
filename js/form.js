@@ -13,10 +13,12 @@
   var checkinField = document.querySelector('#timein');
   var checkoutField = document.querySelector('#timeout');
 
+  var submitButton = document.querySelector('.ad-form__submit');
+
   // выводим адрес по умолчанию
 
-  var defaultX = window.util.CONTROL_SIZE / 2;
-  var defaultY = window.util.CONTROL_SIZE / 2;
+  var defaultX = window.map.startX + (window.util.CONTROL_SIZE / 2);
+  var defaultY = window.map.startY + (window.util.CONTROL_SIZE / 2);
   var defaultAddress = null;
 
   // вывод актуального адреса контрольного пина - будет дописано позже в соответствии с ТЗ,
@@ -38,6 +40,11 @@
     var currY = c.offsetTop;
     var addr = writeAddress(currX, currY);
     return addr;
+  };
+
+  var rewriteAddress = function () {
+    currentAddress = getCurrentAddress();
+    return currentAddress;
   };
 
   var toggleFormActivate = function (active) {
@@ -129,6 +136,7 @@
 
   window.form = {
     adForm: adForm,
+    submitButton: submitButton,
     currentAddress: currentAddress,
     currentX: currentX,
     currentY: currentY,
@@ -140,6 +148,7 @@
     checkinField: checkinField,
     checkoutField: checkoutField,
     getCurrentAddress: getCurrentAddress,
+    rewriteAddress: rewriteAddress,
     toggleFormActivate: toggleFormActivate,
     checkGuests: checkGuests,
     validateTitle: validateTitle,

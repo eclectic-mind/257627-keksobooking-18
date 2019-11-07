@@ -16,6 +16,11 @@
   var minX = (innerWidth - map.offsetWidth) / 2;
   var maxX = (map.offsetWidth + minX) - (PIN_WIDTH / 2);
 
+  var controlStartCoords = control.getBoundingClientRect();
+  var startX = controlStartCoords.left;
+  var startY = controlStartCoords.top + window.scrollY;
+  // console.log(controlStartCoords, startX, startY);
+
   // активируем-дезактивируем карту
 
   var toggleMapActivate = function (active) {
@@ -25,6 +30,7 @@
     } else {
       map.classList.add('map--faded');
       map.setAttribute('disabled', 'disabled');
+      // resetControl();
     }
   };
 
@@ -91,6 +97,7 @@
   // удаляем все метки
 
   var deletePins = function () {
+    // var pins = pinsContainer.getElementsByClassName('map__pin');
     var pins = pinsContainer.querySelectorAll('.map__pin');
     // console.log(pins);
     /* var empty = [];
@@ -111,8 +118,10 @@
     // console.log(pinClass);
     var pin = document.getElementsByClassName(pinClass)[0];
     // console.log(pin);
-    pin.classList.remove(pinClass);
-    // console.log(pin);
+    if (pin) {
+      pin.classList.remove(pinClass);
+      // console.log(pin);
+    }
   };
 
   // перерисовываем метки при фильтрации
@@ -125,12 +134,12 @@
     var rs = window.filters.getFilteredVal(window.filters.housingRooms);
     var gs = window.filters.getFilteredVal(window.filters.housingGuests);
 
-    /* var wf = window.filters.getFeature(window.filters.filterWifi);
+    var wf = window.filters.getFeature(window.filters.filterWifi);
     var dw = window.filters.getFeature(window.filters.filterDishwasher);
     var pk = window.filters.getFeature(window.filters.filterParking);
     var ws = window.filters.getFeature(window.filters.filterWasher);
     var et = window.filters.getFeature(window.filters.filterElevator);
-    var cd = window.filters.getFeature(window.filters.filterConditioner); */
+    var cd = window.filters.getFeature(window.filters.filterConditioner);
 
     var filteredData = window.offers;
     filteredData = window.filters.filterByParam('type', tp, filteredData);
@@ -138,13 +147,14 @@
     filteredData = window.filters.filterByParam('rooms', rs, filteredData);
     filteredData = window.filters.filterByParam('guests', gs, filteredData);
 
-    /* filteredData = window.filters.filterByParam('wifi', wf, filteredData);
-    filteredData = window.filters.filterByParam('dishwasher', dw, filteredData);
-    filteredData = window.filters.filterByParam('parking', pk, filteredData);
-    filteredData = window.filters.filterByParam('washer', ws, filteredData);
-    filteredData = window.filters.filterByParam('elevator', et, filteredData);
-    filteredData = window.filters.filterByParam('conditioner', cd, filteredData);
-    */
+    filteredData = window.filters.filterByFeat('wifi', wf, filteredData);
+    filteredData = window.filters.filterByFeat('dishwasher', dw, filteredData);
+    filteredData = window.filters.filterByFeat('parking', pk, filteredData);
+    filteredData = window.filters.filterByFeat('washer', ws, filteredData);
+    filteredData = window.filters.filterByFeat('elevator', et, filteredData);
+    filteredData = window.filters.filterByFeat('conditioner', cd, filteredData);
+
+
     // console.log(filteredData);
     window.setTimeout(function () {
       showLocation(filteredData);
@@ -186,6 +196,8 @@
       };
       control.style.top = (control.offsetTop - shift.y) + 'px';
       control.style.left = (control.offsetLeft - shift.x) + 'px';
+      // console.log(finishCoords);
+      // window.form.getCurrentAddress();
     };
 
     var onMouseUp = function (upEvt) {
@@ -197,14 +209,29 @@
     document.addEventListener('mouseup', onMouseUp);
   };
 
+  var resetControl = function () {
+    // control.style = '';
+    control.style.left = startX + 'px';
+    control.style.top = startY + 'px';
+    // console.log('надо:');
+    // console.log(control.style.left, control.style.top);
+    // console.log('фактическое положение:');
+    // console.log(control.getBoundingClientRect());
+    // return control;
+  };
+
   window.map = {
     map: map,
     control: control,
+    controlStartCoords: controlStartCoords,
+    startX: startX,
+    startY: startY,
     toggleMapActivate: toggleMapActivate,
     showLocation: showLocation,
     deletePins: deletePins,
     rewritePins: rewritePins,
     dragControl: dragControl,
+    resetControl: resetControl,
     desactivatePin: desactivatePin
   };
 
