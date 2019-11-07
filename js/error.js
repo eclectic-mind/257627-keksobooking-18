@@ -9,13 +9,17 @@
   // закрытие окна ошибки
 
   var closeErrorWindow = function (evt) {
-    // evt.preventDefault();
-    // errorTpl.remove();
-    document.querySelector('.error').remove();
+    var err = document.querySelector('.error');
+    if (err) {
+      err.remove();
+    }
   };
 
   var closeSuccessWindow = function (evt) {
-    document.querySelector('.success').remove();
+    var suc = document.querySelector('.success');
+    if (suc) {
+      suc.remove();
+    }
   };
 
   // обработчик ошибки
@@ -56,3 +60,4 @@
   }
 
   })();
+

@@ -4,30 +4,29 @@
 
   var card = document.querySelector('#card').content.querySelector('article');
 
-  /* var getFeatures = function (object) {
+  var showFeatures = function (object) {
     var data = object.offer.features;
-    var list = [];
-    for (var i = 0; i < data.length; i++) {
-      var elem = card.querySelector('.popup__feature');
-      var elemClass = 'popup__feature--' + data[i].toString();
-      elem.classList.add(elemClass);
-      list.push(elem);
+    var container = card.querySelector('.popup__features');
+    container.innerHTML = '';
+      for (var i = 0; i < data.length; i++) {
+      var elem = document.createElement('li');
+      var featureClass = 'popup__feature--' + data[i];
+      elem.classList.add('popup__feature');
+      elem.classList.add(featureClass);
+      container.appendChild(elem);
     }
-    return list;
+    return container;
   };
-  */
 
-  var getPics = function (object) {
+  var showPics = function (object) {
     var data = object.offer.photos;
     var container = card.querySelector('.popup__photos');
+    container.innerHTML = '';
     var title = object.offer.title;
     for (var i = 0; i < data.length; i++) {
-      // var elem = document.createElement('img');
       var elem = new Image(45, 40);
       elem.src = data[i];
       elem.alt = title;
-      // elem.width = 45;
-      // elem.height = 40;
       elem.classList.add('popup__photo');
       container.appendChild(elem);
     }
@@ -77,15 +76,11 @@
     offerCapacity.textContent = object.offer.rooms + ' комнаты для ' + object.offer.guests + ' гостей';
     var offerTimeChecks = card.querySelector('.popup__text--time');
     offerTimeChecks.textContent = 'Заезд после ' + object.offer.checkin + ', выезд до ' + object.offer.checkout;
-    // var offerFeatures = card.querySelector('.popup__features');
-
-    // offerFeatures.innerHTML = getFeatures(object);
+    var offerFeatures = showFeatures(object);
     var offerDescr = card.querySelector('.popup__description');
     offerDescr.textContent = object.offer.description;
-
-    var offerPics = getPics(object);
+    var offerPics = showPics(object);
     deleteEmpty(offerPics);
-
     var offerAvatar = card.querySelector('.popup__avatar');
     offerAvatar.src = object.author.avatar;
 
@@ -98,14 +93,17 @@
   // закрытие карточки
 
   var closeCard = function () {
-    document.querySelector('.popup').remove();
-    window.map.desactivatePin();
+    var popup = document.querySelector('.popup');
+    if (popup) {
+      popup.remove();
+      window.map.desactivatePin();
+    }
   };
 
   window.cards = {
     card: card,
-    // getFeatures: getFeatures,
-    getPics: getPics,
+    showFeatures: showFeatures,
+    showPics: showPics,
     fitType: fitType,
     showCard: showCard,
     closeCard: closeCard

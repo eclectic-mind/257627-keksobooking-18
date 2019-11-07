@@ -30,6 +30,7 @@
     } else {
       map.classList.add('map--faded');
       map.setAttribute('disabled', 'disabled');
+      //resetControl();
     }
   };
 
@@ -133,12 +134,12 @@
     var rs = window.filters.getFilteredVal(window.filters.housingRooms);
     var gs = window.filters.getFilteredVal(window.filters.housingGuests);
 
-    /* var wf = window.filters.getFeature(window.filters.filterWifi);
+    var wf = window.filters.getFeature(window.filters.filterWifi);
     var dw = window.filters.getFeature(window.filters.filterDishwasher);
     var pk = window.filters.getFeature(window.filters.filterParking);
     var ws = window.filters.getFeature(window.filters.filterWasher);
     var et = window.filters.getFeature(window.filters.filterElevator);
-    var cd = window.filters.getFeature(window.filters.filterConditioner); */
+    var cd = window.filters.getFeature(window.filters.filterConditioner);
 
     var filteredData = window.offers;
     filteredData = window.filters.filterByParam('type', tp, filteredData);
@@ -146,13 +147,14 @@
     filteredData = window.filters.filterByParam('rooms', rs, filteredData);
     filteredData = window.filters.filterByParam('guests', gs, filteredData);
 
-    /* filteredData = window.filters.filterByParam('wifi', wf, filteredData);
-    filteredData = window.filters.filterByParam('dishwasher', dw, filteredData);
-    filteredData = window.filters.filterByParam('parking', pk, filteredData);
-    filteredData = window.filters.filterByParam('washer', ws, filteredData);
-    filteredData = window.filters.filterByParam('elevator', et, filteredData);
-    filteredData = window.filters.filterByParam('conditioner', cd, filteredData);
-    */
+    filteredData = window.filters.filterByFeat('wifi', wf, filteredData);
+    filteredData = window.filters.filterByFeat('dishwasher', dw, filteredData);
+    filteredData = window.filters.filterByFeat('parking', pk, filteredData);
+    filteredData = window.filters.filterByFeat('washer', ws, filteredData);
+    filteredData = window.filters.filterByFeat('elevator', et, filteredData);
+    filteredData = window.filters.filterByFeat('conditioner', cd, filteredData);
+
+
     // console.log(filteredData);
     window.setTimeout(function () {
       showLocation(filteredData);
@@ -208,10 +210,14 @@
   };
 
   var resetControl = function () {
-    control.left = startX;
-    control.top = startY;
-    console.log(control.left, control.top);
-    return control;
+    // control.style = '';
+    control.style.left = startX + 'px';
+    control.style.top = startY + 'px';
+    console.log('надо:');
+    console.log(control.style.left, control.style.top);
+    console.log('фактическое положение:');
+    console.log(control.getBoundingClientRect());
+    //return control;
   };
 
   window.map = {

@@ -52,16 +52,14 @@
   window.filters.housingRooms.addEventListener('change', window.map.rewritePins);
   window.filters.housingGuests.addEventListener('change', window.map.rewritePins);
 
-  /*
   window.filters.filterWifi.addEventListener('change', window.map.rewritePins);
   window.filters.filterDishwasher.addEventListener('change', window.map.rewritePins);
   window.filters.filterParking.addEventListener('change', window.map.rewritePins);
   window.filters.filterWasher.addEventListener('change', window.map.rewritePins);
   window.filters.filterElevator.addEventListener('change', window.map.rewritePins);
   window.filters.filterConditioner.addEventListener('change', window.map.rewritePins);
-  */
 
-// ресет
+  // ресет
 
   window.map.control.addEventListener('mousedown', window.map.dragControl);
   window.map.control.addEventListener('mouseup', window.form.rewriteAddress);
