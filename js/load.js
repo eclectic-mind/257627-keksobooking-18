@@ -46,10 +46,10 @@
 
   var sendData = function (onSuccess, onError) {
     var formData = new FormData(window.form.adForm);
-    console.log(formData);
+    // console.log(formData);
 
     var xhr = new XMLHttpRequest();
-    //xhr.responseType = 'json';
+    // xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
       if (xhr.status === 200) {
@@ -66,7 +66,7 @@
 
     xhr.open('POST', UPLOAD_URL);
     xhr.send(formData);
-    console.log('данные ушли!');
+    // console.log('данные ушли!');
   };
 
   window.load = {

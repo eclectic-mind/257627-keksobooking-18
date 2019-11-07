@@ -8,14 +8,14 @@
 
   // закрытие окна ошибки
 
-  var closeErrorWindow = function (evt) {
+  var closeErrorWindow = function () {
     var err = document.querySelector('.error');
     if (err) {
       err.remove();
     }
   };
 
-  var closeSuccessWindow = function (evt) {
+  var closeSuccessWindow = function () {
     var suc = document.querySelector('.success');
     if (suc) {
       suc.remove();
@@ -57,7 +57,7 @@
   window.error = {
     showError: showError,
     showSuccess: showSuccess
-  }
+  };
 
-  })();
+})();
 

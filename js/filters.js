@@ -106,7 +106,7 @@
     for (var i = 0; i < data.length; i++) {
       var realValue = data[i].offer.features;
       var hasFeature = realValue.includes(val);
-        if (hasFeature === true) {
+      if (hasFeature === true) {
         filtered.push(data[i]);
       }
     }

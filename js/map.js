@@ -30,7 +30,7 @@
     } else {
       map.classList.add('map--faded');
       map.setAttribute('disabled', 'disabled');
-      //resetControl();
+      // resetControl();
     }
   };
 
@@ -213,11 +213,11 @@
     // control.style = '';
     control.style.left = startX + 'px';
     control.style.top = startY + 'px';
-    console.log('надо:');
-    console.log(control.style.left, control.style.top);
-    console.log('фактическое положение:');
-    console.log(control.getBoundingClientRect());
-    //return control;
+    // console.log('надо:');
+    // console.log(control.style.left, control.style.top);
+    // console.log('фактическое положение:');
+    // console.log(control.getBoundingClientRect());
+    // return control;
   };
 
   window.map = {

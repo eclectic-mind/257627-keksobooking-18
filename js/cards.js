@@ -8,7 +8,7 @@
     var data = object.offer.features;
     var container = card.querySelector('.popup__features');
     container.innerHTML = '';
-      for (var i = 0; i < data.length; i++) {
+    for (var i = 0; i < data.length; i++) {
       var elem = document.createElement('li');
       var featureClass = 'popup__feature--' + data[i];
       elem.classList.add('popup__feature');
