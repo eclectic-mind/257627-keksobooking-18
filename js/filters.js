@@ -21,10 +21,6 @@
   var filterElevator = document.querySelector('#filter-elevator');
   var filterConditioner = document.querySelector('#filter-conditioner');
 
-  var checkboxes = document.querySelectorAll('.map__checkbox');
-
-  // активируем фильтры
-
   var toggleFiltersActivate = function (active) {
     if (active) {
       mapFilters.removeAttribute('disabled');
@@ -41,14 +37,11 @@
 
   var getFeature = function (checkbox) {
     if (checkbox.checked) {
-      // console.log('фича выбрана! Это ' + checkbox.value);
       return checkbox.value;
     } else {
       return null;
     }
   };
-
-  // сопоставляем название цены и числовой диапазон
 
   var fitPriceScale = function (priceName, value) {
     if ((priceName === 'middle') && (value >= 10000 && value <= 50000)) {
@@ -62,28 +55,16 @@
     }
   };
 
-  // фильтрация объектов
-
   var filterByParam = function (param, val, data) {
-
-    // data - фильтруемый массив квартир, param - параметр, по к-рому фильтруем, val - значение параметра, к-рое пришло из фильтра
-    // filtered - итоговый отфильтрованный массив, realValue - фактическое значение параметра у каждой квартиры
-
     var filtered = [];
     if (val === 'any') {
       filtered = data;
     }
-
-    // числовые параметры приводим к числовым значениям
     if (param === 'rooms' || param === 'guests') {
       val = parseInt(val, 10);
     }
-
-    // сравниваем заданное значение с фактическим у каждой квартиры
     for (var i = 0; i < data.length; i++) {
       var realValue = data[i].offer[param];
-
-      // сравниваем цену
       if (param === 'price') {
         var result = fitPriceScale(val, realValue);
         if (result === true) {
@@ -120,7 +101,6 @@
   window.filters = {
     mapFilters: mapFilters,
     filterSelects: filterSelects,
-    checkboxes: checkboxes,
 
     housingType: housingType,
     housingPrice: housingPrice,

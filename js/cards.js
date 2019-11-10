@@ -90,8 +90,6 @@
     card.querySelector('.popup__close').addEventListener('click', closeCard);
   };
 
-  // закрытие карточки
-
   var closeCard = function () {
     var popup = document.querySelector('.popup');
     if (popup) {

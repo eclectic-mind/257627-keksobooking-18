@@ -6,8 +6,6 @@
   var errorTpl = document.querySelector('#error').content.querySelector('div');
   var successTpl = document.querySelector('#success').content.querySelector('div');
 
-  // закрытие окна ошибки
-
   var closeErrorWindow = function () {
     var err = document.querySelector('.error');
     if (err) {
@@ -22,15 +20,12 @@
     }
   };
 
-  // обработчик ошибки
-
   var showError = function (errorMessage) {
     var error = errorTpl.cloneNode(true);
     error.querySelector('p').textContent = errorMessage;
     var fragment = document.createDocumentFragment();
     fragment.appendChild(error);
     mainBlock.prepend(fragment);
-
     error.querySelector('button').addEventListener('click', closeErrorWindow);
     document.addEventListener('keydown', function (evt) {
       if (evt.keyCode === window.util.ESC_KEYCODE) {
@@ -45,7 +40,6 @@
     var fragment = document.createDocumentFragment();
     fragment.appendChild(succ);
     mainBlock.prepend(fragment);
-
     document.addEventListener('keydown', function (evt) {
       if (evt.keyCode === window.util.ESC_KEYCODE) {
         closeSuccessWindow();
@@ -60,4 +54,3 @@
   };
 
 })();
-

@@ -12,23 +12,15 @@
   var typeField = document.querySelector('#type');
   var checkinField = document.querySelector('#timein');
   var checkoutField = document.querySelector('#timeout');
-
   var submitButton = document.querySelector('.ad-form__submit');
-
-  // выводим адрес по умолчанию
 
   var defaultX = window.map.startX + (window.util.CONTROL_SIZE / 2);
   var defaultY = window.map.startY + (window.util.CONTROL_SIZE / 2);
   var defaultAddress = null;
 
-  // вывод актуального адреса контрольного пина - будет дописано позже в соответствии с ТЗ,
-  // когда мы начнём двигать этот пин и пересчитывать его координаты, а пока так
-
   var currentX = defaultX;
   var currentY = defaultY + window.util.CONTROL_SPIKE_HEIGHT;
   var currentAddress = null;
-
-  // генерируем строку адреса
 
   var writeAddress = function (x, y) {
     return x.toString() + ', ' + y.toString();
@@ -65,38 +57,29 @@
     }
   };
 
-  // валидация гостей/комнат
-
   var checkGuests = function () {
     var selectedRooms = parseInt(roomsField.value, 10);
     var selectedGuests = parseInt(guestsField.value, 10);
     var errMessage = '';
     if (selectedGuests > selectedRooms || (selectedRooms === 100 && selectedGuests !== 0)) {
       errMessage = 'Количество гостей не соответствует выбранному количеству комнат';
-      // console.log('комнат ' + selectedRooms + ', гостей ' + selectedGuests);
     }
     guestsField.setCustomValidity(errMessage);
   };
-
-  // валидация заголовка
 
   var validateTitle = function () {
     var title = titleField.value;
     var errMessage = '';
     if (title.length < 30 || title.length > 100) {
-      // console.log(title.length);
       errMessage = 'Недопустимая длина заголовка';
     }
     titleField.setCustomValidity(errMessage);
   };
 
-  // валидация цены
-
   var checkPrice = function () {
     var errMessage = '';
     var tp = typeField.value;
     var pr = priceField.value;
-    // pr.placeholder = pr;
     if (pr < 0) {
       errMessage = 'Цена не может быть меньше нуля';
     } else if (pr < 10000 && tp === 'palace') {
@@ -109,13 +92,10 @@
     priceField.setCustomValidity(errMessage);
   };
 
-  // валидация заезда и выезда
-
   var checkTime = function () {
     var errMessage = '';
     var tIn = parseInt(checkinField.value, 10);
     var tOut = parseInt(checkoutField.value, 10);
-    // console.log(tIn, tOut);
     if (tIn !== tOut) {
       errMessage = 'Время заезда не соответствует времени выезда';
     }
@@ -123,10 +103,8 @@
   };
 
   defaultAddress = writeAddress(defaultX, defaultY);
-  // currentAddress = writeAddress(currentX, currentY);
   currentAddress = getCurrentAddress();
   addrField.value = defaultAddress;
-
   titleField.addEventListener('change', validateTitle);
   priceField.addEventListener('change', checkPrice);
   roomsField.addEventListener('change', checkGuests);

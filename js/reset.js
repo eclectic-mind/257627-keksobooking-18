@@ -15,7 +15,6 @@
     window.form.adForm.reset();
     window.filters.mapFilters.reset();
     window.map.rewritePins();
-    // console.log('ресет!');
   };
 
   window.reset = {

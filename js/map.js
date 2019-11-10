@@ -19,9 +19,6 @@
   var controlStartCoords = control.getBoundingClientRect();
   var startX = controlStartCoords.left;
   var startY = controlStartCoords.top + window.scrollY;
-  // console.log(controlStartCoords, startX, startY);
-
-  // активируем-дезактивируем карту
 
   var toggleMapActivate = function (active) {
     if (active) {
@@ -30,11 +27,8 @@
     } else {
       map.classList.add('map--faded');
       map.setAttribute('disabled', 'disabled');
-      // resetControl();
     }
   };
-
-  // отрисовываем картинку в метку
 
   var drawPinImage = function (offer) {
     var pinPic = document.createElement('img');
@@ -43,41 +37,30 @@
     pinPic.style.width = AVATAR_SIZE + 'px';
     pinPic.style.height = AVATAR_SIZE + 'px';
     pinPic.setAttribute('draggable', false);
-
     return pinPic;
   };
-
-  // отрисовываем метку
 
   var drawPin = function (offer) {
     var pin = document.createElement('button');
     pin.className = 'map__pin';
     pin.setAttribute('type', 'button');
 
-    // стили метки
     var pinX = offer.location.x - (PIN_WIDTH / 2);
     var pinY = offer.location.y - PIN_HEIGHT;
     pin.style.left = pinX + 'px';
     pin.style.top = pinY + 'px';
 
-    // обрабатываем клик - выводим карточку
     pin.addEventListener('click', function () {
       var selected = document.querySelectorAll('.map__pin--active');
-      // console.log(selected);
       if (selected.length > 0) {
         desactivatePin();
       }
       pin.classList.add('map__pin--active');
       window.cards.showCard(offer);
     });
-
-    // добавляем в метку картинку со всеми стилями
     pin.appendChild(drawPinImage(offer));
-
     return pin;
   };
-
-  // создаём dom-элементы меток и отрисовываем их
 
   var showLocation = function (allOffers) {
     var fragment = document.createDocumentFragment();
@@ -86,83 +69,55 @@
         break;
       }
       var pin = drawPin(allOffers[i]);
-      /* if (i > 4) {
-        pin.classList.add('visually-hidden');
-      }; */
       fragment.appendChild(pin);
       pinsContainer.appendChild(fragment);
     }
   };
 
-  // удаляем все метки
-
   var deletePins = function () {
-    // var pins = pinsContainer.getElementsByClassName('map__pin');
     var pins = pinsContainer.querySelectorAll('.map__pin');
-    // console.log(pins);
-    /* var empty = [];
-    empty.push(control);
-    pins = empty;*/
     for (var i = 0; i < pins.length; i++) {
       pins[i].parentNode.removeChild(pins[i]);
     }
     pinsContainer.appendChild(control);
-    // console.log(pins);
     return pinsContainer;
   };
 
-  // убираем выделение с метки
-
   var desactivatePin = function () {
     var pinClass = 'map__pin--active';
-    // console.log(pinClass);
     var pin = document.getElementsByClassName(pinClass)[0];
-    // console.log(pin);
     if (pin) {
       pin.classList.remove(pinClass);
-      // console.log(pin);
     }
   };
 
-  // перерисовываем метки при фильтрации
-
   var rewritePins = function () {
     deletePins();
-
     var tp = window.filters.getFilteredVal(window.filters.housingType);
     var pr = window.filters.getFilteredVal(window.filters.housingPrice);
     var rs = window.filters.getFilteredVal(window.filters.housingRooms);
     var gs = window.filters.getFilteredVal(window.filters.housingGuests);
-
     var wf = window.filters.getFeature(window.filters.filterWifi);
     var dw = window.filters.getFeature(window.filters.filterDishwasher);
     var pk = window.filters.getFeature(window.filters.filterParking);
     var ws = window.filters.getFeature(window.filters.filterWasher);
     var et = window.filters.getFeature(window.filters.filterElevator);
     var cd = window.filters.getFeature(window.filters.filterConditioner);
-
     var filteredData = window.offers;
     filteredData = window.filters.filterByParam('type', tp, filteredData);
     filteredData = window.filters.filterByParam('price', pr, filteredData);
     filteredData = window.filters.filterByParam('rooms', rs, filteredData);
     filteredData = window.filters.filterByParam('guests', gs, filteredData);
-
     filteredData = window.filters.filterByFeat('wifi', wf, filteredData);
     filteredData = window.filters.filterByFeat('dishwasher', dw, filteredData);
     filteredData = window.filters.filterByFeat('parking', pk, filteredData);
     filteredData = window.filters.filterByFeat('washer', ws, filteredData);
     filteredData = window.filters.filterByFeat('elevator', et, filteredData);
     filteredData = window.filters.filterByFeat('conditioner', cd, filteredData);
-
-
-    // console.log(filteredData);
     window.setTimeout(function () {
       showLocation(filteredData);
     }, 500);
-    // showLocation(filteredData);
   };
-
-  // перетаскиваем главный пин
 
   var checkLimits = function (coord, min, max) {
     if (coord < min) {
@@ -196,8 +151,6 @@
       };
       control.style.top = (control.offsetTop - shift.y) + 'px';
       control.style.left = (control.offsetLeft - shift.x) + 'px';
-      // console.log(finishCoords);
-      // window.form.getCurrentAddress();
     };
 
     var onMouseUp = function (upEvt) {
@@ -210,14 +163,8 @@
   };
 
   var resetControl = function () {
-    // control.style = '';
     control.style.left = startX + 'px';
     control.style.top = startY + 'px';
-    // console.log('надо:');
-    // console.log(control.style.left, control.style.top);
-    // console.log('фактическое положение:');
-    // console.log(control.getBoundingClientRect());
-    // return control;
   };
 
   window.map = {
