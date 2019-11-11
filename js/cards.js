@@ -76,10 +76,11 @@
     offerCapacity.textContent = object.offer.rooms + ' комнаты для ' + object.offer.guests + ' гостей';
     var offerTimeChecks = card.querySelector('.popup__text--time');
     offerTimeChecks.textContent = 'Заезд после ' + object.offer.checkin + ', выезд до ' + object.offer.checkout;
-    var offerFeatures = showFeatures(object);
+    var offerFeatures = null;
+    offerFeatures = showFeatures(object);
     var offerDescr = card.querySelector('.popup__description');
     offerDescr.textContent = object.offer.description;
-    var offerPics = showPics(object);
+    var  offerPics = showPics(object);
     deleteEmpty(offerPics);
     var offerAvatar = card.querySelector('.popup__avatar');
     offerAvatar.src = object.author.avatar;
