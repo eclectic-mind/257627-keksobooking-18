@@ -79,7 +79,7 @@
     showFeatures(object);
     var offerDescr = card.querySelector('.popup__description');
     offerDescr.textContent = object.offer.description;
-    var  offerPics = showPics(object);
+    var offerPics = showPics(object);
     deleteEmpty(offerPics);
     var offerAvatar = card.querySelector('.popup__avatar');
     offerAvatar.src = object.author.avatar;
