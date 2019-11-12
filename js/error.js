@@ -6,14 +6,14 @@
   var errorTpl = document.querySelector('#error').content.querySelector('div');
   var successTpl = document.querySelector('#success').content.querySelector('div');
 
-  var closeErrorWindow = function () {
+  var closeErrorWindowHandlerHandler = function () {
     var err = document.querySelector('.error');
     if (err) {
       err.remove();
     }
   };
 
-  var closeSuccessWindow = function () {
+  var closeSuccessWindowHandlerHandler = function () {
     var suc = document.querySelector('.success');
     if (suc) {
       suc.remove();
@@ -26,13 +26,13 @@
     var fragment = document.createDocumentFragment();
     fragment.appendChild(error);
     mainBlock.prepend(fragment);
-    error.querySelector('button').addEventListener('click', closeErrorWindow);
+    error.querySelector('button').addEventListener('click', closeErrorWindowHandler);
     document.addEventListener('keydown', function (evt) {
       if (evt.keyCode === window.util.ESC_KEYCODE) {
-        closeErrorWindow();
+        closeErrorWindowHandler();
       }
     });
-    document.addEventListener('click', closeErrorWindow);
+    document.addEventListener('click', closeErrorWindowHandler);
   };
 
   var showSuccess = function () {
@@ -42,10 +42,10 @@
     mainBlock.prepend(fragment);
     document.addEventListener('keydown', function (evt) {
       if (evt.keyCode === window.util.ESC_KEYCODE) {
-        closeSuccessWindow();
+        closeSuccessWindowHandler();
       }
     });
-    document.addEventListener('click', closeSuccessWindow);
+    document.addEventListener('click', closeSuccessWindowHandler);
   };
 
   window.error = {
