@@ -63,19 +63,20 @@
     if (param === 'rooms' || param === 'guests') {
       val = parseInt(val, 10);
     }
-    for (var i = 0; i < data.length; i++) {
-      var realValue = data[i].offer[param];
+
+    data.forEach(function (item) {
+      var realValue = item.offer[param];
       if (param === 'price') {
         var result = fitPriceScale(val, realValue);
         if (result === true) {
-          filtered.push(data[i]);
+          filtered.push(item);
         }
       } else {
         if (realValue === val) {
-          filtered.push(data[i]);
+          filtered.push(item);
         }
       }
-    }
+    });
     return filtered;
   };
 
@@ -84,13 +85,13 @@
     if (val === null) {
       filtered = data;
     }
-    for (var i = 0; i < data.length; i++) {
-      var realValue = data[i].offer.features;
+    data.forEach(function (item) {
+      var realValue = item.offer.features;
       var hasFeature = realValue.includes(val);
       if (hasFeature === true) {
-        filtered.push(data[i]);
+        filtered.push(item);
       }
-    }
+    });
     return filtered;
   };
 

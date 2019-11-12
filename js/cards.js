@@ -10,13 +10,13 @@
     var data = object.offer.features;
     var container = card.querySelector('.popup__features');
     container.innerHTML = '';
-    for (var i = 0; i < data.length; i++) {
+    data.forEach(function (item) {
       var elem = document.createElement('li');
-      var featureClass = 'popup__feature--' + data[i];
+      var featureClass = 'popup__feature--' + item;
       elem.classList.add('popup__feature');
       elem.classList.add(featureClass);
       container.appendChild(elem);
-    }
+    });
     return container;
   };
 
@@ -25,23 +25,23 @@
     var container = card.querySelector('.popup__photos');
     container.innerHTML = '';
     var title = object.offer.title;
-    for (var i = 0; i < data.length; i++) {
+    data.forEach(function (item) {
       var elem = new Image(45, 40);
-      elem.src = data[i];
+      elem.src = item;
       elem.alt = title;
       elem.classList.add('popup__photo');
       container.appendChild(elem);
-    }
+    });
     return container;
   };
 
   var deleteEmpty = function (pics) {
     var elems = pics.querySelectorAll('.popup__photo');
-    for (var i = 0; i < elems.length; i++) {
-      if (elems[i].alt === DEFAULT_ALT) {
-        elems[i].remove();
+    elems.forEach(function (item) {
+      if (item.alt === DEFAULT_ALT) {
+        item.remove();
       }
-    }
+    });
   };
 
   var fitType = function (objType) {

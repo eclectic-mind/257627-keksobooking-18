@@ -78,9 +78,9 @@
 
   var deletePins = function () {
     var pins = pinsContainer.querySelectorAll('.map__pin');
-    for (var i = 0; i < pins.length; i++) {
-      pins[i].parentNode.removeChild(pins[i]);
-    }
+    pins.forEach(function (item) {
+      item.parentNode.removeChild(item);
+    });
     pinsContainer.appendChild(control);
     return pinsContainer;
   };
