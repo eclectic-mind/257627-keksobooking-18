@@ -9,6 +9,8 @@
   var MIN_Y = 130;
   var MAX_Y = 630;
 
+  var FILTER_TIMEOUT = 500;
+
   var map = document.querySelector('.map');
   var pinsContainer = document.querySelector('.map__pins');
   var control = document.querySelector('.map__pin--main');
@@ -116,7 +118,7 @@
     filteredData = window.filters.filterByFeat('conditioner', cd, filteredData);
     window.setTimeout(function () {
       showLocation(filteredData);
-    }, 500);
+    }, FILTER_TIMEOUT);
   };
 
   var checkLimits = function (coord, min, max) {
@@ -168,6 +170,7 @@
   };
 
   window.map = {
+    FILTER_TIMEOUT: FILTER_TIMEOUT,
     map: map,
     control: control,
     controlStartCoords: controlStartCoords,

@@ -2,6 +2,8 @@
 
 (function () {
 
+  var DEFAULT_ALT = 'Фотография жилья';
+
   var card = document.querySelector('#card').content.querySelector('article');
 
   var showFeatures = function (object) {
@@ -36,7 +38,7 @@
   var deleteEmpty = function (pics) {
     var elems = pics.querySelectorAll('.popup__photo');
     for (var i = 0; i < elems.length; i++) {
-      if (elems[i].alt === 'Фотография жилья') {
+      if (elems[i].alt === DEFAULT_ALT) {
         elems[i].remove();
       }
     }
@@ -99,6 +101,7 @@
   };
 
   window.cards = {
+    DEFAULT_ALT: DEFAULT_ALT,
     card: card,
     showFeatures: showFeatures,
     showPics: showPics,
