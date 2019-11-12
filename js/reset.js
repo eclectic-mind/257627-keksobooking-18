@@ -8,7 +8,7 @@
 
     var openedCards = document.getElementsByClassName('popup');
     if (openedCards) {
-      window.cards.closeCard();
+      window.cards.closeCardHandler();
       window.map.desactivatePin();
     }
     window.map.resetControl();

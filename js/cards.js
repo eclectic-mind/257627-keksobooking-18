@@ -87,10 +87,10 @@
     card.cloneNode(true);
     fragment.appendChild(card);
     window.map.map.prepend(fragment, window.filtersContainer);
-    card.querySelector('.popup__close').addEventListener('click', closeCard);
+    card.querySelector('.popup__close').addEventListener('click', closeCardHandler);
   };
 
-  var closeCard = function () {
+  var closeCardHandler = function () {
     var popup = document.querySelector('.popup');
     if (popup) {
       popup.remove();
@@ -104,7 +104,7 @@
     showPics: showPics,
     fitType: fitType,
     showCard: showCard,
-    closeCard: closeCard
+    closeCardHandler: closeCardHandler
   };
 
 })();

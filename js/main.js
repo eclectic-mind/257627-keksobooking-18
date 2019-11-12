@@ -3,7 +3,6 @@
 (function () {
 
   window.offers = [];
-  // window.pins = [];
 
   var toggleUiActivate = function (active) {
     window.map.toggleMapActivate(active);
@@ -13,7 +12,6 @@
 
   var onLoad = function (data) {
     window.offers = data;
-    // window.map.showLocation(data);
   };
 
     window.map.control.addEventListener('click', function () {
@@ -30,7 +28,7 @@
 
   document.addEventListener('keydown', function (evt) {
     if (evt.keyCode === window.util.ESC_KEYCODE) {
-      window.cards.closeCard();
+      window.cards.closeCardHandler();
     }
   });
 
