@@ -36,7 +36,7 @@
 
   toggleUiActivate(false);
 
-  window.load.loadData(onLoad, window.error.showError);
+  window.load.upload(onLoad, window.error.showError);
   window.filters.housingType.addEventListener('change', window.map.rewritePins);
   window.filters.housingPrice.addEventListener('change', window.map.rewritePins);
   window.filters.housingRooms.addEventListener('change', window.map.rewritePins);
@@ -57,7 +57,7 @@
   });
 
   window.form.adForm.addEventListener('submit', function (evt) {
-    window.load.sendData(window.error.showSuccess, window.error.showError);
+    window.load.sendToServer(window.error.showSuccess, window.error.showError);
     evt.preventDefault();
     toggleUiActivate(false);
     window.reset.resetAll();

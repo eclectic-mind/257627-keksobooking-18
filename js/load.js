@@ -6,7 +6,7 @@
   var UPLOAD_URL = 'https://js.dump.academy/keksobooking';
   var TIMEOUT = 10000;
 
-  var loadData = function (onSuccess, onError) {
+  var upload = function (onSuccess, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
     xhr.timeout = TIMEOUT;
@@ -31,7 +31,7 @@
     xhr.send();
   };
 
-  var sendData = function (onSuccess, onError) {
+  var sendToServer = function (onSuccess, onError) {
     var formData = new FormData(window.form.adForm);
     var xhr = new XMLHttpRequest();
     xhr.addEventListener('load', function () {
@@ -52,8 +52,8 @@
   };
 
   window.load = {
-    loadData: loadData,
-    sendData: sendData
+    upload: upload,
+    sendToServer: sendToServer
   };
 
 })();
