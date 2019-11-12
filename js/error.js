@@ -6,18 +6,28 @@
   var errorTpl = document.querySelector('#error').content.querySelector('div');
   var successTpl = document.querySelector('#success').content.querySelector('div');
 
-  var closeErrorWindowHandler = function () {
-    var err = document.querySelector('.error');
-    if (err) {
-      err.remove();
-    }
+  var closeWindowHandler = function (windowName) {
+    var elem = document.querySelector(windowName);
+    if (elem) {
+      elem.parentNode.removeChild(elem);
+    };
   };
 
-  var closeSuccessWindowHandler = function () {
-    var suc = document.querySelector('.success');
-    if (suc) {
-      suc.remove();
-    }
+  var closeErr = function () {
+    var cls = '.error';
+    closeWindowHandler(cls);
+    removeListeners(closeErr);
+  };
+
+  var closeSuc = function () {
+    var cls = '.success';
+    closeWindowHandler(cls);
+    removeListeners(closeSuc);
+  };
+
+  var removeListeners = function (func) {
+    document.removeEventListener('keydown', func);
+    document.removeEventListener('click', func);
   };
 
   var showError = function (errorMessage) {
@@ -26,13 +36,13 @@
     var fragment = document.createDocumentFragment();
     fragment.appendChild(error);
     mainBlock.prepend(fragment);
-    error.querySelector('button').addEventListener('click', closeErrorWindowHandler);
+    error.querySelector('button').addEventListener('click', closeErr);
     document.addEventListener('keydown', function (evt) {
       if (evt.keyCode === window.util.ESC_KEYCODE) {
-        closeErrorWindowHandler();
+      closeErr();
       }
     });
-    document.addEventListener('click', closeErrorWindowHandler);
+    document.addEventListener('click', closeErr);
   };
 
   var showSuccess = function () {
@@ -42,10 +52,10 @@
     mainBlock.prepend(fragment);
     document.addEventListener('keydown', function (evt) {
       if (evt.keyCode === window.util.ESC_KEYCODE) {
-        closeSuccessWindowHandler();
+      closeSuc();
       }
     });
-    document.addEventListener('click', closeSuccessWindowHandler);
+    document.addEventListener('click', closeSuc);
   };
 
   window.error = {

@@ -97,6 +97,7 @@
     if (popup) {
       popup.remove();
       window.map.desactivatePin();
+      document.removeEventListener('keydown', closeCardHandler);
     }
   };
 
