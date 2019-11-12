@@ -13,7 +13,7 @@
     }
   };
 
-  var closeSuccessWindowHandlerHandler = function () {
+  var closeSuccessWindowHandler = function () {
     var suc = document.querySelector('.success');
     if (suc) {
       suc.remove();
