@@ -6,7 +6,7 @@
   var errorTpl = document.querySelector('#error').content.querySelector('div');
   var successTpl = document.querySelector('#success').content.querySelector('div');
 
-  var closeErrorWindowHandlerHandler = function () {
+  var closeErrorWindowHandler = function () {
     var err = document.querySelector('.error');
     if (err) {
       err.remove();
