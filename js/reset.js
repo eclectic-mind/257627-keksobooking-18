@@ -14,7 +14,7 @@
     window.map.resetControl();
     window.form.adForm.reset();
     window.filters.mapFilters.reset();
-    window.map.rewritePins();
+    window.map.deletePins();
   };
 
   window.reset = {

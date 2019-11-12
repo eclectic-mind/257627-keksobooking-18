@@ -11,8 +11,15 @@
     window.filters.toggleFiltersActivate(active);
   };
 
-  window.map.control.addEventListener('click', function () {
+  var onLoad = function (data) {
+    window.offers = data;
+    // window.map.showLocation(data);
+  };
+
+    window.map.control.addEventListener('click', function () {
     toggleUiActivate(true);
+    var data = window.offers;
+    window.map.showLocation(data);
   });
 
   window.map.control.addEventListener('keydown', function (evt) {
@@ -26,11 +33,6 @@
       window.cards.closeCard();
     }
   });
-
-  var onLoad = function (data) {
-    window.offers = data;
-    window.map.showLocation(data);
-  };
 
   toggleUiActivate(false);
 
