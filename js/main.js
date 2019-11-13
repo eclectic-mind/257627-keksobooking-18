@@ -14,7 +14,7 @@
     window.offers = data;
   };
 
-    window.map.control.addEventListener('click', function () {
+  window.map.control.addEventListener('click', function () {
     toggleUiActivate(true);
     var data = window.offers;
     window.map.showLocation(data);
@@ -54,7 +54,7 @@
     window.reset.resetAll();
   });
 
-  window.form.submitButton.addEventListener('click', function (evt) {
+  window.form.submitButton.addEventListener('click', function () {
     window.form.checkGuests();
     window.form.validateTitle();
     window.form.checkPrice();

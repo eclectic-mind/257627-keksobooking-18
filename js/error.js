@@ -10,7 +10,7 @@
     var elem = document.querySelector(windowName);
     if (elem) {
       elem.parentNode.removeChild(elem);
-    };
+    }
   };
 
   var closeErr = function () {
@@ -39,7 +39,7 @@
     error.querySelector('button').addEventListener('click', closeErr);
     document.addEventListener('keydown', function (evt) {
       if (evt.keyCode === window.util.ESC_KEYCODE) {
-      closeErr();
+        closeErr();
       }
     });
     document.addEventListener('click', closeErr);
@@ -52,7 +52,7 @@
     mainBlock.prepend(fragment);
     document.addEventListener('keydown', function (evt) {
       if (evt.keyCode === window.util.ESC_KEYCODE) {
-      closeSuc();
+        closeSuc();
       }
     });
     document.addEventListener('click', closeSuc);
