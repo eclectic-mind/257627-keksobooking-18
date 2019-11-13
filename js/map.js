@@ -21,6 +21,7 @@
   var controlStartCoords = control.getBoundingClientRect();
   var startX = controlStartCoords.left;
   var startY = controlStartCoords.top + window.scrollY;
+  // var startY = controlStartCoords.top;
 
   var toggleMapActivate = function (active) {
     if (active) {
@@ -95,6 +96,7 @@
 
   var rewritePins = function () {
     deletePins();
+    window.cards.closeCardHandler();
     var tp = window.filters.getFilteredVal(window.filters.housingType);
     var pr = window.filters.getFilteredVal(window.filters.housingPrice);
     var rs = window.filters.getFilteredVal(window.filters.housingRooms);
@@ -131,6 +133,14 @@
     return coord;
   };
 
+  var checkLimitsY = function (coord, min, max) {
+    if (window.pageYOffset > 0) {
+      min -= pageYOffset;
+      max -= pageYOffset;
+    }
+    return checkLimits(coord, min, max);
+  };
+
   var dragControl = function (evt) {
     evt.preventDefault();
     var startCoords = {
@@ -141,7 +151,7 @@
       moveEvt.preventDefault();
       var finishCoords = {
         x: checkLimits(moveEvt.clientX, minX, maxX),
-        y: checkLimits(moveEvt.clientY, MIN_Y, MAX_Y)
+        y: checkLimitsY(moveEvt.clientY, MIN_Y, MAX_Y)
       };
       var shift = {
         x: startCoords.x - finishCoords.x,

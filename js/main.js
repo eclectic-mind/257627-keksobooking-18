@@ -54,6 +54,13 @@
     window.reset.resetAll();
   });
 
+  window.form.submitButton.addEventListener('click', function (evt) {
+    window.form.checkGuests();
+    window.form.validateTitle();
+    window.form.checkPrice();
+    window.form.checkTime();
+  });
+
   window.form.adForm.addEventListener('submit', function (evt) {
     window.load.sendToServer(window.error.showSuccess, window.error.showError);
     evt.preventDefault();

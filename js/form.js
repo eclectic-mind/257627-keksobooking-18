@@ -42,6 +42,7 @@
   var toggleFormActivate = function (active) {
     if (active) {
       addrField.value = currentAddress;
+      addrField.setAttribute('readonly', 'readonly');
       adForm.classList.remove('ad-form--disabled');
       adForm.removeAttribute('disabled');
       allFieldsets.forEach(function (item) {
