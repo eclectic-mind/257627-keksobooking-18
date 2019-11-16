@@ -7,6 +7,8 @@
   var PRICE_H = 10000;
   var PRICE_MD = 5000;
   var PRICE_L = 1000;
+  var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+  var DEFAULT_AVATAR = 'img/muffin-grey.svg';
 
   var adForm = document.querySelector('.ad-form');
   var allFieldsets = document.querySelectorAll('fieldset');
@@ -18,6 +20,9 @@
   var typeField = document.querySelector('#type');
   var checkinField = document.querySelector('#timein');
   var checkoutField = document.querySelector('#timeout');
+  var avatarPrv = document.querySelector('.ad-form-header__preview');
+  var avatarField = document.querySelector('#avatar');
+  var avatarPic = avatarPrv.querySelector('img');
   var submitButton = document.querySelector('.ad-form__submit');
 
   var defaultX = window.city.startX + (window.util.CONTROL_SIZE / 2);
@@ -109,6 +114,25 @@
     checkinField.setCustomValidity(errMessage);
   };
 
+  var uploadAvatar = function () {
+    var file = avatarField.files[0];
+    var fileName = file.name.toLowerCase();
+    var matches = FILE_TYPES.some(function (it) {
+     return fileName.endsWith(it);
+    });
+    if (matches) {
+      var reader = new FileReader();
+      reader.addEventListener('load', function () {
+        avatarPic.src = reader.result;
+        });
+      reader.readAsDataURL(file);
+    }
+  };
+
+  var cleanFiles = function () {
+    avatarPic.src = DEFAULT_AVATAR;
+  };
+
   defaultAddress = writeAddress(defaultX, defaultY);
   currentAddress = getCurrentAddress();
   addrField.value = defaultAddress;
@@ -118,6 +142,7 @@
   guestsField.addEventListener('change', checkGuests);
   checkinField.addEventListener('change', checkTime);
   checkoutField.addEventListener('change', checkTime);
+  avatarField.addEventListener('change', uploadAvatar);
 
   window.add = {
     adForm: adForm,
@@ -132,13 +157,18 @@
     typeField: typeField,
     checkinField: checkinField,
     checkoutField: checkoutField,
+    avatarPrv: avatarPrv,
+    avatarPic: avatarPic,
+    avatarField: avatarField,
     getCurrentAddress: getCurrentAddress,
     rewriteAddress: rewriteAddress,
     toggleFormActivate: toggleFormActivate,
     checkGuests: checkGuests,
     validateTitle: validateTitle,
     checkPrice: checkPrice,
-    checkTime: checkTime
+    checkTime: checkTime,
+    uploadAvatar: uploadAvatar,
+    cleanFiles: cleanFiles
   };
 
 })();

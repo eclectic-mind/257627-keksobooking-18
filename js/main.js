@@ -54,6 +54,7 @@
     window.refresh.resetAll();
   });
 
+
   window.add.submitButton.addEventListener('click', function () {
     window.add.checkGuests();
     window.add.validateTitle();

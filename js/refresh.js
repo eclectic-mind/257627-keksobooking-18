@@ -13,6 +13,7 @@
     }
     window.city.resetControl();
     window.add.adForm.reset();
+    window.add.cleanFiles();
     window.sort.mapFilters.reset();
     window.city.deletePins();
   };
