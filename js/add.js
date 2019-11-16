@@ -73,8 +73,16 @@
     var selectedRooms = parseInt(roomsField.value, 10);
     var selectedGuests = parseInt(guestsField.value, 10);
     var errMessage = '';
-    if (selectedGuests > selectedRooms || (selectedRooms === 100 && selectedGuests !== 0)) {
-      errMessage = 'Количество гостей не соответствует выбранному количеству комнат';
+    if (selectedRooms === 100 && selectedGuests !== 0) {
+        errMessage = 'Количество гостей не соответствует выбранному количеству комнат';
+    }
+    if (selectedRooms <= 3 && selectedGuests <= 3) {
+      if (selectedGuests > selectedRooms) {
+        errMessage = 'Количество гостей не соответствует выбранному количеству комнат';
+      }
+      if (selectedGuests === 0) {
+        errMessage = 'Количество гостей не соответствует выбранному количеству комнат';
+      }
     }
     guestsField.setCustomValidity(errMessage);
   };
