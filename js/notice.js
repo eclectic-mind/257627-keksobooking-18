@@ -58,7 +58,7 @@
     document.addEventListener('click', closeSuc);
   };
 
-  window.error = {
+  window.notice = {
     showError: showError,
     showSuccess: showSuccess
   };

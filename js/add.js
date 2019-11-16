@@ -2,6 +2,12 @@
 
 (function () {
 
+  var MIN_TITLE_LENGTH = 30;
+  var MAX_TITLE_LENGTH = 100;
+  var PRICE_H = 10000;
+  var PRICE_MD = 5000;
+  var PRICE_L = 1000;
+
   var adForm = document.querySelector('.ad-form');
   var allFieldsets = document.querySelectorAll('fieldset');
   var roomsField = document.querySelector('#room_number');
@@ -14,8 +20,8 @@
   var checkoutField = document.querySelector('#timeout');
   var submitButton = document.querySelector('.ad-form__submit');
 
-  var defaultX = window.map.startX + (window.util.CONTROL_SIZE / 2);
-  var defaultY = window.map.startY + (window.util.CONTROL_SIZE / 2);
+  var defaultX = window.city.startX + (window.util.CONTROL_SIZE / 2);
+  var defaultY = window.city.startY + (window.util.CONTROL_SIZE / 2);
   var defaultAddress = null;
 
   var currentX = defaultX;
@@ -27,7 +33,7 @@
   };
 
   var getCurrentAddress = function () {
-    var c = window.map.control;
+    var c = window.city.control;
     var currX = c.offsetLeft;
     var currY = c.offsetTop;
     var addr = writeAddress(currX, currY);
@@ -71,7 +77,7 @@
   var validateTitle = function () {
     var title = titleField.value;
     var errMessage = '';
-    if (title.length < 30 || title.length > 100) {
+    if (title.length < MIN_TITLE_LENGTH || title.length > MAX_TITLE_LENGTH) {
       errMessage = 'Недопустимая длина заголовка';
     }
     titleField.setCustomValidity(errMessage);
@@ -83,12 +89,12 @@
     var pr = priceField.value;
     if (pr < 0) {
       errMessage = 'Цена не может быть меньше нуля';
-    } else if (pr < 10000 && tp === 'palace') {
-      errMessage = 'Минимальная цена на дворец составляет 10000';
-    } else if (pr < 5000 && tp === 'house') {
-      errMessage = 'Минимальная цена на дом составляет 5000';
-    } else if (pr < 1000 && tp === 'flat') {
-      errMessage = 'Минимальная цена на квартиру составляет 1000';
+    } else if (pr < PRICE_H && tp === 'palace') {
+      errMessage = 'Минимальная цена на дворец составляет ' + PRICE_H;
+    } else if (pr < PRICE_MD && tp === 'house') {
+      errMessage = 'Минимальная цена на дом составляет ' + PRICE_MD;
+    } else if (pr < PRICE_L && tp === 'flat') {
+      errMessage = 'Минимальная цена на квартиру составляет ' + PRICE_L;
     }
     priceField.setCustomValidity(errMessage);
   };
@@ -113,7 +119,7 @@
   checkinField.addEventListener('change', checkTime);
   checkoutField.addEventListener('change', checkTime);
 
-  window.form = {
+  window.add = {
     adForm: adForm,
     submitButton: submitButton,
     currentAddress: currentAddress,

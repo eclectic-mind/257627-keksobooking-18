@@ -2,6 +2,9 @@
 
 (function () {
 
+  var PRICE_LIMIT_LOW = 10000;
+  var PRICE_LIMIT_HIGH = 50000;
+
   var mapFilters = document.querySelector('.map__filters');
   var filterSelects = mapFilters.querySelectorAll('select');
 
@@ -44,11 +47,11 @@
   };
 
   var fitPriceScale = function (priceName, value) {
-    if ((priceName === 'middle') && (value >= 10000 && value <= 50000)) {
+    if ((priceName === 'middle') && (value >= PRICE_LIMIT_LOW && value <= PRICE_LIMIT_HIGH)) {
       return true;
-    } else if ((priceName === 'low') && (value < 10000)) {
+    } else if ((priceName === 'low') && (value < PRICE_LIMIT_LOW)) {
       return true;
-    } else if ((priceName === 'high') && (value > 50000)) {
+    } else if ((priceName === 'high') && (value > PRICE_LIMIT_HIGH)) {
       return true;
     } else {
       return false;
@@ -99,7 +102,10 @@
     return filter.value;
   };
 
-  window.filters = {
+  window.sort = {
+    PRICE_LIMIT_LOW: PRICE_LIMIT_LOW,
+    PRICE_LIMIT_HIGH: PRICE_LIMIT_HIGH,
+
     mapFilters: mapFilters,
     filterSelects: filterSelects,
 

@@ -3,6 +3,8 @@
 (function () {
 
   var DEFAULT_ALT = 'Фотография жилья';
+  var PIC_WIDTH = 45;
+  var PIC_HEIGHT = 40;
 
   var card = document.querySelector('#card').content.querySelector('article');
 
@@ -26,7 +28,7 @@
     container.innerHTML = '';
     var title = object.offer.title;
     data.forEach(function (item) {
-      var elem = new Image(45, 40);
+      var elem = new Image(PIC_WIDTH, PIC_HEIGHT);
       elem.src = item;
       elem.alt = title;
       elem.classList.add('popup__photo');
@@ -88,7 +90,7 @@
 
     card.cloneNode(true);
     fragment.appendChild(card);
-    window.map.map.prepend(fragment, window.filtersContainer);
+    window.city.map.prepend(fragment, window.filtersContainer);
     card.querySelector('.popup__close').addEventListener('click', closeCardHandler);
   };
 
@@ -96,13 +98,16 @@
     var popup = document.querySelector('.popup');
     if (popup) {
       popup.remove();
-      window.map.desactivatePin();
+      window.city.desactivatePin();
       document.removeEventListener('keydown', closeCardHandler);
     }
   };
 
-  window.cards = {
+  window.details = {
+    PIC_WIDTH: PIC_WIDTH,
+    PIC_HEIGHT: PIC_HEIGHT,
     DEFAULT_ALT: DEFAULT_ALT,
+
     card: card,
     showFeatures: showFeatures,
     showPics: showPics,

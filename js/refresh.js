@@ -8,16 +8,16 @@
 
     var openedCards = document.getElementsByClassName('popup');
     if (openedCards) {
-      window.cards.closeCardHandler();
-      window.map.desactivatePin();
+      window.details.closeCardHandler();
+      window.city.desactivatePin();
     }
-    window.map.resetControl();
-    window.form.adForm.reset();
-    window.filters.mapFilters.reset();
-    window.map.deletePins();
+    window.city.resetControl();
+    window.add.adForm.reset();
+    window.sort.mapFilters.reset();
+    window.city.deletePins();
   };
 
-  window.reset = {
+  window.refresh = {
     resetButton: resetButton,
     resetAll: resetAll
   };

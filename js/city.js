@@ -5,10 +5,9 @@
   var AVATAR_SIZE = 40;
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 70;
-
+  var PINS_VISIBLE = 5;
   var MIN_Y = 130;
   var MAX_Y = 630;
-
   var FILTER_TIMEOUT = 500;
 
   var map = document.querySelector('.map');
@@ -21,7 +20,6 @@
   var controlStartCoords = control.getBoundingClientRect();
   var startX = controlStartCoords.left;
   var startY = controlStartCoords.top + window.scrollY;
-  // var startY = controlStartCoords.top;
 
   var toggleMapActivate = function (active) {
     if (active) {
@@ -59,7 +57,7 @@
         desactivatePin();
       }
       pin.classList.add('map__pin--active');
-      window.cards.showCard(offer);
+      window.details.showCard(offer);
     });
     pin.appendChild(drawPinImage(offer));
     return pin;
@@ -68,7 +66,7 @@
   var showLocation = function (allOffers) {
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < allOffers.length; i++) {
-      if (i > 4) {
+      if (i >= PINS_VISIBLE) {
         break;
       }
       var pin = drawPin(allOffers[i]);
@@ -96,28 +94,28 @@
 
   var rewritePins = function () {
     deletePins();
-    window.cards.closeCardHandler();
-    var tp = window.filters.getFilteredVal(window.filters.housingType);
-    var pr = window.filters.getFilteredVal(window.filters.housingPrice);
-    var rs = window.filters.getFilteredVal(window.filters.housingRooms);
-    var gs = window.filters.getFilteredVal(window.filters.housingGuests);
-    var wf = window.filters.getFeature(window.filters.filterWifi);
-    var dw = window.filters.getFeature(window.filters.filterDishwasher);
-    var pk = window.filters.getFeature(window.filters.filterParking);
-    var ws = window.filters.getFeature(window.filters.filterWasher);
-    var et = window.filters.getFeature(window.filters.filterElevator);
-    var cd = window.filters.getFeature(window.filters.filterConditioner);
+    window.details.closeCardHandler();
+    var tp = window.sort.getFilteredVal(window.sort.housingType);
+    var pr = window.sort.getFilteredVal(window.sort.housingPrice);
+    var rs = window.sort.getFilteredVal(window.sort.housingRooms);
+    var gs = window.sort.getFilteredVal(window.sort.housingGuests);
+    var wf = window.sort.getFeature(window.sort.filterWifi);
+    var dw = window.sort.getFeature(window.sort.filterDishwasher);
+    var pk = window.sort.getFeature(window.sort.filterParking);
+    var ws = window.sort.getFeature(window.sort.filterWasher);
+    var et = window.sort.getFeature(window.sort.filterElevator);
+    var cd = window.sort.getFeature(window.sort.filterConditioner);
     var filteredData = window.offers;
-    filteredData = window.filters.filterByParam('type', tp, filteredData);
-    filteredData = window.filters.filterByParam('price', pr, filteredData);
-    filteredData = window.filters.filterByParam('rooms', rs, filteredData);
-    filteredData = window.filters.filterByParam('guests', gs, filteredData);
-    filteredData = window.filters.filterByFeat('wifi', wf, filteredData);
-    filteredData = window.filters.filterByFeat('dishwasher', dw, filteredData);
-    filteredData = window.filters.filterByFeat('parking', pk, filteredData);
-    filteredData = window.filters.filterByFeat('washer', ws, filteredData);
-    filteredData = window.filters.filterByFeat('elevator', et, filteredData);
-    filteredData = window.filters.filterByFeat('conditioner', cd, filteredData);
+    filteredData = window.sort.filterByParam('type', tp, filteredData);
+    filteredData = window.sort.filterByParam('price', pr, filteredData);
+    filteredData = window.sort.filterByParam('rooms', rs, filteredData);
+    filteredData = window.sort.filterByParam('guests', gs, filteredData);
+    filteredData = window.sort.filterByFeat('wifi', wf, filteredData);
+    filteredData = window.sort.filterByFeat('dishwasher', dw, filteredData);
+    filteredData = window.sort.filterByFeat('parking', pk, filteredData);
+    filteredData = window.sort.filterByFeat('washer', ws, filteredData);
+    filteredData = window.sort.filterByFeat('elevator', et, filteredData);
+    filteredData = window.sort.filterByFeat('conditioner', cd, filteredData);
     window.setTimeout(function () {
       showLocation(filteredData);
     }, FILTER_TIMEOUT);
@@ -179,7 +177,7 @@
     control.style.top = startY + 'px';
   };
 
-  window.map = {
+  window.city = {
     FILTER_TIMEOUT: FILTER_TIMEOUT,
     map: map,
     control: control,

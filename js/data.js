@@ -5,6 +5,7 @@
   var DATA_SRC = 'https://js.dump.academy/keksobooking/data';
   var UPLOAD_URL = 'https://js.dump.academy/keksobooking';
   var TIMEOUT = 10000;
+  var STATUS_OK = 200;
 
   var upload = function (onSuccess, onError) {
     var xhr = new XMLHttpRequest();
@@ -12,7 +13,7 @@
     xhr.timeout = TIMEOUT;
 
     xhr.addEventListener('load', function () {
-      if (xhr.status === 200) {
+      if (xhr.status === STATUS_OK) {
         onSuccess(xhr.response);
       } else {
         onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
@@ -32,10 +33,10 @@
   };
 
   var sendToServer = function (onSuccess, onError) {
-    var formData = new FormData(window.form.adForm);
+    var formData = new FormData(window.add.adForm);
     var xhr = new XMLHttpRequest();
     xhr.addEventListener('load', function () {
-      if (xhr.status === 200) {
+      if (xhr.status === STATUS_OK) {
         onSuccess();
         JSON.parse(xhr.response);
       } else {
@@ -51,7 +52,9 @@
     xhr.send(formData);
   };
 
-  window.load = {
+  window.data = {
+    STATUS_OK: STATUS_OK,
+
     upload: upload,
     sendToServer: sendToServer
   };
