@@ -63,16 +63,22 @@
     return pin;
   };
 
-  var showLocation = function (allOffers) {
+  var addPinToMap = function (elem) {
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < allOffers.length; i++) {
-      if (i >= PINS_VISIBLE) {
-        break;
+    fragment.appendChild(elem);
+    pinsContainer.appendChild(fragment);
+    return pinsContainer;
+  };
+
+  var showLocation = function (allOffers) {
+    var items = allOffers;
+    items.forEach(function (item, index) {
+      var pin = drawPin(items[index]);
+      addPinToMap(pin);
+      if (index >= PINS_VISIBLE) {
+        pin.remove();
       }
-      var pin = drawPin(allOffers[i]);
-      fragment.appendChild(pin);
-      pinsContainer.appendChild(fragment);
-    }
+    });
   };
 
   var deletePins = function () {
