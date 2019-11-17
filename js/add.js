@@ -7,6 +7,7 @@
   var PRICE_H = 10000;
   var PRICE_MD = 5000;
   var PRICE_L = 1000;
+  var PRICE_LIMIT = 1000000;
   var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
   var DEFAULT_AVATAR = 'img/muffin-grey.svg';
 
@@ -103,6 +104,9 @@
     var errMessage = '';
     var tp = typeField.value;
     var pr = priceField.value;
+    if (pr >= PRICE_LIMIT) {
+      errMessage = 'Цена не может быть больше 1 000 000';
+    }
     if (pr < 0) {
       errMessage = 'Цена не может быть меньше нуля';
     } else if (pr < PRICE_H && tp === 'palace') {
