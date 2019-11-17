@@ -7,7 +7,7 @@
   var TIMEOUT = 10000;
   var STATUS_OK = 200;
 
-  var upload = function (onSuccess, onError) {
+  var loadFromServer = function (onSuccess, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
     xhr.timeout = TIMEOUT;
@@ -32,7 +32,7 @@
     xhr.send();
   };
 
-  var sendToServer = function (onSuccess, onError) {
+  var loadToServer = function (onSuccess, onError) {
     var formData = new FormData(window.add.adForm);
     var xhr = new XMLHttpRequest();
     xhr.addEventListener('load', function () {
@@ -54,9 +54,8 @@
 
   window.data = {
     STATUS_OK: STATUS_OK,
-
-    upload: upload,
-    sendToServer: sendToServer
+    loadFromServer: loadFromServer,
+    loadToServer: loadToServer
   };
 
 })();

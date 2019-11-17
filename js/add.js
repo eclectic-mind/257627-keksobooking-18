@@ -41,6 +41,9 @@
     var c = window.city.control;
     var currX = c.offsetLeft;
     var currY = c.offsetTop;
+    if (currX < 0) {
+      currX = 0;
+    };
     var addr = writeAddress(currX, currY);
     return addr;
   };
