@@ -144,7 +144,7 @@
     }
   };
 
-  var cleanFiles = function () {
+  var deleteAvatar = function () {
     avatarPic.src = DEFAULT_AVATAR;
   };
 
@@ -183,7 +183,7 @@
     checkPrice: checkPrice,
     checkTime: checkTime,
     uploadAvatar: uploadAvatar,
-    cleanFiles: cleanFiles
+    deleteAvatar: deleteAvatar
   };
 
 })();

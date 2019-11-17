@@ -14,23 +14,47 @@
     window.offers = data;
   };
 
-  window.city.control.addEventListener('click', function () {
+  var controlClickHandler = function () {
     toggleUiActivate(true);
     var data = window.offers;
     window.city.showLocation(data);
-  });
+  };
 
-  window.city.control.addEventListener('keydown', function (evt) {
+  var controlKeydownHandler = function (evt) {
     if (evt.keyCode === window.util.ENTER_KEYCODE) {
       toggleUiActivate(true);
     }
-  });
+  };
 
-  document.addEventListener('keydown', function (evt) {
+  var docKeydownHandler = function (evt) {
     if (evt.keyCode === window.util.ESC_KEYCODE) {
       window.details.closeCardHandler();
     }
-  });
+  };
+
+  var resetClickHandler = function () {
+    toggleUiActivate(false);
+    window.refresh.resetAll();
+  };
+
+  var submitClickHandler = function () {
+    window.add.checkGuests();
+    window.add.validateTitle();
+    window.add.checkPrice();
+    window.add.checkTime();
+  };
+
+  var formSubmitHandler = function (evt) {
+    window.data.loadToServer(window.notice.showSuccess, window.notice.showError);
+    evt.preventDefault();
+    toggleUiActivate(false);
+    window.refresh.resetAll();
+  };
+
+  window.city.control.addEventListener('click', controlClickHandler);
+  window.city.control.addEventListener('keydown', controlKeydownHandler);
+
+  document.addEventListener('keydown', docKeydownHandler);
 
   toggleUiActivate(false);
 
@@ -49,23 +73,9 @@
   window.city.control.addEventListener('mousedown', window.city.dragControl);
   window.city.control.addEventListener('mouseup', window.add.rewriteAddress);
 
-  window.refresh.resetButton.addEventListener('click', function () {
-    toggleUiActivate(false);
-    window.refresh.resetAll();
-  });
+  window.refresh.resetButton.addEventListener('click', resetClickHandler);
 
-  window.add.submitButton.addEventListener('click', function () {
-    window.add.checkGuests();
-    window.add.validateTitle();
-    window.add.checkPrice();
-    window.add.checkTime();
-  });
-
-  window.add.adForm.addEventListener('submit', function (evt) {
-    window.data.loadToServer(window.notice.showSuccess, window.notice.showError);
-    evt.preventDefault();
-    toggleUiActivate(false);
-    window.refresh.resetAll();
-  });
+  window.add.submitButton.addEventListener('click', submitClickHandler);
+  window.add.adForm.addEventListener('submit', formSubmitHandler);
 
 })();

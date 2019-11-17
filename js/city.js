@@ -52,15 +52,19 @@
     pin.style.top = pinY + 'px';
 
     pin.addEventListener('click', function () {
-      var selected = document.querySelectorAll('.map__pin--active');
+      clickPinHandler(offer, pin);
+    });
+    pin.appendChild(drawPinImage(offer));
+    return pin;
+  };
+
+  var clickPinHandler = function (offer, pin) {
+    var selected = document.querySelectorAll('.map__pin--active');
       if (selected.length > 0) {
         desactivatePin();
       }
       pin.classList.add('map__pin--active');
       window.details.showCard(offer);
-    });
-    pin.appendChild(drawPinImage(offer));
-    return pin;
   };
 
   var addPinToMap = function (elem) {
