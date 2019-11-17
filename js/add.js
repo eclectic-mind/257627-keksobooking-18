@@ -44,7 +44,7 @@
     var currY = c.offsetTop;
     if (currX < 0) {
       currX = 0;
-    };
+    }
     var addr = writeAddress(currX, currY);
     return addr;
   };
@@ -78,7 +78,7 @@
     var selectedGuests = parseInt(guestsField.value, 10);
     var errMessage = '';
     if (selectedRooms === 100 && selectedGuests !== 0) {
-        errMessage = 'Количество гостей не соответствует выбранному количеству комнат';
+      errMessage = 'Количество гостей не соответствует выбранному количеству комнат';
     }
     if (selectedRooms <= 3 && selectedGuests <= 3) {
       if (selectedGuests > selectedRooms) {
@@ -133,13 +133,13 @@
     var file = avatarField.files[0];
     var fileName = file.name.toLowerCase();
     var matches = FILE_TYPES.some(function (it) {
-     return fileName.endsWith(it);
+      return fileName.endsWith(it);
     });
     if (matches) {
       var reader = new FileReader();
       reader.addEventListener('load', function () {
         avatarPic.src = reader.result;
-        });
+      });
       reader.readAsDataURL(file);
     }
   };

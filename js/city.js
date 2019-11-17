@@ -60,11 +60,11 @@
 
   var clickPinHandler = function (offer, pin) {
     var selected = document.querySelectorAll('.map__pin--active');
-      if (selected.length > 0) {
-        desactivatePin();
-      }
-      pin.classList.add('map__pin--active');
-      window.details.showCard(offer);
+    if (selected.length > 0) {
+      desactivatePin();
+    }
+    pin.classList.add('map__pin--active');
+    window.details.showCard(offer);
   };
 
   var addPinToMap = function (elem) {
